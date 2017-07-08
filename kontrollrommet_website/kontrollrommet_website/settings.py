@@ -39,8 +39,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Django REST Framework
     'rest_framework',
+    # Installed Apps
+    'accounts.apps.AccountsConfig',
     'core_database.apps.CoreDatabaseConfig',
+    # Djangostuff
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

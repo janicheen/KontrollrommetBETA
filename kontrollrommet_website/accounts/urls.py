@@ -1,12 +1,11 @@
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from rest_framework import routers
  
-from . import api
+import api.views
  
 router = routers.DefaultRouter()
 router.register(r'accounts', api.views.UserView, 'list')
  
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^api/', include(router.urls)),
-)
+]
