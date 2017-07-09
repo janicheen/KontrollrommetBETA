@@ -21,8 +21,15 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -41,6 +48,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # Django REST Framework
     'rest_framework',
+    'rest_framework.authtoken',
     # Installed Apps
     'accounts.apps.AccountsConfig',
     'core_database.apps.CoreDatabaseConfig',

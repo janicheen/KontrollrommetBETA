@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
         write_only_fields = ('password',)
         read_only_fields = ('is_staff', 'is_superuser', 'is_active', 'date_joined',)
  
+    # NB Uncertain code here, have to check out
     def create(self, validated_data):
         user = User(
             email=validated_data['email'],

@@ -24,3 +24,21 @@ router.register(r'users', UserViewSet)
 
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
+
+
+
+
+     url(r'^login', api.views.login),
+
+@api_view(["POST"])
+def login(request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+
+    user = authenticate(username=username, password=password)
+    if not user:
+        return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
+
+    token, _ = Token.objects.get_or_create(user=user)
+    return Response({"token": token.key})

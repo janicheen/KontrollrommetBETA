@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
-from django.contrib.auth.models import User
-
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from django.contrib.auth.models import User
 
 from .permissions import IsStaffOrTargetUser
 from .serializers import UserSerializer
@@ -26,7 +26,6 @@ class UserView(viewsets.ModelViewSet):
         return (AllowAny() if self.request.method == 'POST'
                 else IsStaffOrTargetUser()),
 
-
 class AuthView(APIView):
     authentication_classes = (authentication.QuietBasicAuthentication,)
     serializer_class = serializers.UserSerializer
@@ -34,4 +33,3 @@ class AuthView(APIView):
     
     def post(self, request, *args, **kwargs):
         return Response(self.serializer_class(request.user).data)
-
