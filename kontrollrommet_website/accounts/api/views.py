@@ -3,15 +3,12 @@ from __future__ import unicode_literals
 
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
-from rest_framework.views import APIView
-from rest_framework.response import Response
 
+#Import User model
 from django.contrib.auth.models import User
 
 from .permissions import IsStaffOrTargetUser
 from .serializers import UserSerializer
-
-from . import authentication, serializers  # see previous post[1] for user serializer.
 
  
 # Create your views here.
@@ -26,10 +23,3 @@ class UserView(viewsets.ModelViewSet):
         return (AllowAny() if self.request.method == 'POST'
                 else IsStaffOrTargetUser()),
 
-class AuthView(APIView):
-    authentication_classes = (authentication.QuietBasicAuthentication,)
-    serializer_class = serializers.UserSerializer
-    queryset = User.objects.all()
-    
-    def post(self, request, *args, **kwargs):
-        return Response(self.serializer_class(request.user).data)
