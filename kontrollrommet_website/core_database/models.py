@@ -42,7 +42,9 @@ def create_user_profile(sender, instance, created, **kwargs):
 # Signal listener, automatic edits user in person.
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.person.save()
+    relatedperson = Person.objects.get(user=instance)
+    relatedperson.user = instance
+    relatedperson.save()
 
 # Entity index
 class Entity(models.Model):
