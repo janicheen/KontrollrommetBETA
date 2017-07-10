@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     # Installed Apps
     'accounts.apps.AccountsConfig',
     'core_database.apps.CoreDatabaseConfig',
+    'meeting_manager.apps.MeetingManagerConfig',
     # Djangostuff
     'django.contrib.admin',
     'django.contrib.auth',

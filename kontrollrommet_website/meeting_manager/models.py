@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Dependent Models
-
+from core_database.models import Person, Entity
 
 # Create your models here.
 
@@ -15,6 +15,37 @@ class MeetingCategory(models.Model):
 	#id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50)
 
+	def __str__(self):
+		return '%s' % (self.name)
+
+#### Related indexes
+
+# Participants
+class Participant(models.Model):
+	#id = models.AutoField(primary_key=True)
+	person = models.ForeignKey(Person, on_delete=models.CASCADE)
+	
+	sent_meetingrequest = models.BooleanField(default=False)
+	is_invited = models.BooleanField(default=False)
+	accepted_invite = models.DateTimeField(blank=True, null=True)
+	is_attending = models.BooleanField(default=False)
+	is_leading = models.BooleanField(default=False)
+	is_reporting = models.BooleanField(default=False)
+
+	def __str__(self):
+		return '%s' % (self.person)
+
+#Meeting subjects 
+class Meetingsubject(models.Model):
+	original_headline = models.CharField(max_length=300, blank=True)
+	original_description = models.TextField(blank=True)
+	original_listposition = models.IntegerField(blank=True, null=True)
+	final_headline = models.CharField(max_length=300, blank=True)
+	final_description = models.TextField(blank=True)
+	final_listposition = models.IntegerField(blank=True, null=True)
+
+	def __str__(self):
+		return '%s' % (self.original_headline)
 
 ### Indexes ### 
 
@@ -35,27 +66,5 @@ class Meeting(models.Model):
 	participants = models.ManyToManyField(Participant)
 	meeting_subjects = models.ManyToManyField(Meetingsubject)
 
-#### Related indexes
-
-# Participants
-class Participant(models.Model):
-	#id = models.AutoField(primary_key=True)
-	person = models.ForeignKey(Person, on_delete=models.CASCADE)
-	
-	sent_meetingrequest = models.BooleanField(default=False)
-	is_invited = models.BooleanField(default=False)
-	accepted_invite = models.DateTimeField(blank=True, null=True)
-	is_attending = models.BooleanField(default=False)
-	is_leading = models.BooleanField(default=False)
-	is_reporting = models.BooleanField(default=False)
-
-#Meeting subjects 
-class Meetingsubject(models.Model):
-	original_headline = models.CharField(max_length=300, blank=True)
-	original_description = models.TextField(blank=True)
-	original_listposition = models.IntegerField(blank=True, null=True)
-	final_headline = models.CharField(max_length=300, blank=True)
-	final_description = models.TextField(blank=True)
-	final_listposition = models.IntegerField(blank=True, null=True)
-
-
+	def __str__(self):
+		return '%s - %s - %s' % (self.meeting_category, self.entity, self.requested_meetdate)
