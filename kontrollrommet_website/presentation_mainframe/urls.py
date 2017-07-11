@@ -1,7 +1,10 @@
+# Django dependencies
 from django.conf.urls import url
 
-from . import views
+# Wiews to route to URLs  
+from views import index
 
+# URL routing
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^dashboard', index, name='index'),
 ]

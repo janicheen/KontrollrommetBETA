@@ -1,11 +1,21 @@
+
+# Django dependencies
 from django.conf.urls import url, include
+
+# REST framework dependencies
 from rest_framework import routers
 
-from views import MeetingList
+# Models and serializers
+
+# Views
+from views import index, MeetingViewSet
 
 router = routers.DefaultRouter()
-router.register(r'meetings', MeetingList.as_view({'get': 'list'}), 'meetinglist')
+router.register(r'meetings', MeetingViewSet)
 
-urlpatterns = [
-    url(r'^meet/', include(router.urls)),
-]
+#urlpatterns = [
+#    url(r'^meetings', index, name='meetingindex')
+#]
+
+#Adde Routed urlpatterns
+urlpatterns = router.urls
