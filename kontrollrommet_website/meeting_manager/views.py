@@ -16,9 +16,18 @@ from django.contrib.auth.models import User
 from meeting_manager.models import Meeting
 from meeting_manager.serializers import MeetingSerializer
 
+
+# Default viewset of all meetings, listing, editing, creating and detail view
 class MeetingViewSet(viewsets.ModelViewSet):
 	queryset = Meeting.objects.all()
 	serializer_class = MeetingSerializer
+
+class MeetingList(generics.ListAPIView):
+    serializer_class = MeetingSerializer
+# makes a queryset of all meetings where current user is participant 
+    def get_queryset(self):        
+        user = self.request.user
+        return Meeting.objects.filter(participants__user__id = user.id)
 	
 
 ###TEST VIEW

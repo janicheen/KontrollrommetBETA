@@ -5,17 +5,13 @@ from django.conf.urls import url, include
 # REST framework dependencies
 from rest_framework import routers
 
-# Models and serializers
-
 # Views
-from views import index, MeetingViewSet
+from views import index, MeetingViewSet, MeetingList
 
+# Set up routers
 router = routers.DefaultRouter()
-router.register(r'meetings', MeetingViewSet)
+router.register(r'meetings', MeetingViewSet, 'meetings')
+#router.register(r'meetinglist', MeetingList.as_view(), 'meetinglist')
 
-#urlpatterns = [
-#    url(r'^meetings', index, name='meetingindex')
-#]
-
-#Adde Routed urlpatterns
-urlpatterns = router.urls
+#Routed urlpatterns
+urlpatterns = router.urls + [url(r'^meetinglist/', MeetingList.as_view())]
