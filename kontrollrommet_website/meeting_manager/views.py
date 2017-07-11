@@ -13,22 +13,26 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 
 # Models and serializers
-from meeting_manager.models import Meeting
-from meeting_manager.serializers import MeetingSerializer
+from meeting_manager.models import Meeting, Entity
+from meeting_manager.serializers import MeetingSerializer, EntitySerializer
 
 
 # Default viewset of all meetings, listing, editing, creating and detail view
 class MeetingViewSet(viewsets.ModelViewSet):
-	queryset = Meeting.objects.all()
 	serializer_class = MeetingSerializer
+	# makes a queryset of all meetings where current user is participant 
+	def get_queryset(self):        
+		user = self.request.user
+		return Meeting.objects.filter(participants__user__id = user.id)
 
-class MeetingList(generics.ListAPIView):
-    serializer_class = MeetingSerializer
-# makes a queryset of all meetings where current user is participant 
-    def get_queryset(self):        
-        user = self.request.user
-        return Meeting.objects.filter(participants__user__id = user.id)
-	
+# Default viewset of all entities, listing, editing, creating and detail view
+class EntityViewSet(viewsets.ModelViewSet):
+	serializer_class = EntitySerializer
+	# makes a queryset of all meetings where current user is participant 
+	def get_queryset(self):        
+		user = self.request.user
+		return Entity.objects.filter(persontoentityrelation__person__user__id = user.id)
+
 
 ###TEST VIEW
 def index(request):

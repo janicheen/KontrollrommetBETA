@@ -82,11 +82,15 @@ class Property(models.Model):
 
 ### Relation Tables
 # Person to Entity relation
+@python_2_unicode_compatible  # only if you need to support Python 2
 class PersonToEntityRelation(models.Model):
 	#id = models.AutoField(primary_key=True)
 	person = models.ForeignKey(Person, on_delete=models.CASCADE)
 	entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
 	function = models.ForeignKey(PersonfunctionCategory, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return '%s - %s - %s' % (self.person, self.function, self.entity)
 
 # Entity to Property relation
 class EntityToPropertyRelation(models.Model):

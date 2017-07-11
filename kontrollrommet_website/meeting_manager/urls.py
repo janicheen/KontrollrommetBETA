@@ -6,12 +6,12 @@ from django.conf.urls import url, include
 from rest_framework import routers
 
 # Views
-from views import index, MeetingViewSet, MeetingList
+from views import index, MeetingViewSet, EntityViewSet
 
 # Set up routers
 router = routers.DefaultRouter()
 router.register(r'meetings', MeetingViewSet, 'meetings')
-#router.register(r'meetinglist', MeetingList.as_view(), 'meetinglist')
+router.register(r'entities', EntityViewSet, 'entities')
 
 #Routed urlpatterns
-urlpatterns = router.urls + [url(r'^meetinglist/', MeetingList.as_view())]
+urlpatterns = router.urls

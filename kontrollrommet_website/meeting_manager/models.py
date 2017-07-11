@@ -8,7 +8,7 @@ from core_database.models import Person, Entity
 
 # Create your models here.
 
-### Category Lists ###
+### Category indexes ###
 
 # Meeting categories
 @python_2_unicode_compatible  # only if you need to support Python 2
@@ -19,24 +19,10 @@ class MeetingCategory(models.Model):
 	def __str__(self):
 		return '%s' % (self.name)
 
-#### Related indexes
 
-#Meeting subjects 
-@python_2_unicode_compatible  # only if you need to support Python 2
-class Meetingsubject(models.Model):
-	original_headline = models.CharField(max_length=300, blank=True)
-	original_description = models.TextField(blank=True)
-	original_listposition = models.IntegerField(blank=True, null=True)
-	final_headline = models.CharField(max_length=300, blank=True)
-	final_description = models.TextField(blank=True)
-	final_listposition = models.IntegerField(blank=True, null=True)
+### Main Meeting Tables ### 
 
-	def __str__(self):
-		return '%s' % (self.original_headline)
-
-### Indexes ### 
-
-# Meeting index
+# Meetings
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Meeting(models.Model):
 	#id = models.AutoField(primary_key=True)
@@ -52,7 +38,7 @@ class Meeting(models.Model):
 	is_current_meeting = models.BooleanField(default=False)
 	
 	participants = models.ManyToManyField(Person, through='Participant')
-	meeting_subjects = models.ManyToManyField(Meetingsubject)
+	meeting_subjects = models.ManyToManyField('Meetingsubject')
 
 	def __str__(self):
 		return '%s - %s - %s' % (self.meeting_category, self.entity, self.requested_meetdate)
@@ -76,4 +62,18 @@ class Participant(models.Model):
 
 	def __str__(self):
 		return '%s - %s' % (self.person, self.meeting)
+
+#Meeting subjects 
+@python_2_unicode_compatible  # only if you need to support Python 2
+class Meetingsubject(models.Model):
+	original_headline = models.CharField(max_length=300, blank=True)
+	original_description = models.TextField(blank=True)
+	original_listposition = models.IntegerField(blank=True, null=True)
+	final_headline = models.CharField(max_length=300, blank=True)
+	final_description = models.TextField(blank=True)
+	final_listposition = models.IntegerField(blank=True, null=True)
+
+	def __str__(self):
+		return '%s' % (self.original_headline)
+
 
