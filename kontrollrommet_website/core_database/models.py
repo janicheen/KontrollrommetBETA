@@ -5,10 +5,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.utils.encoding import python_2_unicode_compatible
 
 ### Category lists### 
 # Personfunction categories
+@python_2_unicode_compatible  # only if you need to support Python 2
 class PersonfunctionCategory(models.Model):
 	#id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50)
@@ -17,6 +18,7 @@ class PersonfunctionCategory(models.Model):
 		return '%s' % (self.name)
 
 # Entity categories
+@python_2_unicode_compatible  # only if you need to support Python 2
 class EntityCategory(models.Model):
 	#id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50)
@@ -25,6 +27,7 @@ class EntityCategory(models.Model):
 		return '%s' % (self.name)
 
 # EntityToProperty function categories
+@python_2_unicode_compatible  # only if you need to support Python 2
 class EntityToPropertyRelationCategory(models.Model):
 	#id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50)
@@ -35,6 +38,7 @@ class EntityToPropertyRelationCategory(models.Model):
 ### Indexes ###
 # Person index
 
+@python_2_unicode_compatible  # only if you need to support Python 2
 class Person(models.Model):
 	#id = models.AutoField(primary_key=True)
 	first_name = models.CharField(max_length=50)
@@ -58,6 +62,7 @@ def save_user_profile(sender, instance, **kwargs):
     relatedperson.save()
 
 # Entity index
+@python_2_unicode_compatible  # only if you need to support Python 2
 class Entity(models.Model):
 	#id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50)
@@ -67,6 +72,7 @@ class Entity(models.Model):
 		return '%s' % (self.name)
 
 # Property index
+@python_2_unicode_compatible  # only if you need to support Python 2
 class Property(models.Model):
 	#id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=100)

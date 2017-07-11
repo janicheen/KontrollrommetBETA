@@ -42,3 +42,16 @@ def login(request):
 
     token, _ = Token.objects.get_or_create(user=user)
     return Response({"token": token.key})
+
+
+
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return Meeting.objects.filter(participants__person__user=user).filter(participants__is_invited=True).order_by('requested_meetdate')
+serializer_class = MeetingListSerializer
+

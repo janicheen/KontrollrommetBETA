@@ -4,6 +4,8 @@ from rest_framework import routers
 from views import MeetingList
 
 router = routers.DefaultRouter()
-router.register(r'meetings', MeetingList, 'list')
+router.register(r'meetings', MeetingList.as_view({'get': 'list'}), 'meetinglist')
 
-urlpatterns = router.urls
+urlpatterns = [
+    url(r'^meet/', include(router.urls)),
+]

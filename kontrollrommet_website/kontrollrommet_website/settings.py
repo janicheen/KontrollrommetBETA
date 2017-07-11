@@ -25,7 +25,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
     )
 }
 
@@ -48,7 +47,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # Django REST Framework
     'rest_framework',
-    'rest_framework.authtoken',
     # Installed Apps
     'accounts.apps.AccountsConfig',
     'core_database.apps.CoreDatabaseConfig',
