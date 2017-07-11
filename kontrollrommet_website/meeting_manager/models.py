@@ -48,7 +48,7 @@ class Meeting(models.Model):
 class Participant(models.Model):
 	#id = models.AutoField(primary_key=True)
 	meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
-	person = models.ForeignKey(Person, on_delete=models.CASCADE)
+	person = models.ForeignKey(Person, related_name='participants', on_delete=models.CASCADE)
 	sent_meetingrequest = models.BooleanField(default=False)
 	is_invited = models.BooleanField(default=False)
 	accepted_invite = models.DateTimeField(blank=True, null=True)

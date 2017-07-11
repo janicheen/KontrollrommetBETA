@@ -13,9 +13,13 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 
 # Models and serializers
-from meeting_manager.models import Meeting, Entity
-from meeting_manager.serializers import MeetingSerializer, EntitySerializer
+from meeting_manager.models import Meeting, Entity, Person
+from meeting_manager.serializers import MeetingSerializer, EntitySerializer, PersonSerializer
 
+
+class PersonViewSet(viewsets.ModelViewSet):
+	serializer_class = PersonSerializer
+	queryset = Person.objects.all()
 
 # Default viewset of all meetings, listing, editing, creating and detail view
 class MeetingViewSet(viewsets.ModelViewSet):
