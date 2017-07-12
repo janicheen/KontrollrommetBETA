@@ -41,8 +41,8 @@ class EntityToPropertyRelationCategory(models.Model):
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Person(models.Model):
 	#id = models.AutoField(primary_key=True)
-	first_name = models.CharField(max_length=50)
-	last_name = models.CharField(max_length=50)
+	first_name = models.CharField(max_length=50, related_name='first_name')
+	last_name = models.CharField(max_length=50, related_name='last_name')
 	user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 
 	def __str__(self):
