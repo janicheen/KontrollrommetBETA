@@ -52,7 +52,7 @@ class Subject(models.Model):
 	def __str__(self):
 		return '%s' % (self.headline)
 
-#Subjects 
+#Subjects related to Meeting 
 @python_2_unicode_compatible  # only if you need to support Python 2
 class MeetingSubject(models.Model):
 	meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
@@ -66,7 +66,7 @@ class MeetingSubject(models.Model):
 		return '%s - %s' % (self.meeting, self.subject)
 
 	class Meta:
-		unique_together = ('meeting', 'subject',)
+		unique_together = (('meeting', 'subject'), ('meeting', 'listposition_on_request'), ('meeting', 'listposition_on_report'))
 
 # Participants
 @python_2_unicode_compatible  # only if you need to support Python 2
