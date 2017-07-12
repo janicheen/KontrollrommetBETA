@@ -1,12 +1,17 @@
-from meeting_manager.models import Meeting, Entity, Person, Participant
+from meeting_manager.models import Meeting, Entity, Person, Participant, Meetingsubject
 from rest_framework import serializers
 
 class ParticipantSerializer(serializers.ModelSerializer):
 	id = serializers.ReadOnlyField(source='person.id')
-	name = serializers.ReadOnlyField(source='person.first_name')
+	name = serializers.ReadOnlyField(source='person.full_name')
 	class Meta:
 		model = Participant
-		fields = ('id', 'name', 'is_invited')
+		fields = ('id', 'name', 'sent_meetingrequest', 'is_invited', 'accepted_invite', 'is_attending', 'is_leading', 'is_reporting')
+
+class MeetingsubjectSerializer(serializers.ModelSerializer):
+		class Meta:
+			model = Meetingsubject
+			fields = ('original_listposition', 'original_headline')
 
 class PersonSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -15,11 +20,10 @@ class PersonSerializer(serializers.ModelSerializer):
 
 class MeetingSerializer(serializers.ModelSerializer):
 	participants = ParticipantSerializer(source='participant_set', many=True)
-	#    participants = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-	#    print(participants)
+	meeting_subjects = MeetingsubjectSerializer(many=True)
 	class Meta:
 		model = Meeting
-		fields = ('id', 'meeting_category', 'entity', 'requested_meetdate', 'participants')
+		fields = ('id', 'meeting_category', 'entity', 'requested_meetdate', 'participants', 'meeting_subjects')
 
 class EntitySerializer(serializers.ModelSerializer):
 	class Meta:

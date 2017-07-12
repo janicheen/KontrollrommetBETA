@@ -45,15 +45,21 @@ class Person(models.Model):
 	last_name = models.CharField(max_length=50)
 	user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 
-	def __str__(self):
+	@property
+	def full_name(self):
 		return '%s %s' % (self.first_name, self.last_name)
 
+	def __str__(self):
+		return '%s' % (self.full_name)
+
+# Automatic creation of Person model, when user is created
 # Singal listener, automatic adds User to Person on creation
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Person.objects.create(user=instance)
 
+# Automatic edit of Person model, when user is edited
 # Signal listener, automatic edits user in person.
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

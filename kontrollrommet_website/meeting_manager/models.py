@@ -73,6 +73,10 @@ class Meetingsubject(models.Model):
 	final_description = models.TextField(blank=True)
 	final_listposition = models.IntegerField(blank=True, null=True)
 
+	#Forbids a person to be registered to the same meeting more than once
+#	class Meta:
+#		unique_together = ('meetingsubject.meeting_set', 'original_listposition',)
+
 	def __str__(self):
 		return '%s' % (self.original_headline)
 
