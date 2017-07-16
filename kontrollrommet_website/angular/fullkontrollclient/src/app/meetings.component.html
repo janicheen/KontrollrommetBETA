@@ -1,23 +1,23 @@
-<h2>My Heroes</h2>
+<h2>My Meetings</h2>
 <div>
-  <label>Hero name:</label> <input #heroName />
-  <button (click)="add(heroName.value); heroName.value=''">
+  <label>Meeting name:</label> <input #meetingName />
+  <button (click)="add(meetingName.value); meetingName.value=''">
     Add
   </button>
 </div>
-<ul class="heroes">
-  <li *ngFor="let hero of heroes"
-    [class.selected]="hero === selectedHero"
-    (click)="onSelect(hero)">
-    <span class="badge">{{hero.id}}</span>
-    <span>{{hero.name}}</span>
+<ul class="meetings">
+  <li *ngFor="let meeting of meetings"
+    [class.selected]="meeting === selectedMeeting"
+    (click)="onSelect(meeting)">
+    <span class="badge">{{meeting.id}}</span>
+    <span>{{meeting.name}}</span>
     <button class="delete"
-      (click)="delete(hero); $event.stopPropagation()">x</button>
+      (click)="delete(meeting); $event.stopPropagation()">x</button>
   </li>
 </ul>
-<div *ngIf="selectedHero">
+<div *ngIf="selectedMeeting">
   <h2>
-    {{selectedHero.name | uppercase}} is my hero
+    {{selectedMeeting.name | uppercase}} is my meeting
   </h2>
   <button (click)="gotoDetail()">View Details</button>
 </div>

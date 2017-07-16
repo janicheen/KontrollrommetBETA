@@ -3,26 +3,26 @@ import { Component, OnInit }        from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 
-import { Hero }         from './hero';
-import { HeroService }  from './hero.service';
+import { Meeting }         from './meeting';
+import { MeetingService }  from './meeting.service';
 @Component({
-  selector: 'hero-detail',
-  templateUrl: './hero-detail.component.html',
-  styleUrls: [ './hero-detail.component.css' ]
+  selector: 'meeting-detail',
+  templateUrl: './meeting-detail.component.html',
+  styleUrls: [ './meeting-detail.component.css' ]
 })
-export class HeroDetailComponent implements OnInit {
-  hero: Hero;
+export class MeetingDetailComponent implements OnInit {
+  meeting: Meeting;
 
   constructor(
-    private heroService: HeroService,
+    private meetingService: MeetingService,
     private route: ActivatedRoute,
     private location: Location
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap
-      .switchMap((params: ParamMap) => this.heroService.getHero(+params.get('id')))
-      .subscribe(hero => this.hero = hero);
+      .switchMap((params: ParamMap) => this.meetingService.getMeeting(+params.get('id')))
+      .subscribe(meeting => this.meeting = meeting);
   }
 
   goBack(): void {
@@ -30,7 +30,7 @@ export class HeroDetailComponent implements OnInit {
   }
 
   save(): void {
-  this.heroService.update(this.hero)
+  this.meetingService.update(this.meeting)
     .then(() => this.goBack());
   }
 }

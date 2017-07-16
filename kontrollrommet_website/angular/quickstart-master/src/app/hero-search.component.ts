@@ -12,21 +12,21 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
  
-import { HeroSearchService } from './hero-search.service';
-import { Hero } from './hero';
+import { MeetingSearchService } from './meeting-search.service';
+import { Meeting } from './meeting';
  
 @Component({
-  selector: 'hero-search',
-  templateUrl: './hero-search.component.html',
-  styleUrls: [ './hero-search.component.css' ],
-  providers: [HeroSearchService]
+  selector: 'meeting-search',
+  templateUrl: './meeting-search.component.html',
+  styleUrls: [ './meeting-search.component.css' ],
+  providers: [MeetingSearchService]
 })
-export class HeroSearchComponent implements OnInit {
-  heroes: Observable<Hero[]>;
+export class MeetingSearchComponent implements OnInit {
+  meetings: Observable<Meeting[]>;
   private searchTerms = new Subject<string>();
  
   constructor(
-    private heroSearchService: HeroSearchService,
+    private meetingSearchService: MeetingSearchService,
     private router: Router) {}
  
   // Push a search term into the observable stream.
@@ -35,23 +35,23 @@ export class HeroSearchComponent implements OnInit {
   }
  
   ngOnInit(): void {
-    this.heroes = this.searchTerms
+    this.meetings = this.searchTerms
       .debounceTime(300)        // wait 300ms after each keystroke before considering the term
       .distinctUntilChanged()   // ignore if next search term is same as previous
       .switchMap(term => term   // switch to new observable each time the term changes
         // return the http search observable
-        ? this.heroSearchService.search(term)
-        // or the observable of empty heroes if there was no search term
-        : Observable.of<Hero[]>([]))
+        ? this.meetingSearchService.search(term)
+        // or the observable of empty meetings if there was no search term
+        : Observable.of<Meeting[]>([]))
       .catch(error => {
         // TODO: add real error handling
         console.log(error);
-        return Observable.of<Hero[]>([]);
+        return Observable.of<Meeting[]>([]);
       });
   }
  
-  gotoDetail(hero: Hero): void {
-    let link = ['/detail', hero.id];
+  gotoDetail(meeting: Meeting): void {
+    let link = ['/detail', meeting.id];
     this.router.navigate(link);
   }
 }

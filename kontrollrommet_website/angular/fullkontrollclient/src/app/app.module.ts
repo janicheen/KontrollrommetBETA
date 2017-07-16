@@ -9,10 +9,10 @@ import { InMemoryDataService }  from './in-memory-data.service';
 
 import { AppComponent }         from './app.component';
 import { DashboardComponent }   from './dashboard.component';
-import { HeroDetailComponent }  from './hero-detail.component';
-import { HeroesComponent }      from './heroes.component';
-import { HeroSearchComponent } from './hero-search.component';
-import { HeroService }          from './hero.service';
+import { MeetingDetailComponent }  from './meeting-detail.component';
+import { MeetingsComponent }      from './meetings.component';
+import { MeetingSearchComponent } from './meeting-search.component';
+import { MeetingService }          from './meeting.service';
 
 import { AppRoutingModule }     from './app-routing.module';
 
@@ -27,11 +27,11 @@ import { AppRoutingModule }     from './app-routing.module';
   declarations: [
     AppComponent,
     DashboardComponent,
-    HeroDetailComponent,
-    HeroesComponent,
-    HeroSearchComponent
+    MeetingDetailComponent,
+    MeetingsComponent,
+    MeetingSearchComponent
   ],
-  providers: [ HeroService ],
+  providers: [ MeetingService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
