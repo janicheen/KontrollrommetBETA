@@ -3,19 +3,19 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Hero } from './hero';
+import { Meeting } from './meeting';
 
 @Injectable()
-export class HeroService {
-  private heroesUrl = 'api/heroes';  // URL to web api
+export class MeetingService {
+  private meetingsUrl = 'api/meetings';  // URL to web api
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }
  
-  getHeroes(): Promise<Hero[]> {
-    return this.http.get(this.heroesUrl)
+  getMeetings(): Promise<Meeting[]> {
+    return this.http.get(this.meetingsUrl)
       .toPromise()
-      .then(response => response.json().data as Hero[])
+      .then(response => response.json().data as Meeting[])
       .catch(this.handleError);
   }
  
@@ -24,40 +24,40 @@ export class HeroService {
     return Promise.reject(error.message || error);
   }
   
-  getHeroesSlowly(): Promise<Hero[]> {
+  getMeetingsSlowly(): Promise<Meeting[]> {
     return new Promise(resolve => {
       // Simulate server latency with 2 second delay
-      setTimeout(() => resolve(this.getHeroes()), 2000);
+      setTimeout(() => resolve(this.getMeetings()), 2000);
     });
   }
 
-  getHero(id: number): Promise<Hero> {
-  const url = `${this.heroesUrl}/${id}`;
+  getMeeting(id: number): Promise<Meeting> {
+  const url = `${this.meetingsUrl}/${id}`;
   return this.http.get(url)
     .toPromise()
-    .then(response => response.json().data as Hero)
+    .then(response => response.json().data as Meeting)
     .catch(this.handleError);
   }
 
-  update(hero: Hero): Promise<Hero> {
-  const url = `${this.heroesUrl}/${hero.id}`;
+  update(meeting: Meeting): Promise<Meeting> {
+  const url = `${this.meetingsUrl}/${meeting.id}`;
   return this.http
-    .put(url, JSON.stringify(hero), {headers: this.headers})
+    .put(url, JSON.stringify(meeting), {headers: this.headers})
     .toPromise()
-    .then(() => hero)
+    .then(() => meeting)
     .catch(this.handleError);
   }
 
-  create(name: string): Promise<Hero> {
+  create(name: string): Promise<Meeting> {
   return this.http
-    .post(this.heroesUrl, JSON.stringify({name: name}), {headers: this.headers})
+    .post(this.meetingsUrl, JSON.stringify({name: name}), {headers: this.headers})
     .toPromise()
-    .then(res => res.json().data as Hero)
+    .then(res => res.json().data as Meeting)
     .catch(this.handleError);
   }
 
   delete(id: number): Promise<void> {
-  const url = `${this.heroesUrl}/${id}`;
+  const url = `${this.meetingsUrl}/${id}`;
   return this.http.delete(url, {headers: this.headers})
     .toPromise()
     .then(() => null)
