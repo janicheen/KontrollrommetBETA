@@ -10,12 +10,12 @@ import { MeetingService } from './meeting.service';
 })
 export class DashboardComponent implements OnInit {
 
-  meetinges: Meeting[] = [];
+  meetings: Meeting[] = [];
 
   constructor(private meetingService: MeetingService) { }
 
   ngOnInit(): void {
     this.meetingService.getMeetings()
-      .then(meetinges => this.meetinges = meetinges.slice(1, 5));
+      .then(meetings => this.meetings = meetings.slice(1, 5));
   }
 }
