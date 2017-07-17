@@ -38,17 +38,42 @@ class Meeting(models.Model):
 	is_current_meeting = models.BooleanField(default=False)
 	
 	participants = models.ManyToManyField(Person, through='Participant')
-	meeting_subjects = models.ManyToManyField('Meetingsubject')
+	meeting_subjects = models.ManyToManyField('Subject', through='Meetingsubject')
 
 	def __str__(self):
 		return '%s - %s - %s' % (self.meeting_category, self.entity, self.requested_meetdate)
+
+#Subjects 
+@python_2_unicode_compatible  # only if you need to support Python 2
+class Subject(models.Model):
+	headline = models.CharField(max_length=300, blank=True)
+	description = models.TextField(blank=True)
+
+	def __str__(self):
+		return '%s' % (self.headline)
+
+#Subjects related to Meeting 
+@python_2_unicode_compatible  # only if you need to support Python 2
+class MeetingSubject(models.Model):
+	meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
+	subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+	edited_headline = models.CharField(max_length=300, blank=True)
+	edited_description = models.TextField(blank=True)
+	listposition_on_request = models.IntegerField(blank=True, null=True)
+	listposition_on_report = models.IntegerField(blank=True, null=True)
+
+	def __str__(self):
+		return '%s - %s' % (self.meeting, self.subject)
+
+	class Meta:
+		unique_together = (('meeting', 'subject'), ('meeting', 'listposition_on_request'), ('meeting', 'listposition_on_report'))
 
 # Participants
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Participant(models.Model):
 	#id = models.AutoField(primary_key=True)
 	meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
-	person = models.ForeignKey(Person, related_name='participants', on_delete=models.CASCADE)
+	person = models.ForeignKey(Person, on_delete=models.CASCADE)
 	sent_meetingrequest = models.BooleanField(default=False)
 	is_invited = models.BooleanField(default=False)
 	accepted_invite = models.DateTimeField(blank=True, null=True)
@@ -62,18 +87,5 @@ class Participant(models.Model):
 
 	def __str__(self):
 		return '%s - %s' % (self.person, self.meeting)
-
-#Meeting subjects 
-@python_2_unicode_compatible  # only if you need to support Python 2
-class Meetingsubject(models.Model):
-	original_headline = models.CharField(max_length=300, blank=True)
-	original_description = models.TextField(blank=True)
-	original_listposition = models.IntegerField(blank=True, null=True)
-	final_headline = models.CharField(max_length=300, blank=True)
-	final_description = models.TextField(blank=True)
-	final_listposition = models.IntegerField(blank=True, null=True)
-
-	def __str__(self):
-		return '%s' % (self.original_headline)
 
 

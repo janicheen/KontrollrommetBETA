@@ -41,19 +41,25 @@ class EntityToPropertyRelationCategory(models.Model):
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Person(models.Model):
 	#id = models.AutoField(primary_key=True)
-	first_name = models.CharField(max_length=50, related_name='first_name')
-	last_name = models.CharField(max_length=50, related_name='last_name')
+	first_name = models.CharField(max_length=50)
+	last_name = models.CharField(max_length=50)
 	user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 
-	def __str__(self):
+	@property
+	def full_name(self):
 		return '%s %s' % (self.first_name, self.last_name)
 
+	def __str__(self):
+		return '%s' % (self.full_name)
+
+# Automatic creation of Person model, when user is created
 # Singal listener, automatic adds User to Person on creation
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Person.objects.create(user=instance)
 
+# Automatic edit of Person model, when user is edited
 # Signal listener, automatic edits user in person.
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
