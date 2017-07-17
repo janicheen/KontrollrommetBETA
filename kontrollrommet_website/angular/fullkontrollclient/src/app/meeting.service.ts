@@ -19,18 +19,6 @@ export class MeetingService {
       .catch(this.handleError);
   }
  
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
-  }
-  
-  getMeetingsSlowly(): Promise<Meeting[]> {
-    return new Promise(resolve => {
-      // Simulate server latency with 2 second delay
-      setTimeout(() => resolve(this.getMeetings()), 2000);
-    });
-  }
-
   getMeeting(id: number): Promise<Meeting> {
   const url = `${this.meetingsUrl}/${id}`;
   return this.http.get(url)
@@ -63,4 +51,10 @@ export class MeetingService {
     .then(() => null)
     .catch(this.handleError);
   }
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
+  }
+  
 }
