@@ -80,7 +80,8 @@ MIDDLEWARE = [
 #Cors thing, added for testing
 CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8000',
-    'localhost:3000')
+    'localhost:3000',
+    'localhost:4200')
 
 ROOT_URLCONF = 'kontrollrommet_website.urls'
 
