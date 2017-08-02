@@ -1,4 +1,10 @@
-from meeting_manager.models import Meeting, Entity, Person, Participant, MeetingSubject
+#Core models
+from core_database.models import Entity, Person
+
+#Meeting models
+from meeting_manager.models import Meeting, Participant, MeetingSubject
+
+# Rest Framework dependencies
 from rest_framework import serializers
 
 class ParticipantSerializer(serializers.ModelSerializer):
@@ -21,11 +27,15 @@ class PersonSerializer(serializers.ModelSerializer):
 		fields = ('id', 'first_name', 'last_name', 'user')
 
 class MeetingSerializer(serializers.ModelSerializer):
-	participants = ParticipantSerializer(source='participant_set', many=True)
-	meeting_subjects = MeetingsubjectSerializer(source='meetingsubject_set', many=True)
+#	participants = ParticipantSerializer(source='participant_set', many=True)
+#	meeting_subjects = MeetingsubjectSerializer(source='meetingsubject_set', many=True)
+	meeting_category = serializers.StringRelatedField()
+	entity = serializers.StringRelatedField()
 	class Meta:
 		model = Meeting
-		fields = ('id', 'meeting_category', 'entity', 'requested_meetdate', 'participants', 'meeting_subjects')
+		### Deactivated until tested basics
+		#fields = ('id', 'meeting_category', 'entity', 'requested_meetdate', 'participants', 'meeting_subjects')
+		fields = ('id', 'meeting_category', 'entity', 'requested_meetdate')
 
 class EntitySerializer(serializers.ModelSerializer):
 	class Meta:
