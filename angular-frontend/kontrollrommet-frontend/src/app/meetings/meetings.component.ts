@@ -20,7 +20,7 @@ export class MeetingsComponent implements OnInit {
   getMeetings(): void {
     this.meetingService.getMeetings()
     .then(meetings => this.meetings = meetings);
-  }
+    }
 
   ngOnInit(): void {
     this.getMeetings();

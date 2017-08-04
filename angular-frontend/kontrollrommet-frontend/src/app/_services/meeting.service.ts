@@ -9,10 +9,10 @@ export class MeetingService {
   
   // for test purposes, can probably be deleted now:
   // private meetingsUrl = 'api/meetings';  // URL to web api
- 
+  private usertoken = localStorage.getItem('UserToken') 
   private meetingsUrl = 'http://127.0.0.1:8000/meetings/?format=json';  // URL to runserver local web api
   private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
-  private JWTheader = new Headers({'Authorization': 'JWT ' + localStorage.getItem('currentUserToken')})
+  private JWTheader = new Headers({'Authorization': 'JWT ' + this.usertoken})
   private JWToptions = new RequestOptions({ headers: this.JWTheader });
   
   constructor(private Http: Http) { }

@@ -1,7 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AlertService, AuthenticationService } from '../_services/index';
+import { AlertService, AuthenticationService, UserService } from '../_services/index';
+
+import { User } from '../_models/index';
 
 @Component({
     moduleId: module.id,
@@ -17,7 +19,9 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private alertService: AlertService) { }
+        private alertService: AlertService,
+        private userservice: UserService
+    ) { }
 
     ngOnInit() {
         // reset login status
@@ -32,11 +36,22 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
+                    console.log("at the point where I call getcurrentuser")
+                    this.userservice.getCurrentUser()
+                    .then(luser => this.setuser(luser));
+                    console.log("this is after i try calling setuser")
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
+                    console.log("running error")
                     this.alertService.error(error);
                     this.loading = false;
                 });
+    }
+    
+    setuser(user) {
+        localStorage.setItem('CurrentUser', user);
+        console.log("here's the user object", user)
+        return
     }
 }
