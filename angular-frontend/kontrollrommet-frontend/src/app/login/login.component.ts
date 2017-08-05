@@ -36,10 +36,6 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
-                    console.log("at the point where I call getcurrentuser")
-                    this.userservice.getCurrentUser()
-                    .then(luser => this.setuser(luser));
-                    console.log("this is after i try calling setuser")
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
@@ -49,9 +45,4 @@ export class LoginComponent implements OnInit {
                 });
     }
     
-    setuser(user) {
-        localStorage.setItem('CurrentUser', user);
-        console.log("here's the user object", user)
-        return
-    }
 }

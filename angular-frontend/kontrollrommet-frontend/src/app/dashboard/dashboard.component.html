@@ -1,8 +1,8 @@
-<h3>Top Meetings</h3>
+<h3>Top Meetings for {{currentuser.first_name}} </h3>
 <div class="grid grid-pad">
   <a *ngFor="let meeting of meetings"  [routerLink]="['/detail', meeting.id]"  class="col-1-4">
     <div class="module meeting">
-      <h4>{{meeting.name}}</h4>
+      <h4>{{meeting.meeting_category}}</h4>
     </div>
   </a>
 </div>

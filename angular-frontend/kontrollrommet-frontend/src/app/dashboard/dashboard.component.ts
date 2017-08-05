@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Meeting } from '../_models/meeting';
-import { MeetingService } from '../_services/index';
+import { Meeting, User } from '../_models/index';
+import { MeetingService, UserService } from '../_services/index';
 
 @Component({
   selector: 'my-dashboard',
@@ -11,11 +11,16 @@ import { MeetingService } from '../_services/index';
 export class DashboardComponent implements OnInit {
 
   meetings: Meeting[] = [];
-
-  constructor(private meetingService: MeetingService) { }
+  currentuser: User
+  constructor(
+    private meetingService: MeetingService,
+    private userService: UserService
+  ) { }
 
   ngOnInit(): void {
     this.meetingService.getMeetings()
       .then(meetings => this.meetings = meetings.slice(1, 5));
+    this.userService.getCurrentUser()
+      .then(user => this.currentuser = user)
   }
 }
