@@ -3,10 +3,10 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-# Dependent Models
+
+# Models
 from core_database.models import Person, Entity
 
-# Create your models here.
 
 ### Category indexes ###
 
@@ -20,7 +20,7 @@ class MeetingCategory(models.Model):
 		return '%s' % (self.name)
 
 
-### Main Meeting Tables ### 
+### Main Meeting Table ### 
 
 # Meetings
 @python_2_unicode_compatible  # only if you need to support Python 2
@@ -52,7 +52,9 @@ class Subject(models.Model):
 	def __str__(self):
 		return '%s' % (self.headline)
 
-#Subjects related to Meeting 
+### Relational tables
+
+#Meeting Subjects 
 @python_2_unicode_compatible  # only if you need to support Python 2
 class MeetingSubject(models.Model):
 	meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
@@ -67,6 +69,7 @@ class MeetingSubject(models.Model):
 
 	class Meta:
 		unique_together = (('meeting', 'subject'), ('meeting', 'listposition_on_request'), ('meeting', 'listposition_on_report'))
+		ordering = ('meeting', 'listposition_on_request')
 
 # Participants
 @python_2_unicode_compatible  # only if you need to support Python 2
@@ -84,6 +87,7 @@ class Participant(models.Model):
 	#Forbids a person to be registered to the same meeting more than once
 	class Meta:
 		unique_together = ('meeting', 'person',)
+		ordering = ('meeting', 'person__first_name')
 
 	def __str__(self):
 		return '%s - %s' % (self.person, self.meeting)

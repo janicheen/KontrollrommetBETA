@@ -1,5 +1,5 @@
 #Core models
-from core_database.models import Entity, Person
+from core_database.models import Entity, Person, PersonToEntityRelation
 
 #Meeting models
 from meeting_manager.models import Meeting, Participant, MeetingSubject
@@ -21,24 +21,12 @@ class MeetingsubjectSerializer(serializers.ModelSerializer):
 		model = MeetingSubject
 		fields = ('id', 'headline', 'listposition_on_request', 'listposition_on_report')
 
-class PersonSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Person
-		fields = ('id', 'first_name', 'last_name', 'user')
-
 class MeetingSerializer(serializers.ModelSerializer):
-#	participants = ParticipantSerializer(source='participant_set', many=True)
-#	meeting_subjects = MeetingsubjectSerializer(source='meetingsubject_set', many=True)
+	participants = ParticipantSerializer(source='participant_set', many=True)
+	meeting_subjects = MeetingsubjectSerializer(source='meetingsubject_set', many=True)
 	meeting_category = serializers.StringRelatedField()
 	entity = serializers.StringRelatedField()
 	class Meta:
 		model = Meeting
-		### Deactivated until tested basics
-		#fields = ('id', 'meeting_category', 'entity', 'requested_meetdate', 'participants', 'meeting_subjects')
-		fields = ('id', 'meeting_category', 'entity', 'requested_meetdate')
-
-class EntitySerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Entity
-		fields = ('id', 'name', 'category')
-
+		fields = ('id', 'meeting_category', 'entity', 'requested_meetdate', 'participants', 'meeting_subjects')
+		

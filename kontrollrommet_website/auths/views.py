@@ -8,24 +8,23 @@ from django.shortcuts import render
 
 # REST Framework dependencies
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import generics
+from rest_framework.generics import RetrieveAPIView
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 # Django User Model
 from django.contrib.auth.models import User
 
 # Models and serializers
-from core_database.models import Person
+from auths.serializers import UserSerializer
 
-from serializers import UserSerializer
-
+#Viewset for all users
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
-class CurrentUser(APIView):
+#API view to get logged in user
+class CurrentUser(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
@@ -33,7 +32,3 @@ class CurrentUser(APIView):
         serializer = UserSerializer(currentuser)
         return Response(serializer.data)   
 
-# NOT FINISHED
-#class GetUserDataViewSet(viewsets.ModelViewSet):
- #   serializer_class = PersonSerializer
-  #  queryset = Person.objects.all()

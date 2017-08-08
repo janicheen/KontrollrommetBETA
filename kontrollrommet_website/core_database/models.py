@@ -75,7 +75,6 @@ def save_user_profile(sender, instance, **kwargs):
 # Entity index
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Entity(models.Model):
-	#id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50)
 	category = models.ForeignKey(EntityCategory, on_delete=models.CASCADE)
 
@@ -85,7 +84,6 @@ class Entity(models.Model):
 # Property index
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Property(models.Model):
-	#id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=100)
 
 	def __str__(self):
@@ -95,7 +93,6 @@ class Property(models.Model):
 # Person to Entity relation
 @python_2_unicode_compatible  # only if you need to support Python 2
 class PersonToEntityRelation(models.Model):
-	#id = models.AutoField(primary_key=True)
 	person = models.ForeignKey(Person, on_delete=models.CASCADE)
 	entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
 	function = models.ForeignKey(PersonfunctionCategory, on_delete=models.CASCADE)
@@ -105,7 +102,6 @@ class PersonToEntityRelation(models.Model):
 
 # Entity to Property relation
 class EntityToPropertyRelation(models.Model):
-	#id = models.AutoField(primary_key=True)
 	entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
 	propertyitem = models.ForeignKey(Property, on_delete=models.CASCADE)
 	relation = models.ForeignKey(EntityToPropertyRelationCategory, on_delete=models.CASCADE)

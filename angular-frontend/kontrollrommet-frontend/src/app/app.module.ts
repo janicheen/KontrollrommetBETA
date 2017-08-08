@@ -39,6 +39,13 @@ import {
   AlertService
  } from './_services/index';
 
+// Guards
+import {
+  AuthGuard
+} from './_guards/index';
+
+// Forms
+import { MeetingFormComponent } from './_forms/index';
 
 @NgModule({ 
   imports: [ // Necessary Modules
@@ -58,7 +65,9 @@ import {
     MeetingsComponent,
     MeetingDetailComponent,
     MeetingSearchComponent,
-    DashboardComponent
+    DashboardComponent,
+// Forms
+    MeetingFormComponent
   ],
   providers: [ // Services
     // Application services
@@ -66,7 +75,8 @@ import {
     //Login services
     AuthenticationService,
     UserService,
-    AlertService
+    AlertService,
+    AuthGuard,
    ],
   bootstrap: [ AppComponent ] //root component
 })

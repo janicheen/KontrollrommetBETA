@@ -1,10 +1,10 @@
+import { MeetingParticipant, MeetingSubject } from '../_models/index';
+
 export class Meeting {
-  shorthand: string;
-  constructor(
-    public id: number,  
-    public meeting_category: number,
-    public entity: number,
-    public requested_meetdate: number
- // this.shorthand = this.meeting_category + this.entity;
-  ){}  
+  id: number;  
+  meeting_category: number;
+  entity: number;
+  requested_meetdate: number;
+  participants: MeetingParticipant[];
+  meeting_subjects: MeetingSubject[];
 }
