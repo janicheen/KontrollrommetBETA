@@ -4,8 +4,8 @@
 	<form>
 		<div class="form-group">
 			<label for="power">Velg Boligselskap</label>
-			<select class="form-control" id="power" required>
-				<option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+			<select class="form-control" id="entity" required>
+				<option *ngFor="let entity of entities" [value]="entity.id">{{entity.entity_name}}</option>
 			</select>
 		</div>
 			

@@ -39,14 +39,6 @@ export class MeetingsComponent implements OnInit {
     this.router.navigate(['/meetingform']);
   }
 
-  getEntities(): void {
-    this.meetingService.getEntities()
-    .then(entities => this.entities = entities);
-    let anentity = this.entities[1]
-    console.log(anentity.entity_name)
-    }
-
-
   add(name: string): void {
   name = name.trim();
   if (!name) { return; }
