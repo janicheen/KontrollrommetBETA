@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Meeting} from '../_models/index';
+import { Meeting, Entity} from '../_models/index';
 import { MeetingService } from '../_services/index';
 
 @Component({
@@ -12,6 +12,7 @@ import { MeetingService } from '../_services/index';
 export class MeetingsComponent implements OnInit {
   // Variables to be used in component
   meetings: Meeting[];
+  entities: Entity[];
   selectedMeeting: Meeting;
 
   // Something wize about this part...
@@ -37,6 +38,14 @@ export class MeetingsComponent implements OnInit {
   onClickNewMeetingRequest(): void {
     this.router.navigate(['/meetingform']);
   }
+
+  getEntities(): void {
+    this.meetingService.getEntities()
+    .then(entities => this.entities = entities);
+    let anentity = this.entities[1]
+    console.log(anentity.entity_name)
+    }
+
 
   add(name: string): void {
   name = name.trim();

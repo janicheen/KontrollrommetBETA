@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Meeting }    from '../_models/index';
+import { MeetingService } from '../_services/index';
 
 @Component({
   selector: 'meeting-form',
@@ -9,12 +10,12 @@ import { Meeting }    from '../_models/index';
 
 export class MeetingFormComponent {
 
-  powers = ['Really Smart', 'Super Flexible',
+powers = ['Really Smart', 'Super Flexible',
             'Super Hot', 'Weather Changer'];
 
- model = new Meeting;
+model = new Meeting;
 
-  submitted = false;
+submitted = false;
 
   onSubmit() { this.submitted = true; }
 

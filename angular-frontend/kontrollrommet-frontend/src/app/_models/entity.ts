@@ -1,5 +1,5 @@
 export class Entity {
     id: number;  
-    name: string;
-    category: number;
+    entity_name: string;
+    function: string;
 }

@@ -3,6 +3,7 @@ import { Headers, Http, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Meeting } from '../_models/index';
+import { Entity } from '../_models/entity';
 
 @Injectable()
 export class MeetingService {
@@ -10,13 +11,25 @@ export class MeetingService {
   // for test purposes, can probably be deleted now:
   // private meetingsUrl = 'api/meetings';  // URL to web api
   private usertoken = localStorage.getItem('UserToken') 
+  
   private meetingsUrl = 'http://127.0.0.1:8000/meetings/?format=json';  // URL to runserver local web api
+  private entitiesbyuserUrl = 'http://127.0.0.1:8000/entitiesbyuser/?format=json';
+
   private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
   private JWTheader = new Headers({'Authorization': 'JWT ' + this.usertoken})
   private JWToptions = new RequestOptions({ headers: this.JWTheader });
   
   constructor(private Http: Http) { }
- 
+  
+  getEntities(): Promise<Entity[]> {
+    console.log("getting user entities...")
+    return this.Http
+      .get(this.entitiesbyuserUrl, this.JWToptions)
+      .toPromise()
+      .then(response => response.json() as Entity[])
+      .catch(this.handleError);
+  }
+  
   getMeetings(): Promise<Meeting[]> {
     console.log("getting meetings...")
     return this.Http
