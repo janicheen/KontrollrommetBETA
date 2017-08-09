@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Meeting } from '../_models/index';
-import { Entity } from '../_models/entity';
+import { Meeting, Entity, Person } from '../_models/index';
 
 @Injectable()
 export class MeetingService {
@@ -14,10 +13,11 @@ export class MeetingService {
   
   private meetingsUrl = 'http://127.0.0.1:8000/meetings/?format=json';  // URL to runserver local web api
   private entitiesbyuserUrl = 'http://127.0.0.1:8000/entitiesbyuser/?format=json';
+  private personsbyentityUrl = 'http://127.0.0.1:8000/personsbyentity/';
 
   private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
   private JWTheader = new Headers({'Authorization': 'JWT ' + this.usertoken})
-  private JWToptions = new RequestOptions({ headers: this.JWTheader });
+  private JWToptions = new RequestOptions({ headers: this.JWTheader, params: {'id': 1}});
   
   constructor(private Http: Http) { }
   
@@ -27,6 +27,16 @@ export class MeetingService {
       .get(this.entitiesbyuserUrl, this.JWToptions)
       .toPromise()
       .then(response => response.json() as Entity[])
+      .catch(this.handleError);
+  }
+
+  getParticipants(ident): Promise<Person[]> {
+  console.log("getting participants...")
+  this.JWToptions = new RequestOptions({ headers: this.JWTheader, params: {'id': ident}});
+    return this.Http
+      .get(this.personsbyentityUrl, this.JWToptions)
+      .toPromise()
+      .then(response => response.json() as Person[])
       .catch(this.handleError);
   }
   
