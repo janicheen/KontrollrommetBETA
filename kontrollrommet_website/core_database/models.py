@@ -11,7 +11,6 @@ from django.utils.encoding import python_2_unicode_compatible
 #Django User model
 from django.contrib.auth.models import User
 
-
 ### Category lists### 
 # Personfunction categories
 @python_2_unicode_compatible  # only if you need to support Python 2
@@ -35,7 +34,7 @@ class EntityToPropertyRelationCategory(models.Model):
 	name = models.CharField(max_length=50)
 
 	def __str__(self):
-		return '%s' % (self.name)
+    		return '%s' % (self.name)
 
 ### Indexes ###
 # Person index

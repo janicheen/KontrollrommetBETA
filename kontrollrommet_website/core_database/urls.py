@@ -11,9 +11,10 @@ from .views import EntitiesByUserView, PersonsByEntityViewSet
 
 # Set up router for viewsets
 router = routers.DefaultRouter()
-# Person viewset
+# core database viewsets
 router.register(r'persons', PersonViewSet, 'persons')
 router.register(r'entities', EntityViewSet, 'entities')
+# Spesific viewsets
 # Gets persons by entity, using ?id='id.entity'
 router.register(r'personsbyentity', PersonsByEntityViewSet, 'personsbyentity')
 

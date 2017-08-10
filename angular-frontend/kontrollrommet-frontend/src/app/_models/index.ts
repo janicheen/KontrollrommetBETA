@@ -5,3 +5,4 @@ export * from './meeting';
 export * from './meetingcategory';
 export * from './meetingparticipant';
 export * from './meetingsubject';
+export * from './subject';

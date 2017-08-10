@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 # Models
 from core_database.models import Entity, Person, PersonToEntityRelation
+from meeting_manager.models import SubjectToEntityRelation
 # Serializers
 from core_database.serializers import EntitySerializer, PersonSerializer, EntitiesByPersonSerializer, PersonsByEntitySerializer
 

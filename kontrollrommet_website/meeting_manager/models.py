@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
 # Models
-from core_database.models import Person, Entity
+from core_database.models import Entity, Person
 
 
 ### Category indexes ###
@@ -91,5 +91,24 @@ class Participant(models.Model):
 
 	def __str__(self):
 		return '%s - %s' % (self.person, self.meeting)
+
+
+# SubjectToEntity relation categories
+@python_2_unicode_compatible  # only if you need to support Python 2
+class SubjectToEntityRelationCategory(models.Model):
+	name = models.CharField(max_length=50)
+
+	def __str__(self):
+		return '%s' % (self.name)
+
+# Subject to Entity relation
+@python_2_unicode_compatible  # only if you need to support Python 2
+class SubjectToEntityRelation(models.Model):
+	subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+	entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
+	relation = models.ForeignKey(SubjectToEntityRelationCategory, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return '%s - %s - %s' % (self.subject, self.relation, self.entity)
 
 

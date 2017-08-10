@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Meeting, Person, Entity }    from '../_models/index';
+import { Meeting, Person, Entity, Subject }    from '../_models/index';
 import { MeetingService } from '../_services/index';
 
 @Component({
@@ -12,6 +12,7 @@ export class MeetingFormComponent {
 
 entities: Entity[];
 participants: Person[];
+meetingsubjects: Subject[];
 selectedEntity: Entity
 idnumber: Number
 
@@ -33,7 +34,11 @@ getParticipants(ident): void {
     .then(participants => this.participants = participants);
     }
 
-
+getMeetingSubjects(ident): void {
+    console.log("gotten this id", ident)
+    this.meetingService.getMeetingSubjects(ident)
+    .then(meetingsubjects => this.meetingsubjects = meetingsubjects);
+    }
 
 // What to do when the component initiates
 ngOnInit(): void {
@@ -43,6 +48,7 @@ ngOnInit(): void {
 
 onEntityChange(): void {
 this.getParticipants(this.model.entity);
+this.getMeetingSubjects(this.model.entity)
 }
 onSubmit() { this.submitted = true; }
 

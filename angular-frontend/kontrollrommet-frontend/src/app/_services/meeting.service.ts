@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Meeting, Entity, Person } from '../_models/index';
+import { Meeting, Entity, Person, Subject } from '../_models/index';
 
 @Injectable()
 export class MeetingService {
@@ -14,6 +14,7 @@ export class MeetingService {
   private meetingsUrl = 'http://127.0.0.1:8000/meetings/?format=json';  // URL to runserver local web api
   private entitiesbyuserUrl = 'http://127.0.0.1:8000/entitiesbyuser/?format=json';
   private personsbyentityUrl = 'http://127.0.0.1:8000/personsbyentity/';
+  private subjectsbyentityUrl = 'http://127.0.0.1:8000/subjectsbyentity/';
 
   private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
   private JWTheader = new Headers({'Authorization': 'JWT ' + this.usertoken})
@@ -22,7 +23,7 @@ export class MeetingService {
   constructor(private Http: Http) { }
   
   getEntities(): Promise<Entity[]> {
-    console.log("getting user entities...")
+    console.log("getting user entities from API...")
     return this.Http
       .get(this.entitiesbyuserUrl, this.JWToptions)
       .toPromise()
@@ -31,7 +32,7 @@ export class MeetingService {
   }
 
   getParticipants(ident): Promise<Person[]> {
-  console.log("getting participants...")
+  console.log("getting participants from API...")
   this.JWToptions = new RequestOptions({ headers: this.JWTheader, params: {'id': ident}});
     return this.Http
       .get(this.personsbyentityUrl, this.JWToptions)
@@ -39,7 +40,15 @@ export class MeetingService {
       .then(response => response.json() as Person[])
       .catch(this.handleError);
   }
-  
+  getMeetingSubjects(ident): Promise<Subject[]> {
+  console.log("getting subjects from API...")
+  this.JWToptions = new RequestOptions({ headers: this.JWTheader, params: {'id': ident}});
+    return this.Http
+      .get(this.subjectsbyentityUrl, this.JWToptions)
+      .toPromise()
+      .then(response => response.json() as Person[])
+      .catch(this.handleError);
+  }
   getMeetings(): Promise<Meeting[]> {
     console.log("getting meetings...")
     return this.Http
