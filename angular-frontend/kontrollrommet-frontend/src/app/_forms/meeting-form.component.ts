@@ -12,6 +12,8 @@ export class MeetingFormComponent {
 
 entities: Entity[];
 participants: Person[];
+selectedEntity: Entity
+idnumber: Number
 
 model = new Meeting;
 submitted = false;
@@ -26,16 +28,22 @@ getEntities(): void {
     }
 
 getParticipants(ident): void {
+    console.log("gotten this id", ident)
     this.meetingService.getParticipants(ident)
     .then(participants => this.participants = participants);
     }
 
-// What to do when the component initiates
-  ngOnInit(): void {
-    this.getEntities();
-    this.getParticipants(2);
-  }
 
+
+// What to do when the component initiates
+ngOnInit(): void {
+    // Populate entity field
+    this.getEntities();
+}
+
+onEntityChange(): void {
+this.getParticipants(this.model.entity);
+}
 onSubmit() { this.submitted = true; }
 
   // TODO: Remove this when we're done
