@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Meeting, Person, Entity, Subject }    from '../_models/index';
+import { Meeting, Person, Entity, Subject, MeetingCategory }    from '../_models/index';
 import { MeetingService } from '../_services/index';
 
 @Component({
@@ -13,6 +13,7 @@ export class MeetingFormComponent {
 entities: Entity[];
 participants: Person[];
 meetingsubjects: Subject[];
+categories: MeetingCategory[];
 selectedEntity: Entity
 idnumber: Number
 
@@ -26,7 +27,12 @@ constructor(
 getEntities(): void {
     this.meetingService.getEntities()
     .then(entities => this.entities = entities);
-    }
+}
+
+getMeetingCategories(): void {
+    this.meetingService.getMeetingCategories()
+    .then(categories => this.categories = categories);
+}
 
 getParticipants(ident): void {
     console.log("gotten this id", ident)
@@ -44,12 +50,14 @@ getMeetingSubjects(ident): void {
 ngOnInit(): void {
     // Populate entity field
     this.getEntities();
+    this.getMeetingCategories();
 }
 
 onEntityChange(): void {
 this.getParticipants(this.model.entity);
 this.getMeetingSubjects(this.model.entity)
 }
+
 onSubmit() { this.submitted = true; }
 
   // TODO: Remove this when we're done

@@ -13,7 +13,6 @@ from core_database.models import Entity, Person
 # Meeting categories
 @python_2_unicode_compatible  # only if you need to support Python 2
 class MeetingCategory(models.Model):
-	#id = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=50)
 
 	def __str__(self):

@@ -1,10 +1,10 @@
 #Core models
 from core_database.models import Entity, Person, PersonToEntityRelation
 
-#Meeting models
+#Models
 from meeting_manager.models import Meeting, Participant, MeetingSubject
+from meeting_manager.models import SubjectToEntityRelation, MeetingCategory
 
-from meeting_manager.models import SubjectToEntityRelation
 
 # Rest Framework dependencies
 from rest_framework import serializers
@@ -39,3 +39,8 @@ class SubjectsByEntitySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = SubjectToEntityRelation
 		fields = ('subject_id', 'headline', 'description', 'relation')
+
+class MeetingCategorySerializer(serializers.ModelSerializer):
+	class Meta:
+		model = MeetingCategory
+		fields = ('id', 'name')

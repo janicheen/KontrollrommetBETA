@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Meeting, Entity, Person, Subject } from '../_models/index';
+import { Meeting, Entity, Person, Subject, MeetingCategory } from '../_models/index';
 
 @Injectable()
 export class MeetingService {
@@ -15,6 +15,7 @@ export class MeetingService {
   private entitiesbyuserUrl = 'http://127.0.0.1:8000/entitiesbyuser/?format=json';
   private personsbyentityUrl = 'http://127.0.0.1:8000/personsbyentity/';
   private subjectsbyentityUrl = 'http://127.0.0.1:8000/subjectsbyentity/';
+  private meetingcategoriesUrl = 'http://127.0.0.1:8000/meetingcategories/';
 
   private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
   private JWTheader = new Headers({'Authorization': 'JWT ' + this.usertoken})
@@ -58,6 +59,14 @@ export class MeetingService {
       .catch(this.handleError);
   }
  
+  getMeetingCategories(): Promise<MeetingCategory[]> {
+    console.log("getting categories...")
+    return this.Http
+      .get(this.meetingcategoriesUrl, this.JWToptions)
+      .toPromise()
+      .then(response => response.json() as Meeting[])
+      .catch(this.handleError);
+  }
   getMeeting(id: number): Promise<Meeting> {
   const url = `${this.meetingsUrl}/${id}`;
   return this.Http.get(url)

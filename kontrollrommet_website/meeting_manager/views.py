@@ -6,6 +6,7 @@ from django.http import HttpResponse
 
 # REST Framework dependencies
 from rest_framework import generics
+from rest_framework.generics import ListAPIView
 from rest_framework import viewsets
 from rest_framework.response import Response
 
@@ -13,8 +14,8 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 
 # Models and serializers
-from meeting_manager.models import Meeting, SubjectToEntityRelation
-from meeting_manager.serializers import MeetingSerializer, SubjectsByEntitySerializer
+from meeting_manager.models import Meeting, SubjectToEntityRelation, MeetingCategory
+from meeting_manager.serializers import MeetingSerializer, SubjectsByEntitySerializer, MeetingCategorySerializer
 
 # Default viewset of all meetings, listing, editing, creating and detail view
 class MeetingViewSet(viewsets.ModelViewSet):
@@ -32,7 +33,10 @@ class SubjectsByEntityViewSet(viewsets.ReadOnlyModelViewSet):
 		queryset = SubjectToEntityRelation.objects.filter(entity__id = id)
 		return queryset
 
-
+class MeetingCategoriesView(ListAPIView):
+	serializer_class = MeetingCategorySerializer
+	queryset = MeetingCategory.objects.all()     
+	
 ###TEST VIEW
 def index(request):
     return HttpResponse("Hello, world. You're at the meeting manager")

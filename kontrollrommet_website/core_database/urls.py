@@ -21,9 +21,7 @@ router.register(r'personsbyentity', PersonsByEntityViewSet, 'personsbyentity')
 # generic views urls
 genericviewsurl = [
     url(r'^entitiesbyuser', EntitiesByUserView.as_view(), name='entitiesbyuser'),
-    #url(r'^personsbyentity/(?P<pk>[0-9]+)/$', PersonsByEntityView.as_view(), name='personsbyentity'),   
 ]
 
 #Final Url pattern combines viewsets and generic views
 urlpatterns = genericviewsurl + router.urls
-# + genericviewsurl
