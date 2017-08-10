@@ -58,7 +58,9 @@ this.getParticipants(this.model.entity);
 this.getMeetingSubjects(this.model.entity)
 }
 
-onSubmit() { this.submitted = true; }
+onSubmit() {
+    console.dir(this.model)
+    this.submitted = true; }
 
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }

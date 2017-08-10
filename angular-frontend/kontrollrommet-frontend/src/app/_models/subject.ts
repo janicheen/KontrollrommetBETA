@@ -1,5 +1,5 @@
 export class Subject {
-    id: number;
+    subject_id: number;
     headline: string;
     description: string;
 }
