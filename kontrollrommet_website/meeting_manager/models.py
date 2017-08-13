@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+#Django dependencies
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
 # Models
 from core_database.models import Entity, Person
-
+from process_control.models import Subject
 
 ### Category indexes ###
 
@@ -21,12 +22,10 @@ class MeetingCategory(models.Model):
 
 ### Main Meeting Table ### 
 
-# Meetings
+# Meeting
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Meeting(models.Model):
-	#id = models.AutoField(primary_key=True)
 	meeting_category = models.ForeignKey(MeetingCategory, on_delete=models.CASCADE)
-	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
 	
 	requested_meetdate = models.DateField(blank=True, null=True)
 	meetingrequest_sent = models.DateTimeField(blank=True, null=True)
@@ -34,30 +33,25 @@ class Meeting(models.Model):
 	meeting_completed = models.DateTimeField(blank=True, null=True)
 	report_started = models.DateTimeField(blank=True, null=True)
 	report_completed = models.DateTimeField(blank=True, null=True)
+	
 	is_current_meeting = models.BooleanField(default=False)
 	
+	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
 	participants = models.ManyToManyField(Person, through='Participant')
-	meeting_subjects = models.ManyToManyField('Subject', through='Meetingsubject')
+	meeting_subjects = models.ManyToManyField(Subject, through='Meetingsubject')
 
 	def __str__(self):
 		return '%s - %s - %s' % (self.meeting_category, self.entity, self.requested_meetdate)
 
-#Subjects 
-@python_2_unicode_compatible  # only if you need to support Python 2
-class Subject(models.Model):
-	headline = models.CharField(max_length=300, blank=True)
-	description = models.TextField(blank=True)
 
-	def __str__(self):
-		return '%s' % (self.headline)
-
-### Relational tables
+### Relational tables for Persons and Subjects in Meeting
 
 #Meeting Subjects 
 @python_2_unicode_compatible  # only if you need to support Python 2
 class MeetingSubject(models.Model):
 	meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
 	subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+	
 	edited_headline = models.CharField(max_length=300, blank=True)
 	edited_description = models.TextField(blank=True)
 	listposition_on_request = models.IntegerField(blank=True, null=True)
@@ -73,15 +67,15 @@ class MeetingSubject(models.Model):
 # Participants
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Participant(models.Model):
-	#id = models.AutoField(primary_key=True)
 	meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
 	person = models.ForeignKey(Person, on_delete=models.CASCADE)
-	sent_meetingrequest = models.BooleanField(default=False)
+	
 	is_invited = models.BooleanField(default=False)
-	accepted_invite = models.DateTimeField(blank=True, null=True)
 	is_attending = models.BooleanField(default=False)
 	is_leading = models.BooleanField(default=False)
 	is_reporting = models.BooleanField(default=False)
+	accepted_invite = models.DateTimeField(blank=True, null=True)
+	sent_meetingrequest = models.DateTimeField(blank=True, null=True)
 	
 	#Forbids a person to be registered to the same meeting more than once
 	class Meta:
@@ -90,24 +84,3 @@ class Participant(models.Model):
 
 	def __str__(self):
 		return '%s - %s' % (self.person, self.meeting)
-
-
-# SubjectToEntity relation categories
-@python_2_unicode_compatible  # only if you need to support Python 2
-class SubjectToEntityRelationCategory(models.Model):
-	name = models.CharField(max_length=50)
-
-	def __str__(self):
-		return '%s' % (self.name)
-
-# Subject to Entity relation
-@python_2_unicode_compatible  # only if you need to support Python 2
-class SubjectToEntityRelation(models.Model):
-	subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-	entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
-	relation = models.ForeignKey(SubjectToEntityRelationCategory, on_delete=models.CASCADE)
-
-	def __str__(self):
-		return '%s - %s - %s' % (self.subject, self.relation, self.entity)
-
-

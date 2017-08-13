@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'core_database.apps.CoreDatabaseConfig',
     'meeting_manager.apps.MeetingManagerConfig',
+    'process_control.apps.ProcessControlConfig',
+    
     # Djangostuff
     'django.contrib.admin',
     'django.contrib.auth',

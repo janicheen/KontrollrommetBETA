@@ -10,7 +10,6 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 # Models
 from core_database.models import Entity, Person, PersonToEntityRelation
-from meeting_manager.models import SubjectToEntityRelation
 # Serializers
 from core_database.serializers import EntitySerializer, PersonSerializer, EntitiesByPersonSerializer, PersonsByEntitySerializer
 
@@ -35,6 +34,7 @@ class EntitiesByUserView(ListAPIView):
 		return PersonToEntityRelation.objects.filter(person__user__id = user.id)
 
 ### Views requiring query parameters in URL
+
 class PersonsByEntityViewSet(viewsets.ReadOnlyModelViewSet):
 	serializer_class = PersonsByEntitySerializer
 	# makes a queryset with all persons matching the requested entity 

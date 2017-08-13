@@ -2,9 +2,7 @@
 from core_database.models import Entity, Person, PersonToEntityRelation
 
 #Models
-from meeting_manager.models import Meeting, Participant, MeetingSubject
-from meeting_manager.models import SubjectToEntityRelation, MeetingCategory
-
+from meeting_manager.models import Meeting, Participant, MeetingSubject, MeetingCategory
 
 # Rest Framework dependencies
 from rest_framework import serializers
@@ -31,14 +29,6 @@ class MeetingSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Meeting
 		fields = ('id', 'meeting_category', 'entity', 'requested_meetdate', 'participants', 'meeting_subjects')
-
-class SubjectsByEntitySerializer(serializers.ModelSerializer):
-	subject_id = serializers.ReadOnlyField(source='subject.id')
-	headline = serializers.ReadOnlyField(source='subject.headline')
-	description = serializers.ReadOnlyField(source='subject.description')
-	class Meta:
-		model = SubjectToEntityRelation
-		fields = ('subject_id', 'headline', 'description', 'relation')
 
 class MeetingCategorySerializer(serializers.ModelSerializer):
 	class Meta:
