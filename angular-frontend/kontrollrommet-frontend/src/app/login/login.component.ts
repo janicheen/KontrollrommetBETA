@@ -12,15 +12,15 @@ import { User } from '../_models/index';
 
 export class LoginComponent implements OnInit {
     model: any = {};
+    user: User
     loading = false;
     returnUrl: string;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationService: AuthenticationService,
+        private authService: AuthenticationService,
         private alertService: AlertService,
-        private userservice: UserService
     ) { }
 
     ngOnInit() {
@@ -30,17 +30,16 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.loading = true;
-        this.authenticationService.login(this.model.username, this.model.password)
+        this.authService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
-                    console.log("running error")
+                    console.log("login error")
                     this.alertService.error(error);
                     this.loading = false;
                 }
             );
     }
-    
 }

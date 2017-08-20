@@ -17,8 +17,8 @@ import { AuthenticationService } from './_services/index';
   <div>
     <nav>
       <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-      <a routerLink="/login" routerLinkActive="active" *ngIf="!auth.loggedIn()">Login</a>    
-      <a (click)="logout()" *ngIf="auth.loggedIn()">Logout</a>      
+      <a routerLink="/login" routerLinkActive="active" *ngIf="!authService.loggedIn()">Login</a>    
+      <a (click)="logout()" *ngIf="authService.loggedIn()">Logout</a>      
     </nav>
   <router-outlet></router-outlet>
   </div>
@@ -26,22 +26,25 @@ import { AuthenticationService } from './_services/index';
   `,
   styleUrls: ['./app.component.css'],
 })
+
 export class AppComponent implements AfterContentInit {
   currentuser: User
+  
   constructor(
     private userService: UserService,
-    private auth: AuthenticationService,
+    private authService: AuthenticationService,
     private router: Router
   ) { }
 
   logout(): void {
-    alert("Out are logging out")
-    this.auth.logout()
+    alert("You are logging out")
+    this.authService.logout()
     this.router.navigate(['/login']);
   }
 
   ngAfterContentInit(): void {
-    this.userService.getCurrentUser()
+    this.authService.getCurrentUser()
       .then(user => this.currentuser = user)
   }
+
 }
