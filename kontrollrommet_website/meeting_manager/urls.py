@@ -9,7 +9,8 @@ from meeting_manager.views import MeetingViewSet, MeetingCategoriesView
 
 # Set up routers
 router = routers.DefaultRouter()
-# General viwesets
+
+# General Meeting model Viweset
 router.register(r'meetings', MeetingViewSet, 'meetings')
 # Viewsets with query params
 #

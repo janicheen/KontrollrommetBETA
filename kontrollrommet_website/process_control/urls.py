@@ -9,10 +9,13 @@ from process_control.views import SubjectsByEntityViewSet
 
 # Set up routers
 router = routers.DefaultRouter()
+
 # General viwesets
 #
 # Viewsets with query params
+# Subjects-by-Entity Viewset, fetched through query param EntityID
 router.register(r'subjectsbyentity', SubjectsByEntityViewSet, 'subjectsbyentity')
+
 # generic views urls
 genericviewsurl = [
     #

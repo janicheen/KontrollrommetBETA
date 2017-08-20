@@ -25,8 +25,10 @@ from rest_framework_jwt.views import obtain_jwt_token
 urlpatterns = [
 	# views related to the core database: Person - Entity - Property
     url(r'^', include('core_database.urls')),
-	# views related to the meeting manager app 
+	# views related to the meeting manager module 
     url(r'^', include('meeting_manager.urls')),
+    # views related to the process control module 
+    url(r'^', include('process_control.urls')),
 	# views related to authorization
     url(r'^', include('auths.urls')),
 	# the standard django admin API

@@ -23,6 +23,7 @@ class MeetingViewSet(viewsets.ModelViewSet):
 		user = self.request.user
 		return Meeting.objects.filter(participants__user__id = user.id)
 
+# 
 class MeetingCategoriesView(ListAPIView):
 	serializer_class = MeetingCategorySerializer
 	queryset = MeetingCategory.objects.all()

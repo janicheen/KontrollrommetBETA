@@ -20,10 +20,12 @@ from auths.serializers import UserSerializer
 
 #Viewset for all users
 class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
-#API view to get logged in user
+#View to get logged in user
 class CurrentUser(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
 

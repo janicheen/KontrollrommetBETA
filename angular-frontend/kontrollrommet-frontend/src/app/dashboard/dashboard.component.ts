@@ -1,6 +1,8 @@
+// Angular dependencies
 import { Component, OnInit } from '@angular/core';
-
+// Models
 import { Meeting, User } from '../_models/index';
+// Services
 import { MeetingService, UserService } from '../_services/index';
 
 @Component({
@@ -12,6 +14,7 @@ export class DashboardComponent implements OnInit {
 
   meetings: Meeting[] = [];
   currentuser: User
+  
   constructor(
     private meetingService: MeetingService,
     private userService: UserService

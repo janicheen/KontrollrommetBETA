@@ -1,10 +1,14 @@
+// Angular modules
 import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
+// angular2-jwt module
+import { AuthModule } from './auth.module'
+
 // The Main Routing Module
-import { AppRoutingModule }     from './router';
+import { AppRoutingModule } from './router';
 
 // The Root Component
 import { AppComponent }         from './app.component';
@@ -49,9 +53,12 @@ import { MeetingFormComponent } from './_forms/index';
 
 @NgModule({ 
   imports: [ // Necessary Modules
+  // Angular modules
     BrowserModule,
     FormsModule,
     HttpModule,
+  // angular2-jwt module
+    AuthModule,
 //The Main Routing module
     AppRoutingModule
   ],

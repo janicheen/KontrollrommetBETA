@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
+import { AuthHttp } from 'angular2-jwt';
+
 import { Meeting, Entity, Person, Subject, MeetingCategory } from '../_models/index';
 
 @Injectable()
@@ -20,8 +22,9 @@ export class MeetingService {
   private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
   private JWTheader = new Headers({'Authorization': 'JWT ' + this.usertoken})
   private JWToptions = new RequestOptions({ headers: this.JWTheader, params: {'id': 1}});
+  private options = new RequestOptions({ headers: this.headers});
   
-  constructor(private Http: Http) { }
+  constructor(private Http: Http, private authHttp: AuthHttp) { }
   
   getEntities(): Promise<Entity[]> {
     console.log("getting user entities from API...")
@@ -52,8 +55,8 @@ export class MeetingService {
   }
   getMeetings(): Promise<Meeting[]> {
     console.log("getting meetings...")
-    return this.Http
-      .get(this.meetingsUrl, this.JWToptions)
+    return this.authHttp
+      .get(this.meetingsUrl)
       .toPromise()
       .then(response => response.json() as Meeting[])
       .catch(this.handleError);

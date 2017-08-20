@@ -8,11 +8,13 @@ from views import UserViewSet, CurrentUser
 
 # Set up router for viewset
 router = routers.DefaultRouter()
-# Users viewset
+
+# General User model viewset
 router.register(r'users', UserViewSet, 'users')
 
 # generic views urls
 genericviewsurl = [
+    # get current user
      url(r'^currentuser', CurrentUser.as_view()),
 ]
 

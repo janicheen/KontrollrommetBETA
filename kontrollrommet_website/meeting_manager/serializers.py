@@ -7,12 +7,24 @@ from meeting_manager.models import Meeting, Participant, MeetingSubject, Meeting
 # Rest Framework dependencies
 from rest_framework import serializers
 
+
 class ParticipantSerializer(serializers.ModelSerializer):
 	id = serializers.ReadOnlyField(source='person.id')
-	name = serializers.ReadOnlyField(source='person.full_name')
+	first_name = serializers.ReadOnlyField(source='person.first_name')
+	last_name = serializers.ReadOnlyField(source='person.last_name')
 	class Meta:
 		model = Participant
-		fields = ('id', 'name', 'sent_meetingrequest', 'is_invited', 'accepted_invite', 'is_attending', 'is_leading', 'is_reporting')
+		fields = (
+			'id',
+			'first_name',
+			'last_name',
+			'sent_meetingrequest',
+			'is_invited',
+			'accepted_invite',
+			'is_attending',
+			'is_leading',
+			'is_reporting'
+			)
 
 class MeetingsubjectSerializer(serializers.ModelSerializer):
 	id = serializers.ReadOnlyField(source='subject.id')

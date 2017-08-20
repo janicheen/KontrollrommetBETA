@@ -28,7 +28,7 @@ class EntityCategory(models.Model):
 
 ### Categories for core table relations
 
-# Person-to-Entity Relation categories
+# Person-to-Entity relation categories
 @python_2_unicode_compatible  # only if you need to support Python 2
 class PersonfunctionCategory(models.Model):
     name = models.CharField(max_length=50)
