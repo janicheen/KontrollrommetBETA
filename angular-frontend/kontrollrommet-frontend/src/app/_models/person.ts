@@ -1,6 +1,6 @@
 export class Person {
     person_id: number;
-    person_firstname: string;
-    person_lastname: string;
+    first_name: string;
+    last_name: string;
     function: string;  
 }

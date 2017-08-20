@@ -2,14 +2,9 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 // Application components
-import { 
-  DashboardComponent 
-} from './dashboard/index';
+import { DashboardComponent } from './dashboard/index';
 
-import { 
-  MeetingsComponent,
-  MeetingDetailComponent
-} from './meetings/index';
+import { MeetingsComponent, MeetingDetailComponent } from './meetings/index';
 
 // Login components
 import { UsersComponent } from './users/index';
@@ -25,8 +20,8 @@ const routes: Routes = [
   //From root site adress, redirect to here 
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   //Paths to applications, protected from unauthorized access by AuthGuard
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'meetings', component: MeetingsComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+  { path: 'meetings', component: MeetingsComponent, canActivate: [AuthGuard]},
   { path: 'meetings/:id', component: MeetingDetailComponent },
   { path: 'users', component: UsersComponent },
   // Authorizations

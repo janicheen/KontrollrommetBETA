@@ -1,4 +1,10 @@
-<h2>Velkommen til Kontrollrommet, {{currentuser.person.first_name}}! </h2>
-
+<br>
+<h2>DASHBOARD:</h2>
+<nav>
+    <a routerLink="/meetings" routerLinkActive="active">Meetings</a>
+    </nav>
+<router-outlet></router-outlet>
+<br>
+<h3>Kommende møter:</h3>
 <my-meetings></my-meetings>
 <!-- <meeting-search></meeting-search>-->

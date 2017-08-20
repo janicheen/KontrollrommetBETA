@@ -3,19 +3,22 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 
+import { tokenNotExpired } from 'angular2-jwt';
+
+
 @Injectable()
 export class AuthenticationService {
     // Url and headers set for request
-    private url = 'http://127.0.0.1:8000/api-token-auth/';
+    private gettokenurl = 'http://127.0.0.1:8000/api-token-auth/';
     private headers = new Headers({'Accept': 'application/json','Content-Type': 'application/json'});
     private options = new RequestOptions({ headers: this.headers });
     
     constructor(private http: Http) { }
     
-    // Login method to be called
+    // Login method
     login(username: string, password: string) {
         return this.http
-            .post(this.url, JSON.stringify({ username: username, password: password }), this.options)
+            .post(this.gettokenurl, JSON.stringify({ username: username, password: password }), this.options)
             .map((response: Response) => {
                 // login is successful if there's a jwt token in the response
                 let JWTtoken = response.json();
@@ -29,9 +32,14 @@ export class AuthenticationService {
             });
     }
 
-    // Logout method to be called
+    // Logout method
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('UserToken');
     }
+
+    // Check if someone is logged in
+    loggedIn() {
+        return tokenNotExpired('UserToken');
+      }
 }
