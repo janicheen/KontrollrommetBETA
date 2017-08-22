@@ -11,10 +11,8 @@ from django.contrib.auth.models import User
 
 # Core Data Models
 from core_database.models import Entity, Person, PersonToEntityRelation
-
 # Action Data Model
 from process_control.models import SubjectToEntityRelation
-
 #Application Data Models
 from meeting_manager.models import Meeting, Participant, MeetingSubject, MeetingCategory
 
@@ -26,20 +24,6 @@ class MeetingCategorySerializer(serializers.ModelSerializer):
 		fields = (
 			'id', 
 			'name'
-			)
-
-### User data serializer ###
-# Serializes user data with added person data 
-class UserSerializer(serializers.ModelSerializer):
-	# Hook relevant Person instance to the User instance
-	person = PersonSerializer()
-	class Meta:
-		model = User
-		fields = (
-			'id', 
-			'username', 
-			'email', 
-			'person'
 			)
 
 
@@ -64,21 +48,18 @@ class EntitySerializer(serializers.ModelSerializer):
 			'category'
 			)
 
-# Serializes Meetings
-class MeetingSerializer(serializers.ModelSerializer):
-	participants = ParticipantSerializer(source='participant_set', many=True)
-	meeting_subjects = MeetingsubjectSerializer(source='meetingsubject_set', many=True)
-	meeting_category = serializers.StringRelatedField()
-	entity = serializers.StringRelatedField()
+### User data serializer ###
+# Serializes user data with added person data 
+class UserSerializer(serializers.ModelSerializer):
+	# Hook relevant Person instance to the User instance
+	person = PersonSerializer()
 	class Meta:
-		model = Meeting
+		model = User
 		fields = (
 			'id', 
-			'meeting_category', 
-			'entity', 
-			'requested_meetdate', 
-			'participants', 
-			'meeting_subjects'
+			'username', 
+			'email', 
+			'person'
 			)
 
 ### Serializers adding relational data
@@ -154,3 +135,19 @@ class MeetingsubjectSerializer(serializers.ModelSerializer):
 			'listposition_on_report'
 			   )
 
+# Serializes Meetings
+class MeetingSerializer(serializers.ModelSerializer):
+	participants = ParticipantSerializer(source='participant_set', many=True)
+	meeting_subjects = MeetingsubjectSerializer(source='meetingsubject_set', many=True)
+	meeting_category = serializers.StringRelatedField()
+	entity = serializers.StringRelatedField()
+	class Meta:
+		model = Meeting
+		fields = (
+			'id', 
+			'meeting_category', 
+			'entity', 
+			'requested_meetdate', 
+			'participants', 
+			'meeting_subjects'
+			)
