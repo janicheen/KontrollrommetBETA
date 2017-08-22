@@ -5,7 +5,8 @@ import { MeetingService } from '../_services/index';
 
 @Component({
   selector: 'meeting-form',
-  templateUrl: './meeting-form.component.html'
+  templateUrl: './meeting-form.component.html',
+  styleUrls: [ './meeting-form.component.css' ]
 })
 
 export class MeetingFormComponent {

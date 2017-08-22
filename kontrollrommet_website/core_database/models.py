@@ -10,7 +10,7 @@ from django.utils.encoding import python_2_unicode_compatible
 #Django User model
 from django.contrib.auth.models import User
 
-### Categories for core tables### 
+### Category models### 
 
 # Person Categories
 # TBA category index to identify who is user of system, contact, contributor, tenant, etc. NOT relational status.
@@ -25,8 +25,6 @@ class EntityCategory(models.Model):
 
 # Property Categories
 #TBA category index to identify properties
-
-### Categories for core table relations
 
 # Person-to-Entity relation categories
 @python_2_unicode_compatible  # only if you need to support Python 2

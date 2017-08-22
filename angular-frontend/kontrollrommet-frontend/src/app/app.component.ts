@@ -5,13 +5,13 @@ import { User } from './_models/index';
 // Services
 import { UserService } from './_services/index';
 
-import { AuthenticationService } from './_services/index';
+import { AuthenticationService, AlertService } from './_services/index';
 
 @Component({
   selector: 'my-app',
   template: `
   <div>
-    <h1>Velkommen til Kontrollrommet, {{currentuser.person.first_name}}! </h1>  
+    <h1>Velkommen til Kontrollrommet, {{currentuser?.person.first_name}}! </h1>  
   </div>
 
   <div>
@@ -27,24 +27,27 @@ import { AuthenticationService } from './_services/index';
   styleUrls: ['./app.component.css'],
 })
 
-export class AppComponent implements AfterContentInit {
-  currentuser: User
+export class AppComponent {
   
+  currentuser: User
+  loggedin: Boolean
+
   constructor(
-    private userService: UserService,
     private authService: AuthenticationService,
+    private alertService: AlertService,
     private router: Router
-  ) { }
+  ) {
+    const user$ = this.authService.getCurrentUser();
+    user$.subscribe(
+      user => this.currentuser = user,
+      error => this.alertService.error(error)
+    );
+   }
 
   logout(): void {
     alert("You are logging out")
     this.authService.logout()
     this.router.navigate(['/login']);
-  }
-
-  ngAfterContentInit(): void {
-    this.authService.getCurrentUser()
-      .then(user => this.currentuser = user)
   }
 
 }

@@ -1,11 +1,18 @@
-<ul class="meetings">
-  <li *ngFor="let meeting of meetings"
-    [class.selected]="meeting === selectedMeeting"
-    (click)="onSelect(meeting)">
-    <span class="badge">{{meeting.requested_meetdate | date}}</span>
-    <span>{{meeting.meeting_category}} - {{meeting.entity}}</span>
-  </li>
-</ul>
+<table class="meetings">
+  <thead>
+    <th>Møtedato</th>
+    <th>Møtetype</th>
+    <th>Selskap</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let meeting of meetings" [class.selected]="meeting === selectedMeeting" (click)="onSelect(meeting)">
+      <td>{{meeting.requested_meetdate | date}}</td>
+      <td>{{meeting.meeting_category}}</td>
+      <td>{{meeting.entity}}</td>
+    </tr>
+  </tbody>
+</table>
+
 <button (click)="onClickNewMeetingRequest()">Lag Møteinnkalling</button>
 
 <div *ngIf="selectedMeeting">

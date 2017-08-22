@@ -23,6 +23,13 @@ export class AuthenticationService {
         private authHttp: AuthHttp 
     ) { }
     
+    // Method for getting data on currently logged in user
+    getCurrentUser(): Observable<User> {
+        console.log("getting current user...")
+        return this.authHttp.get(this.getcurrentuserUrl)
+        .map(res => res.json());
+    }
+
     // Login method
     login(username: string, password: string) {
         return this.http
@@ -39,7 +46,7 @@ export class AuthenticationService {
                 return JWTtoken;
             });
     }
-
+    
     // Logout method
     logout() {
         // remove user from local storage to log user out
@@ -51,14 +58,7 @@ export class AuthenticationService {
         return tokenNotExpired('UserToken');
     }
 
-    // Method for getting data on currently logged in user
-    getCurrentUser(): Promise<User> {
-        console.log("getting current user...")
-        return this.authHttp.get(this.getcurrentuserUrl)
-          .toPromise()
-          .then(response => response.json() as User)
-          .catch(this.handleError);
-    }
+    
 
     private handleError(error: any): Promise<any> {
         console.error('An error occurred', error); // for demo purposes only

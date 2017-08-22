@@ -1,16 +1,18 @@
-.selected {
+  .selected {
   background-color: #CFD8DC !important;
   color: white;
 }
 .meetings {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 45em;
+  width: 50%;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 3em 3em;
 }
-.meetings li {
+.meetings th {
+    height: 20px;
+}
+.meetings tr {
   cursor: pointer;
-  position: relative;
   left: 0;
   background-color: #EEE;
   margin: .5em;
@@ -18,33 +20,20 @@
   height: 1.6em;
   border-radius: 4px;
 }
-.meetings li:hover {
+.meetings tr:hover {
   color: #607D8B;
   background-color: #DDD;
   left: .1em;
 }
-.meetings li.selected:hover {
+.meetings tr.selected:hover {
   background-color: #BBD8DC !important;
   color: white;
 }
 .meetings .text {
-  position: relative;
   top: -3px;
 }
-.meetings .badge {
-  display: inline-block;
-  font-size: small;
-  color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color: #607D8B;
-  line-height: 1em;
-  position: relative;
-  left: -1px;
-  top: -4px;
-  height: 1.8em;
-  margin-right: .8em;
-  border-radius: 4px 0 0 4px;
-}
+
+/* Buttons */
 button {
   font-family: Arial;
   background-color: #eee;

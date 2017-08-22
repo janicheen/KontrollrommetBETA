@@ -6,6 +6,7 @@ import { Meeting, User } from '../_models/index';
 import { MeetingService, UserService } from '../_services/index';
 
 @Component({
+  moduleId: module.id,
   selector: 'my-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: [ './dashboard.component.css' ]
