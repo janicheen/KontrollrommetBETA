@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-# Django dependencies
-
 # REST Framework dependencies
 from rest_framework import serializers
 
 # Django User Model
 from django.contrib.auth.models import User
-
 # Core Data Models
 from core_database.models import Entity, Person, PersonToEntityRelation
 # Action Data Model
