@@ -23,14 +23,8 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 #Url patterns
 urlpatterns = [
-	# views related to the core database: Person - Entity - Property
-    url(r'^', include('core_database.urls')),
-	# views related to the meeting manager module 
-    url(r'^', include('meeting_manager.urls')),
-    # views related to the process control module 
-    url(r'^', include('process_control.urls')),
-	# views related to authorization
-    url(r'^', include('auths.urls')),
+	# Collectes set of views meant for client frontend
+    url(r'^', include('client_views.urls')),
 	# the standard django admin API
     url(r'^admin/', admin.site.urls),
     #JWT token authentication views

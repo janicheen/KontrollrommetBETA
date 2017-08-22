@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework',
     # Installed Apps
     'accounts.apps.AccountsConfig',
+    'client_views.ClientViewsConfic',
     'core_database.apps.CoreDatabaseConfig',
     'meeting_manager.apps.MeetingManagerConfig',
     'process_control.apps.ProcessControlConfig',
