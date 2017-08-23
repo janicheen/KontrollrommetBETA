@@ -5,9 +5,9 @@
 		<div class="form-group">
 			<label for="entity">Velg Boligselskap</label>
 			<select class="form-control" name="entity" required [(ngModel)]="model.entity" (change)="onEntityChange()">
-				<option *ngFor="let entity of entities" [value]="entity.entity_id">{{entity.entity_name}}</option>
+				<option *ngFor="let entity of entities" [value]="entity">{{entity.entity_name}}</option>
 			</select>
-			TODO: remove this: {{model.entity}}
+			TODO: remove this: {{model.entity.id}}
 		</div>
 			
 		<div class="form-group">

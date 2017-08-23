@@ -25,20 +25,21 @@ class MeetingCategory(models.Model):
 # Meeting
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Meeting(models.Model):
+	# Relational data
 	meeting_category = models.ForeignKey(MeetingCategory, on_delete=models.CASCADE)
-	
+	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
+	participants = models.ManyToManyField(Person, through='Participant')
+	meeting_subjects = models.ManyToManyField(Subject, through='Meetingsubject')
+	# Dates
 	requested_meetdate = models.DateField(blank=True, null=True)
 	meetingrequest_sent = models.DateTimeField(blank=True, null=True)
 	meeting_started = models.DateTimeField(blank=True, null=True)
 	meeting_completed = models.DateTimeField(blank=True, null=True)
 	report_started = models.DateTimeField(blank=True, null=True)
 	report_completed = models.DateTimeField(blank=True, null=True)
-	
+	# Boolean
 	is_current_meeting = models.BooleanField(default=False)
 	
-	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
-	participants = models.ManyToManyField(Person, through='Participant')
-	meeting_subjects = models.ManyToManyField(Subject, through='Meetingsubject')
 
 	def __str__(self):
 		return '%s - %s - %s' % (self.meeting_category, self.entity, self.requested_meetdate)

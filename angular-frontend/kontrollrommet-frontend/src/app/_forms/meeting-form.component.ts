@@ -1,6 +1,8 @@
+// Angular dependencies
 import { Component, OnInit } from '@angular/core';
-
+// Models
 import { Meeting, Person, Entity, Subject, MeetingCategory }    from '../_models/index';
+// Services
 import { MeetingService } from '../_services/index';
 
 @Component({
@@ -49,14 +51,15 @@ getMeetingSubjects(ident): void {
 
 // What to do when the component initiates
 ngOnInit(): void {
-    // Populate entity field
+    // Populate these fields
     this.getEntities();
     this.getMeetingCategories();
 }
-
+// What to do when entity field is chosen
 onEntityChange(): void {
-this.getParticipants(this.model.entity);
-this.getMeetingSubjects(this.model.entity)
+    // Populate these fields
+    this.getParticipants(this.model.entity.entity_id);
+    this.getMeetingSubjects(this.model.entity)
 }
 
 onSubmit() {

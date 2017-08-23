@@ -1,22 +1,25 @@
+// Angular Dependencies
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
+// rxjs Dependencies
 import 'rxjs/add/operator/toPromise';
-
+// Angular2 JWT dependencies
 import { AuthHttp } from 'angular2-jwt';
 
+// Models
 import { Meeting, Entity, Person, Subject, MeetingCategory } from '../_models/index';
 
 @Injectable()
 export class MeetingService {
-  
-  // for test purposes, can probably be deleted now:
-  // private meetingsUrl = 'api/meetings';  // URL to web api
+
+  // get token from storage
   private usertoken = localStorage.getItem('UserToken') 
   
   private meetingsUrl = 'http://127.0.0.1:8000/meetings/?format=json';  // URL to runserver local web api
   private entitiesbyuserUrl = 'http://127.0.0.1:8000/entitiesbyuser/?format=json';
   private personsbyentityUrl = 'http://127.0.0.1:8000/personsbyentity/';
   private subjectsbyentityUrl = 'http://127.0.0.1:8000/subjectsbyentity/';
+  
   private meetingcategoriesUrl = 'http://127.0.0.1:8000/meetingcategories/';
 
   private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
@@ -26,35 +29,9 @@ export class MeetingService {
   
   constructor(private Http: Http, private authHttp: AuthHttp) { }
   
-  getEntities(): Promise<Entity[]> {
-    console.log("getting user entities from API...")
-    return this.Http
-      .get(this.entitiesbyuserUrl, this.JWToptions)
-      .toPromise()
-      .then(response => response.json() as Entity[])
-      .catch(this.handleError);
-  }
-
-  getParticipants(ident): Promise<Person[]> {
-  console.log("getting participants from API...")
-  this.JWToptions = new RequestOptions({ headers: this.JWTheader, params: {'id': ident}});
-    return this.Http
-      .get(this.personsbyentityUrl, this.JWToptions)
-      .toPromise()
-      .then(response => response.json() as Person[])
-      .catch(this.handleError);
-  }
-  getMeetingSubjects(ident): Promise<Subject[]> {
-  console.log("getting subjects from API...")
-  this.JWToptions = new RequestOptions({ headers: this.JWTheader, params: {'id': ident}});
-    return this.Http
-      .get(this.subjectsbyentityUrl, this.JWToptions)
-      .toPromise()
-      .then(response => response.json() as Person[])
-      .catch(this.handleError);
-  }
+  // Get list of meetings from API
   getMeetings(): Promise<Meeting[]> {
-    console.log("getting meetings...")
+    console.log("getting meetings from API...")
     return this.authHttp
       .get(this.meetingsUrl)
       .toPromise()
@@ -62,14 +39,45 @@ export class MeetingService {
       .catch(this.handleError);
   }
  
-  getMeetingCategories(): Promise<MeetingCategory[]> {
-    console.log("getting categories...")
-    return this.Http
-      .get(this.meetingcategoriesUrl, this.JWToptions)
+  getEntities(): Promise<Entity[]> {
+    console.log("getting user entities from API...")
+    return this.authHttp
+      .get(this.entitiesbyuserUrl)
       .toPromise()
-      .then(response => response.json() as Meeting[])
+      .then(response => response.json() as Entity[])
       .catch(this.handleError);
   }
+
+  getParticipants(ident): Promise<Person[]> {
+  console.log("getting participants from API...")
+  this.options = new RequestOptions({params: {'id': ident}});
+    return this.authHttp
+      .get(this.personsbyentityUrl, this.options)
+      .toPromise()
+      .then(response => response.json() as Person[])
+      .catch(this.handleError);
+  }
+  getMeetingSubjects(ident): Promise<Subject[]> {
+  console.log("getting subjects from API...")
+  this.options = new RequestOptions({params: {'id': ident}});
+    return this.authHttp
+      .get(this.subjectsbyentityUrl, this.options)
+      .toPromise()
+      .then(response => response.json() as Person[])
+      .catch(this.handleError);
+  }
+  
+  getMeetingCategories(): Promise<MeetingCategory[]> {
+    console.log("getting meeting categories...")
+    return this.authHttp
+      .get(this.meetingcategoriesUrl)
+      .toPromise()
+      .then(response => response.json() as MeetingCategory[])
+      .catch(this.handleError);
+  }
+
+
+  
   getMeeting(id: number): Promise<Meeting> {
   const url = `${this.meetingsUrl}/${id}`;
   return this.Http.get(url)
