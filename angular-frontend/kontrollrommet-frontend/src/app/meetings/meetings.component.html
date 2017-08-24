@@ -7,8 +7,8 @@
   <tbody>
     <tr *ngFor="let meeting of meetings" [class.selected]="meeting === selectedMeeting" (click)="onSelect(meeting)">
       <td>{{meeting.requested_meetdate | date}}</td>
-      <td>{{meeting.meeting_category}}</td>
-      <td>{{meeting.entity}}</td>
+      <td>{{meeting.meeting_category.name}}</td>
+      <td>{{meeting.entity.name}}</td>
     </tr>
   </tbody>
 </table>
@@ -17,20 +17,20 @@
 
 <div *ngIf="selectedMeeting">
   <h3>
-    {{selectedMeeting.meeting_category}} - {{selectedMeeting.entity}}
+    {{selectedMeeting.meeting_category.name}} - {{selectedMeeting.entity.name}}
   </h3>
   
   Deltakere:
   <ul class="participants">
     <li *ngFor="let participant of selectedMeeting.participants">
-      <span>{{participant.first_name}} {{participant.last_name}}</span>
+      <span>{{participant.person_first_name}} {{participant.person_last_name}}</span>
     </li>
   </ul>
 
  Agenda:
   <ul class="subjects">
     <li *ngFor="let subject of selectedMeeting.meeting_subjects">
-      <span>{{subject.headline}}</span>
+      <span>{{subject.subject_headline}}</span>
     </li>
   </ul>
 

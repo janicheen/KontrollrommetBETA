@@ -5,7 +5,7 @@
 		<div class="form-group">
 			<label for="entity">Velg Boligselskap</label>
 			<select class="form-control" name="entity" required [(ngModel)]="model.entity" (change)="onEntityChange()">
-				<option *ngFor="let entity of entities" [value]="entity">{{entity.entity_name}}</option>
+				<option *ngFor="let entity of users_entities" [value]="entity.id">{{entity.entity.name}}</option>
 			</select>
 			TODO: remove this: {{model.entity.id}}
 		</div>
@@ -25,14 +25,14 @@
 		<div class="form-group">
 			<label for="participants">Møtedeltakere</label>
 			<select multiple class="form-control" id="participants" name="participants" required [(ngModel)]="model.participants">
-				<option *ngFor="let participant of participants" [value]="participant.person_id">{{participant.person_firstname}} {{participant.person_lastname}} ({{participant.function}})</option>
+				<option *ngFor="let participant of participants" [value]="participant.person_id">{{participant.person_first_name}} {{participant.person_last_name}}</option>
 			</select>
 		</div>
  
 		<div class="form-group">
 			<label for="meetingsubjects">Agenda</label>
 			<select multiple class="form-control" id="meetingsubjects" name="meetingsubjects" required [(ngModel)]="model.meeting_subjects">
-				<option *ngFor="let meetingsubject of meetingsubjects" [value]="meetingsubject.subject_id">{{meetingsubject.headline}}</option>
+				<option *ngFor="let meetingsubject of meetingsubjects" [value]="meetingsubject.subject_id">{{meetingsubject.subject_headline}}</option>
 			</select>
 		</div>
  

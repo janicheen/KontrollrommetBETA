@@ -4,5 +4,5 @@ export class PersonToEntity {
     id: number;
     person: Person;
     entity: Entity;
-    function: string; 
+    person_to_entity_relation_name: string; 
 }

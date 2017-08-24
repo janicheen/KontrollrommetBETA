@@ -37,12 +37,13 @@ class PersonSerializer(serializers.ModelSerializer):
 
 # Serializes pure entity data
 class EntitySerializer(serializers.ModelSerializer):
+	category_name = serializers.StringRelatedField(source='category')
 	class Meta:
 		model = Entity
 		fields = (
 			'id', 
 			'name', 
-			'category'
+			'category_name'
 			)
 
 ### User data serializer ###
@@ -62,19 +63,17 @@ class UserSerializer(serializers.ModelSerializer):
 ### Serializers adding relational data
 # Serializes entity data with added person relation data
 class EntitiesByPersonSerializer(serializers.ModelSerializer):
-	person_id = serializers.ReadOnlyField(source='person.id')
-	entity_id = serializers.ReadOnlyField(source='entity.id')
-	entity_name = serializers.ReadOnlyField(source='entity.name')
-	person_to_entity_relation_name = serializers.StringRelatedField()
+	person = PersonSerializer()
+	entity = EntitySerializer()
+	person_to_entity_relation_name = serializers.StringRelatedField(source='function')
 	class Meta:
 		model = PersonToEntityRelation
 		fields = (
 			'id',
 			# Person related data
-			'person_id',
+			'person',
 			# Entity related data
-			'entity_id', 
-			'entity_name',
+			'entity', 
 			# Relational data 
 			'person_to_entity_relation_name'
 			)
@@ -156,8 +155,8 @@ class MeetingsubjectSerializer(serializers.ModelSerializer):
 
 # Serializes Meetings
 class MeetingSerializer(serializers.ModelSerializer):
-	meeting_category_name = serializers.StringRelatedField()
-	entity_name = serializers.StringRelatedField()
+	meeting_category = MeetingCategorySerializer()
+	entity = EntitySerializer()
 	participants = ParticipantSerializer(source='participant_set', many=True)
 	meeting_subjects = MeetingsubjectSerializer(source='meetingsubject_set', many=True)
 	class Meta:
@@ -168,7 +167,7 @@ class MeetingSerializer(serializers.ModelSerializer):
 			'meeting_category',
 			'entity',
 			'participants',
-			'meeting_subjects'
+			'meeting_subjects',
 			# Date data
 			'requested_meetdate',
 			'meetingrequest_sent',

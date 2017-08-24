@@ -1,7 +1,7 @@
 // Angular dependencies
 import { Component, OnInit } from '@angular/core';
 // Models
-import { Meeting, Person, Entity, Subject, MeetingCategory }    from '../_models/index';
+import { Meeting, Person, Entity, Subject, MeetingCategory, PersonToEntity, MeetingSubject, MeetingParticipant } from '../_models/index';
 // Services
 import { MeetingService } from '../_services/index';
 
@@ -13,9 +13,9 @@ import { MeetingService } from '../_services/index';
 
 export class MeetingFormComponent {
 
-entities: Entity[];
-participants: Person[];
-meetingsubjects: Subject[];
+users_entities: PersonToEntity[];
+participants: MeetingParticipant[];
+meetingsubjects: MeetingSubject[];
 categories: MeetingCategory[];
 selectedEntity: Entity
 idnumber: Number
@@ -29,7 +29,7 @@ constructor(
 
 getEntities(): void {
     this.meetingService.getEntities()
-    .then(entities => this.entities = entities);
+    .then(entities => this.users_entities = entities);
 }
 
 getMeetingCategories(): void {
@@ -58,8 +58,8 @@ ngOnInit(): void {
 // What to do when entity field is chosen
 onEntityChange(): void {
     // Populate these fields
-    this.getParticipants(this.model.entity.entity_id);
-    this.getMeetingSubjects(this.model.entity)
+    this.getParticipants(this.model.entity.id);
+    this.getMeetingSubjects(this.model.entity.id)
 }
 
 onSubmit() {

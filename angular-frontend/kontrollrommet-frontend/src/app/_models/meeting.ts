@@ -1,13 +1,13 @@
 // Models
-import { Entity, MeetingParticipant, MeetingSubject, MeetingCategory } from ../_models/index;
+import { Entity, MeetingParticipant, MeetingSubject, MeetingCategory } from '../_models/index';
 
 export class Meeting {
   id: number; 
   // Relational data
-  meeting_category_name: string; 
-  entity_name: string; 
+  meeting_category: MeetingCategory; 
+  entity: Entity; 
   participants: MeetingParticipant[]; 
-  meeting_subjects: MeetingSubject[]
+  meeting_subjects: MeetingSubject[];
   // Date data
   requested_meetdate: number; 
   meetingrequest_sent: number; 

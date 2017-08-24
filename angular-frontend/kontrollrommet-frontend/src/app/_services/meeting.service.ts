@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 import { AuthHttp } from 'angular2-jwt';
 
 // Models
-import { Meeting, Entity, Person, Subject, MeetingCategory } from '../_models/index';
+import { Meeting, Entity, Person, Subject, MeetingCategory, PersonToEntity, MeetingParticipant, MeetingSubject } from '../_models/index';
 
 @Injectable()
 export class MeetingService {
@@ -39,7 +39,7 @@ export class MeetingService {
       .catch(this.handleError);
   }
  
-  getEntities(): Promise<Entity[]> {
+  getEntities(): Promise<PersonToEntity[]> {
     console.log("getting user entities from API...")
     return this.authHttp
       .get(this.entitiesbyuserUrl)
@@ -48,7 +48,7 @@ export class MeetingService {
       .catch(this.handleError);
   }
 
-  getParticipants(ident): Promise<Person[]> {
+  getParticipants(ident): Promise<MeetingParticipant[]> {
   console.log("getting participants from API...")
   this.options = new RequestOptions({params: {'id': ident}});
     return this.authHttp
@@ -57,7 +57,7 @@ export class MeetingService {
       .then(response => response.json() as Person[])
       .catch(this.handleError);
   }
-  getMeetingSubjects(ident): Promise<Subject[]> {
+  getMeetingSubjects(ident): Promise<MeetingSubject[]> {
   console.log("getting subjects from API...")
   this.options = new RequestOptions({params: {'id': ident}});
     return this.authHttp
