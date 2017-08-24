@@ -19,7 +19,7 @@ from django.contrib.auth.models import User
 # Core Data Models
 from core_database.models import Entity, Person, PersonToEntityRelation
 # Action Data Model
-from process_control.models import SubjectToEntityRelation
+from process_control.models import Subject, SubjectToEntityRelation
 # Application Data Models
 from meeting_manager.models import Meeting, MeetingCategory
 
@@ -30,7 +30,7 @@ from .serializers import UserSerializer
 from .serializers import EntitySerializer, PersonSerializer
 from .serializers import EntitiesByPersonSerializer, PersonsByEntitySerializer
 # Action Data Serializers
-from .serializers import SubjectsByEntitySerializer
+from .serializers import SubjectSerializer, SubjectsByEntitySerializer
 # Application Data Serializers
 from .serializers import MeetingSerializer, MeetingCategorySerializer
 
@@ -66,11 +66,11 @@ class MeetingCategoriesView(ListAPIView):
 
 # List entities related to current user
 class EntitiesByUserView(ListAPIView):
-	serializer_class = EntitiesByPersonSerializer
+	serializer_class = EntitySerializer
 	# makes a queryset of all entities where current user has some function 
 	def get_queryset(self):        
 		user = self.request.user
-		return PersonToEntityRelation.objects.filter(person__user__id = user.id)
+		return Entity.objects.filter(persontoentityrelation__person__user__id = user.id)
 
 # Viewset for all Meetings, where current user is participant
 class MeetingViewSet(viewsets.ModelViewSet):
@@ -84,19 +84,19 @@ class MeetingViewSet(viewsets.ModelViewSet):
 ### Query parameter based views
 
 class PersonsByEntityViewSet(viewsets.ReadOnlyModelViewSet):
-	serializer_class = PersonsByEntitySerializer
+	serializer_class = PersonSerializer
 	# makes a queryset with all persons matching the requested entity 
 	def get_queryset(self):
 		id = self.request.query_params.get('id', None)
-		queryset = PersonToEntityRelation.objects.filter(entity__id = id)
+		queryset = Person.objects.filter(persontoentityrelation__entity__id = id)
 		return queryset
 
 class SubjectsByEntityViewSet(viewsets.ReadOnlyModelViewSet):
-    	serializer_class = SubjectsByEntitySerializer
+    	serializer_class = SubjectSerializer
 	# makes a queryset with all subjects matching the requested entity 
 	def get_queryset(self):
 		id = self.request.query_params.get('id', None)
-		queryset = SubjectToEntityRelation.objects.filter(entity__id = id)
+		queryset = Subject.objects.filter(subjecttoentityrelation__entity__id = id)
 		return queryset
 
 

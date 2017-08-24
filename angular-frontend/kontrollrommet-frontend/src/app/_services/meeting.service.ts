@@ -39,7 +39,7 @@ export class MeetingService {
       .catch(this.handleError);
   }
  
-  getEntities(): Promise<PersonToEntity[]> {
+  getEntities(): Promise<Entity[]> {
     console.log("getting user entities from API...")
     return this.authHttp
       .get(this.entitiesbyuserUrl)
@@ -48,7 +48,7 @@ export class MeetingService {
       .catch(this.handleError);
   }
 
-  getParticipants(ident): Promise<MeetingParticipant[]> {
+  getParticipants(ident): Promise<Person[]> {
   console.log("getting participants from API...")
   this.options = new RequestOptions({params: {'id': ident}});
     return this.authHttp
@@ -57,13 +57,13 @@ export class MeetingService {
       .then(response => response.json() as Person[])
       .catch(this.handleError);
   }
-  getMeetingSubjects(ident): Promise<MeetingSubject[]> {
+  getMeetingSubjects(ident): Promise<Subject[]> {
   console.log("getting subjects from API...")
   this.options = new RequestOptions({params: {'id': ident}});
     return this.authHttp
       .get(this.subjectsbyentityUrl, this.options)
       .toPromise()
-      .then(response => response.json() as Person[])
+      .then(response => response.json() as Subject[])
       .catch(this.handleError);
   }
   

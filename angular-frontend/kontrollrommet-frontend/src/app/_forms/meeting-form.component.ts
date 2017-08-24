@@ -13,9 +13,9 @@ import { MeetingService } from '../_services/index';
 
 export class MeetingFormComponent {
 
-users_entities: PersonToEntity[];
-participants: MeetingParticipant[];
-meetingsubjects: MeetingSubject[];
+users_entities: Entity[];
+participants: Person[];
+meetingsubjects: Subject[];
 categories: MeetingCategory[];
 selectedEntity: Entity
 idnumber: Number
@@ -37,15 +37,15 @@ getMeetingCategories(): void {
     .then(categories => this.categories = categories);
 }
 
-getParticipants(ident): void {
-    console.log("gotten this id", ident)
-    this.meetingService.getParticipants(ident)
+getParticipants(_id): void {
+    console.log("gotten this id", _id)
+    this.meetingService.getParticipants(_id)
     .then(participants => this.participants = participants);
     }
 
-getMeetingSubjects(ident): void {
-    console.log("gotten this id", ident)
-    this.meetingService.getMeetingSubjects(ident)
+getMeetingSubjects(_id): void {
+    console.log("gotten this id", _id)
+    this.meetingService.getMeetingSubjects(_id)
     .then(meetingsubjects => this.meetingsubjects = meetingsubjects);
     }
 

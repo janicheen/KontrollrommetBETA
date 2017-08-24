@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 # Core Data Models
 from core_database.models import Entity, Person, PersonToEntityRelation
 # Action Data Model
-from process_control.models import SubjectToEntityRelation
+from process_control.models import Subject, SubjectToEntityRelation
 #Application Data Models
 from meeting_manager.models import Meeting, Participant, MeetingSubject, MeetingCategory
 
@@ -45,6 +45,15 @@ class EntitySerializer(serializers.ModelSerializer):
 			'name', 
 			'category_name'
 			)
+# Serializes pure Subject data
+class SubjectSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Subject
+		fields = (
+			'id',
+			'headline',
+			'description'
+		)
 
 ### User data serializer ###
 # Serializes user data with added person data 
