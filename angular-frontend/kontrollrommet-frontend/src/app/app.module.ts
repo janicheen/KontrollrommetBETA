@@ -7,6 +7,9 @@ import { HttpModule }    from '@angular/http';
 // angular2-jwt module
 import { AuthModule } from './auth.module'
 
+// sortable module from Bootstrap
+import { SortableModule } from 'ngx-bootstrap';
+
 // The Main Routing Module
 import { AppRoutingModule } from './router';
 
@@ -59,6 +62,8 @@ import { MeetingFormComponent } from './_forms/index';
     HttpModule,
   // angular2-jwt module
     AuthModule,
+  // Sortable module from Bootstrap
+  SortableModule.forRoot(),
 //The Main Routing module
     AppRoutingModule
   ],

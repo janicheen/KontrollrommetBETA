@@ -13,12 +13,11 @@ import { MeetingService } from '../_services/index';
 
 export class MeetingFormComponent {
 
-users_entities: Entity[];
-participants: Person[];
-meetingsubjects: Subject[];
-categories: MeetingCategory[];
-selectedEntity: Entity
-idnumber: Number
+possible_entities: Entity[];
+possible_participants: Person[];
+possible_meetingsubjects: Subject[];
+possible_categories: MeetingCategory[];
+
 
 model = new Meeting;
 submitted = false;
@@ -29,24 +28,24 @@ constructor(
 
 getEntities(): void {
     this.meetingService.getEntities()
-    .then(entities => this.users_entities = entities);
+    .then(entities => this.possible_entities = entities);
 }
 
 getMeetingCategories(): void {
     this.meetingService.getMeetingCategories()
-    .then(categories => this.categories = categories);
+    .then(categories => this.possible_categories = categories);
 }
 
 getParticipants(_id): void {
     console.log("gotten this id", _id)
     this.meetingService.getParticipants(_id)
-    .then(participants => this.participants = participants);
+    .then(participants => this.possible_participants = participants);
     }
 
 getMeetingSubjects(_id): void {
     console.log("gotten this id", _id)
     this.meetingService.getMeetingSubjects(_id)
-    .then(meetingsubjects => this.meetingsubjects = meetingsubjects);
+    .then(meetingsubjects => this.possible_meetingsubjects = meetingsubjects);
     }
 
 // What to do when the component initiates

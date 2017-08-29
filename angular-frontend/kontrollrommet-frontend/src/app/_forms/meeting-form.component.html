@@ -9,47 +9,66 @@
 			<div class="form-group">
 				<label for="entity">Velg Boligselskap</label>
 				<select class="form-control" name="entity" id="entity" required [(ngModel)]="model.entity" (change)="onEntityChange()">
-					<option *ngFor="let entity of users_entities" [ngValue]="entity">{{entity.name}}</option>
+					<option *ngFor="let entity of possible_entities" [ngValue]="entity">{{entity.name}}</option>
 				</select>
 			</div>
-			
-			<div name="restofform" *ngIf="model.entity">
-					
-				<div class="form-group">
-					<label for="meetingcategory">Møtekategori</label>
-					<select class="form-control" name="category" required [(ngModel)]="model.meeting_category">
-						<option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
-					</select>
-				</div>
+								
+			<div class="form-group">
+				<label for="meetingcategory">Møtekategori</label>
+				<select class="form-control" name="category" required [(ngModel)]="model.meeting_category">
+					<option *ngFor="let category of possible_categories" [ngValue]="category">{{category.name}}</option>
+				</select>
+			</div>
 
+			<div name="restofform" *ngIf="model.entity && model.meeting_category">
+			
 				<div class="form-group">
 					<label for="date">Foreslått Møtedato</label>
 					<input type="date" class="form-control" name="date" id="date" required [(ngModel)]="model.requested_meetdate" >
 				</div>
 
-				<div class="form-group">
-					<label for="participants">Møtedeltakere</label>
-					<select multiple class="form-control" id="participants" name="participants" required [(ngModel)]="model.participants">
-						<option *ngFor="let participant of participants" [ngValue]="participant">{{participant.first_name}} {{participant.last_name}}</option>
-					</select>
+				<div>
+					<label>Møtedeltakere</label>
+					<ul>	
+						<li *ngFor="let participant of model.participants">{{participant.first_name}} {{participant.last_name}}</li>
+					</ul>
 				</div>
-		
-				<div class="form-group">
-					<label for="meetingsubjects">Agenda</label>
-					<select multiple class="form-control" id="meetingsubjects" name="meetingsubjects" required [(ngModel)]="model.meeting_subjects">
-						<option *ngFor="let meetingsubject of meetingsubjects" [ngValue]="meetingsubject">{{meetingsubject.headline}}</option>
-					</select>
+
+				<div>
+					<label>Agenda</label>
+					<ul>	
+						<li *ngFor="let meetingsubject of model.meeting_subjects">{{meetingsubject.headline}}</li>
+					</ul>
 				</div>
 		
 				<button type="submit" class="btn btn-success" [disabled]="!meetingForm.form.valid">Submit</button>
 			
 			</div>
 		</form>
+	
 	</div>
 
 	<div class="col-md-6">
-		<ul>	
-			<li *ngFor="let participant of participants">{{participant.first_name}} {{participant.last_name}}</li>
-		</ul>
+		<div class='row'>
+			<label>Velg møtedeltakere</label>
+			<bs-sortable
+			[(ngModel)]="possible_participants"
+			fieldName="first_name"
+			itemClass="sortable-item"
+			itemActiveClass="sortable-item-active"
+			wrapperClass="sortable-wrapper"
+			></bs-sortable>		
+		</div>
+
+		<div class='row'>
+			<label>Velg agendapunkter</label>
+			<bs-sortable
+			[(ngModel)]="possible_meetingsubjects"
+			fieldName="headline"
+			itemClass="sortable-item"
+			itemActiveClass="sortable-item-active"
+			wrapperClass="sortable-wrapper"
+			></bs-sortable>			
+		</div>
 	</div>
 </div>
