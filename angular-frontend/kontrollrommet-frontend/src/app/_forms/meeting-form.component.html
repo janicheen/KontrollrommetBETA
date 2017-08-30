@@ -8,7 +8,7 @@
 		<form (ngSubmit)="onSubmit()" #meetingForm="ngForm">
 			<div class="form-group">
 				<label for="entity">Velg Boligselskap</label>
-				<select class="form-control" name="entity" id="entity" required [(ngModel)]="model.entity" (change)="onEntityChange()">
+				<select class="form-control" name="entity" id="entity" required [(ngModel)]="model.entity" (change)="onChangeEntity()">
 					<option *ngFor="let entity of possible_entities" [ngValue]="entity">{{entity.name}}</option>
 				</select>
 			</div>
@@ -34,10 +34,12 @@
 					</ul>
 				</div>
 
-				<div>
+				<div class='wrapper'>
 					<label>Agenda</label>
-					<ul>	
-						<li *ngFor="let meetingsubject of model.meeting_subjects">{{meetingsubject.subject.headline}}</li>
+					<ul class='container' [dragula]='"another-bag"' [dragulaModel]='model.meeting_subjects'>
+						<li *ngFor="let meetingsubject of model.meeting_subjects">{{meetingsubject.subject.headline}}
+						<button class="delete" (click)="onClickRemove(meetingsubject); $event.stopPropagation()">x</button>	
+						</li>
 					</ul>
 				</div>
 		
@@ -52,14 +54,14 @@
 		<div class='row'>
 			<label>Velg møtedeltakere</label>
 			<ul class="list-group">	
-				<li class="list-group-item" *ngFor="let person of possible_participants" (click)="onPersonSelect(person)">{{person.first_name}} {{person.last_name}}</li>
+				<li class="list-group-item" *ngFor="let person of possible_participants" (click)="onSelectPerson(person)">{{person.first_name}} {{person.last_name}}</li>
 			</ul>
 		</div>
 
 		<div class='row'>
 			<label>Velg agendapunkter</label>
 			<ul class="list-group">	
-					<li class="list-group-item" *ngFor="let subject of possible_meetingsubjects" (click)="onSubjectSelect(subject)">{{subject.headline}}</li>
+					<li class="list-group-item" *ngFor="let subject of possible_meetingsubjects" (click)="onSelectSubject(subject)">{{subject.headline}}</li>
 			</ul>		
 		</div>
 	</div>

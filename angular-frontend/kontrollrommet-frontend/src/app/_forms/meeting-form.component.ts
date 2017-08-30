@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Meeting, Person, Entity, Subject, MeetingCategory, PersonToEntity, MeetingSubject, MeetingParticipant } from '../_models/index';
 // Services
 import { MeetingService } from '../_services/index';
+import { DragulaService } from "ng2-dragula";
 
 @Component({
   selector: 'meeting-form',
@@ -57,13 +58,13 @@ ngOnInit(): void {
     
 }
 // What to do when entity field is chosen
-onEntityChange(): void {
+onChangeEntity(): void {
     // Populate these fields
     this.getParticipants(this.model.entity.id);
     this.getMeetingSubjects(this.model.entity.id)
 }
 
-onPersonSelect(person: Person) {
+onSelectPerson(person: Person) {
     // Construct instance of MeetingParticipant from selected item, and add it as participant in the current meeting instance 
     var meetingparticipant = new MeetingParticipant;
     meetingparticipant.person = person;
@@ -76,7 +77,7 @@ onPersonSelect(person: Person) {
     }
 }
 
-onSubjectSelect(subject: Subject) {
+onSelectSubject(subject: Subject) {
     // Construct instance of MeetingSubject from selected item, and add it as meeting subject in the current meeting instance 
     var meetingsubject = new MeetingSubject;
     meetingsubject.subject = subject;
@@ -86,6 +87,14 @@ onSubjectSelect(subject: Subject) {
     let index: number = this.possible_meetingsubjects.indexOf(subject);
     if (index !== -1) {
         this.possible_meetingsubjects.splice(index, 1);
+    }
+}
+
+onClickRemove(meetingsubject) {
+    let index: number = this.model.meeting_subjects.indexOf(meetingsubject);
+    if (index !== -1) {
+        this.possible_meetingsubjects.push(meetingsubject.subject);
+        this.model.meeting_subjects.splice(index, 1);
     }
 }
 

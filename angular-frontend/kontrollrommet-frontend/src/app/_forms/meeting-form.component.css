@@ -1,5 +1,11 @@
-.container {
-    width: 50%;   
+.container li:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+.container li.active:hover {
+  background-color: #BBD8DC !important;
+  color: white;
 }
 
 .active {

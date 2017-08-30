@@ -7,8 +7,9 @@ import { HttpModule }    from '@angular/http';
 // angular2-jwt module
 import { AuthModule } from './auth.module'
 
-// sortable module from Bootstrap
+// Modules from Bootstrap
 import { SortableModule } from 'ngx-bootstrap';
+import { DragulaModule } from 'ng2-dragula'
 
 // The Main Routing Module
 import { AppRoutingModule } from './router';
@@ -64,6 +65,8 @@ import { MeetingFormComponent } from './_forms/index';
     AuthModule,
   // Sortable module from Bootstrap
   SortableModule.forRoot(),
+  // Dragula module from Bootstrap
+  DragulaModule,
 //The Main Routing module
     AppRoutingModule
   ],
