@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   // Forms
-  { path: 'meetingform', component: MeetingFormComponent },
+  { path: 'meetingform', component: MeetingFormComponent, canActivate: [AuthGuard]},
   // When no other urls match, redirect here
   { path: '**', redirectTo: 'dashboard' }
 ];

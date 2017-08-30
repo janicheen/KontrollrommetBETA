@@ -52,7 +52,9 @@ ngOnInit(): void {
     // Populate these fields
     this.getEntities();
     this.getMeetingCategories();
-    this.model.participants = []
+    this.model.participants = [];
+    this.model.meeting_subjects = [];
+    
 }
 // What to do when entity field is chosen
 onEntityChange(): void {
@@ -61,12 +63,30 @@ onEntityChange(): void {
     this.getMeetingSubjects(this.model.entity.id)
 }
 
-onSelect(participant: Person) {
-console.log(participant.first_name);
-var meetingparticipant = new MeetingParticipant;
-meetingparticipant.person = participant;
-meetingparticipant.is_invited = true;
-this.model.participants.push(meetingparticipant)
+onPersonSelect(person: Person) {
+    // Construct instance of MeetingParticipant from selected item, and add it as participant in the current meeting instance 
+    var meetingparticipant = new MeetingParticipant;
+    meetingparticipant.person = person;
+    meetingparticipant.is_invited = true;
+    this.model.participants.push(meetingparticipant);
+    // Remove the selected instance from list of possible participants
+    let index: number = this.possible_participants.indexOf(person);
+    if (index !== -1) {
+        this.possible_participants.splice(index, 1);
+    }
+}
+
+onSubjectSelect(subject: Subject) {
+    // Construct instance of MeetingSubject from selected item, and add it as meeting subject in the current meeting instance 
+    var meetingsubject = new MeetingSubject;
+    meetingsubject.subject = subject;
+    // meetingsubject.listposition_on_request = TBA add position.
+    this.model.meeting_subjects.push(meetingsubject);
+    // Remove the selected instance from list of possible subjects
+    let index: number = this.possible_meetingsubjects.indexOf(subject);
+    if (index !== -1) {
+        this.possible_meetingsubjects.splice(index, 1);
+    }
 }
 
 onSubmit() {

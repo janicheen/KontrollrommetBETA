@@ -1,8 +1,9 @@
+import { Subject } from "./index";
+
 export class MeetingSubject {
     id: number;
-    // Subject data to include
-    subject_id: number;
-    subject_headline: string;
+    // Subject data
+    subject: Subject;
     // Meeting Subject data
     edited_headline: string;
     edited_description: string;
