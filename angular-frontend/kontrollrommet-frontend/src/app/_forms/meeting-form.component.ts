@@ -18,7 +18,6 @@ possible_participants: Person[];
 possible_meetingsubjects: Subject[];
 possible_categories: MeetingCategory[];
 
-
 model = new Meeting;
 submitted = false;
 
@@ -53,12 +52,21 @@ ngOnInit(): void {
     // Populate these fields
     this.getEntities();
     this.getMeetingCategories();
+    this.model.participants = []
 }
 // What to do when entity field is chosen
 onEntityChange(): void {
     // Populate these fields
     this.getParticipants(this.model.entity.id);
     this.getMeetingSubjects(this.model.entity.id)
+}
+
+onSelect(participant: Person) {
+console.log(participant.first_name);
+var meetingparticipant = new MeetingParticipant;
+meetingparticipant.person = participant;
+meetingparticipant.is_invited = true;
+this.model.participants.push(meetingparticipant)
 }
 
 onSubmit() {

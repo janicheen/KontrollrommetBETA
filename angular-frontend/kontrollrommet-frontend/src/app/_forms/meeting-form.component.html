@@ -20,7 +20,7 @@
 				</select>
 			</div>
 
-			<div name="restofform" *ngIf="model.entity && model.meeting_category">
+			<div name="restofform" *ngIf="model.entity">
 			
 				<div class="form-group">
 					<label for="date">Foreslått Møtedato</label>
@@ -51,13 +51,9 @@
 	<div class="col-md-6">
 		<div class='row'>
 			<label>Velg møtedeltakere</label>
-			<bs-sortable
-			[(ngModel)]="possible_participants"
-			fieldName="first_name"
-			itemClass="sortable-item"
-			itemActiveClass="sortable-item-active"
-			wrapperClass="sortable-wrapper"
-			></bs-sortable>		
+			<ul class='list'>	
+				<li *ngFor="let participant of possible_participants" (click)="onSelect(participant)">{{participant.first_name}} {{participant.last_name}}</li>
+			</ul>	
 		</div>
 
 		<div class='row'>
