@@ -90,7 +90,15 @@ onSelectSubject(subject: Subject) {
     }
 }
 
-onClickRemove(meetingsubject) {
+onClickRemoveParticipant(participant) {
+    let index: number = this.model.participants.indexOf(participant);
+    if (index !== -1) {
+        this.possible_participants.push(participant.person);
+        this.model.participants.splice(index, 1);
+    }
+}
+
+onClickRemoveSubject(meetingsubject) {
     let index: number = this.model.meeting_subjects.indexOf(meetingsubject);
     if (index !== -1) {
         this.possible_meetingsubjects.push(meetingsubject.subject);

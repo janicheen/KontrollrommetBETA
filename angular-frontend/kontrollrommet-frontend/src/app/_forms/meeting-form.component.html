@@ -27,24 +27,27 @@
 					<input type="date" class="form-control" name="date" id="date" required [(ngModel)]="model.requested_meetdate" >
 				</div>
 
-				<div>
-					<label>Møtedeltakere</label>
-					<ul>	
-						<li *ngFor="let participant of model.participants">{{participant.person.first_name}} {{participant.person.last_name}}</li>
+				<div class='wrapper'>
+					<label>Inviterte</label>
+					<ul class='container' [dragula]='"another-bag"' [dragulaModel]='model.participants'>
+						<li *ngFor="let participant of model.participants">
+							{{participant.person.first_name}} {{participant.person.last_name}}
+							<button class="delete" (click)="onClickRemoveParticipant(participant); $event.stopPropagation()">x</button>									
+						</li>	
 					</ul>
 				</div>
 
 				<div class='wrapper'>
 					<label>Agenda</label>
 					<ul class='container' [dragula]='"another-bag"' [dragulaModel]='model.meeting_subjects'>
-						<li *ngFor="let meetingsubject of model.meeting_subjects">{{meetingsubject.subject.headline}}
-						<button class="delete" (click)="onClickRemove(meetingsubject); $event.stopPropagation()">x</button>	
+						<li *ngFor="let meetingsubject of model.meeting_subjects">
+							{{meetingsubject.subject.headline}}
+							<button class="delete" (click)="onClickRemoveSubject(meetingsubject); $event.stopPropagation()">x</button>	
 						</li>
 					</ul>
 				</div>
-		
+
 				<button type="submit" class="btn btn-success" [disabled]="!meetingForm.form.valid">Submit</button>
-			
 			</div>
 		</form>
 	
@@ -52,14 +55,14 @@
 
 	<div class="col-md-6">
 		<div class='row'>
-			<label>Velg møtedeltakere</label>
+			<label>Foreslåtte møtedeltakere</label>
 			<ul class="list-group">	
 				<li class="list-group-item" *ngFor="let person of possible_participants" (click)="onSelectPerson(person)">{{person.first_name}} {{person.last_name}}</li>
 			</ul>
 		</div>
 
 		<div class='row'>
-			<label>Velg agendapunkter</label>
+			<label>Foreslåtte agendapunkter</label>
 			<ul class="list-group">	
 					<li class="list-group-item" *ngFor="let subject of possible_meetingsubjects" (click)="onSelectSubject(subject)">{{subject.headline}}</li>
 			</ul>		
