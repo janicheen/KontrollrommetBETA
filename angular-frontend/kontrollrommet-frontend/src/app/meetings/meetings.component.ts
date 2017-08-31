@@ -39,15 +39,6 @@ export class MeetingsComponent implements OnInit {
     this.router.navigate(['/meetingform']);
   }
 
-  add(name: string): void {
-  name = name.trim();
-  if (!name) { return; }
-  this.meetingService.create(name)
-    .then(meeting => {
-      this.meetings.push(meeting);
-      this.selectedMeeting = null;
-    });
-  }
 
   delete(meeting: Meeting): void {
   this.meetingService

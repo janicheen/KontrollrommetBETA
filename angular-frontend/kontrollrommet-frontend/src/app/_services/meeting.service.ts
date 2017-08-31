@@ -15,11 +15,11 @@ export class MeetingService {
   // get token from storage
   private usertoken = localStorage.getItem('UserToken') 
   
-  private meetingsUrl = 'http://127.0.0.1:8000/meetings/?format=json';  // URL to runserver local web api
+  // URLs to api server requests
+  private meetingsUrl = 'http://127.0.0.1:8000/meetings/?format=json';  
   private entitiesbyuserUrl = 'http://127.0.0.1:8000/entitiesbyuser/?format=json';
   private personsbyentityUrl = 'http://127.0.0.1:8000/personsbyentity/';
   private subjectsbyentityUrl = 'http://127.0.0.1:8000/subjectsbyentity/';
-  
   private meetingcategoriesUrl = 'http://127.0.0.1:8000/meetingcategories/';
 
   private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
@@ -76,8 +76,15 @@ export class MeetingService {
       .catch(this.handleError);
   }
 
+  createMeeting(data): Promise<Meeting> {
+    return this.authHttp
+      .post(this.meetingsUrl, JSON.stringify({data: data}))
+      .toPromise()
+      .then(res => res.json().data as Meeting)
+      .catch(this.handleError);
+  }
 
-  
+  //*** NOT IN USE ***
   getMeeting(id: number): Promise<Meeting> {
   const url = `${this.meetingsUrl}/${id}`;
   return this.Http.get(url)
@@ -85,7 +92,8 @@ export class MeetingService {
     .then(response => response.json() as Meeting)
     .catch(this.handleError);
   }
-
+  
+  //*** NOT IN USE ***
   update(meeting: Meeting): Promise<Meeting> {
   const url = `${this.meetingsUrl}/${meeting.id}`;
   return this.Http
@@ -94,15 +102,8 @@ export class MeetingService {
     .then(() => meeting)
     .catch(this.handleError);
   }
-
-  create(name: string): Promise<Meeting> {
-  return this.Http
-    .post(this.meetingsUrl, JSON.stringify({name: name}), {headers: this.headers})
-    .toPromise()
-    .then(res => res.json().data as Meeting)
-    .catch(this.handleError);
-  }
-
+  
+  //*** NOT IN USE ***
   delete(id: number): Promise<void> {
   const url = `${this.meetingsUrl}/${id}`;
   return this.Http.delete(url, {headers: this.headers})

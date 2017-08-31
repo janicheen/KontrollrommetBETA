@@ -68,7 +68,6 @@ onSelectPerson(person: Person) {
     // Construct instance of MeetingParticipant from selected item, and add it as participant in the current meeting instance 
     var meetingparticipant = new MeetingParticipant;
     meetingparticipant.person = person;
-    meetingparticipant.is_invited = true;
     this.model.participants.push(meetingparticipant);
     // Remove the selected instance from list of possible participants
     let index: number = this.possible_participants.indexOf(person);
@@ -107,8 +106,17 @@ onClickRemoveSubject(meetingsubject) {
 }
 
 onSubmit() {
-    console.dir(this.model)
-    this.submitted = true; }
+    for (let i in this.model.participants) {
+    this.model.participants[i].is_invited = true
+    console.log(this.model.participants[i].is_invited)
+    }
+    for (let i in this.model.meeting_subjects) {
+    this.model.meeting_subjects[i].listposition_on_request = parseInt(i)
+    console.log(this.model.meeting_subjects[i].listposition_on_request)        
+    }
+    this.meetingService.createMeeting(this.model)
+    this.submitted = true;
+}
 
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
