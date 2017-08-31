@@ -1,29 +1,4 @@
-.container li:hover {
-  color: #607D8B;
-  background-color: #DDD;
-  left: .1em;
+.panel {
+    height: 200px;
+    overflow: auto;
 }
-.container li.active:hover {
-  background-color: #BBD8DC !important;
-  color: white;
-}
-
-.active {
-    background-color: #CFD8DC !important;
-    color: white;
-}
-
-.list-group li {
-    cursor: pointer;
-    left: 0;
-    background-color: #EEE;
-  }
-  .list-group li:hover {
-    color: #607D8B;
-    background-color: #DDD;
-    left: .1em;
-  }
-  .list-group li.active:hover {
-    background-color: #BBD8DC !important;
-    color: white;
-  }

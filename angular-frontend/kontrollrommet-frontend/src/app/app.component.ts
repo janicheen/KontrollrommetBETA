@@ -16,9 +16,9 @@ import { AuthenticationService, AlertService } from './_services/index';
 
   <div>
     <nav>
-      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-      <a routerLink="/login" routerLinkActive="active" *ngIf="!authService.loggedIn()">Login</a>    
-      <a (click)="logout()" *ngIf="authService.loggedIn()">Logout</a>      
+      <a class="btn btn-default" role="button" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a class="btn btn-default" role="button" routerLink="/login" routerLinkActive="active" *ngIf="!authService.loggedIn()">Login</a>    
+      <a class="btn btn-default" role="button" (click)="logout()" *ngIf="authService.loggedIn()">Logout</a>      
     </nav>
   <router-outlet></router-outlet>
   </div>
