@@ -106,15 +106,36 @@ onClickRemoveSubject(meetingsubject) {
 }
 
 onSubmit() {
+
+    var send_model = {
+        meeting_category: null,
+        entity: null,
+        requested_meetdate: null,        
+        participants: [],
+        meeting_subjects: []
+    }  ;
+   
+    send_model.meeting_category = this.model.meeting_category.id;
+    send_model.entity = this.model.entity.id;
+    send_model.requested_meetdate = this.model.requested_meetdate;
+    
     for (let i in this.model.participants) {
-    this.model.participants[i].is_invited = true
-    console.log(this.model.participants[i].is_invited)
+        console.log(i)
+        var send_participant: {[k: string]: any} = {};
+        send_participant.is_invited = true;
+        send_participant.person = this.model.participants[i].person.id;
+        send_model.participants.push(
+            send_participant);
     }
     for (let i in this.model.meeting_subjects) {
-    this.model.meeting_subjects[i].listposition_on_request = parseInt(i)
-    console.log(this.model.meeting_subjects[i].listposition_on_request)        
+        console.log(i)
+        var send_meetingsubject: {[k: string]: any} = {};        
+        send_meetingsubject.listposition_on_request = parseInt(i);
+        send_meetingsubject.subject = this.model.meeting_subjects[i].subject.id;
+        send_model.meeting_subjects.push(send_meetingsubject);
     }
-    this.meetingService.createMeeting(this.model)
+    console.dir(send_model)
+    this.meetingService.createMeeting(send_model)
     this.submitted = true;
 }
 

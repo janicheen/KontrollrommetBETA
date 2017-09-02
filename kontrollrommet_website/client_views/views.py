@@ -32,7 +32,7 @@ from .serializers import EntitiesByPersonSerializer, PersonsByEntitySerializer
 # Action Data Serializers
 from .serializers import SubjectSerializer, SubjectsByEntitySerializer
 # Application Data Serializers
-from .serializers import MeetingSerializer, MeetingCategorySerializer
+from .serializers import MeetingSerializer, MeetingSerializerPOST, MeetingCategorySerializer
 
 
 ### Pure Viewsets ###
@@ -79,6 +79,11 @@ class MeetingViewSet(viewsets.ModelViewSet):
 	def get_queryset(self):        
 		user = self.request.user
 		return Meeting.objects.filter(participants__user__id = user.id)
+	# sets different serializers for read and write
+	def get_serializer_class(self):
+		if self.request.method == 'POST':
+			return MeetingSerializerPOST
+		return MeetingSerializer
 
 
 ### Query parameter based views

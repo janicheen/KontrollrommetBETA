@@ -78,7 +78,7 @@ export class MeetingService {
 
   createMeeting(data): Promise<Meeting> {
     return this.authHttp
-      .post(this.meetingsUrl, JSON.stringify({data: data}))
+      .post(this.meetingsUrl, JSON.stringify(data), {headers: this.headers})
       .toPromise()
       .then(res => res.json().data as Meeting)
       .catch(this.handleError);

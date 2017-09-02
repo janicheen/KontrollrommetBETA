@@ -25,9 +25,10 @@ class MeetingCategory(models.Model):
 # Meeting
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Meeting(models.Model):
-	# Relational data
+	# Simple Relational data
 	meeting_category = models.ForeignKey(MeetingCategory, on_delete=models.CASCADE)
 	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
+	# Relational data with addet through model
 	participants = models.ManyToManyField(Person, through='Participant')
 	meeting_subjects = models.ManyToManyField(Subject, through='Meetingsubject')
 	# Dates
