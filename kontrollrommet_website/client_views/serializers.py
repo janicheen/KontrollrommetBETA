@@ -148,6 +148,8 @@ class ParticipantSerializerPOST(serializers.ModelSerializer):
 	class Meta:
 		model = Participant
 		fields = (
+			# Meeting data to include
+			'meeting',
 			# Person data to include
 			'person',
 			# Participant data
@@ -160,7 +162,7 @@ class ParticipantSerializerPOST(serializers.ModelSerializer):
 			)
 
 # Serializes meeting subjects in meeting_manager
-class MeetingsubjectSerializer(serializers.ModelSerializer):
+class MeetingSubjectSerializer(serializers.ModelSerializer):
 	meeting_id = serializers.ReadOnlyField(source='meeting.id')
 	subject_id = serializers.ReadOnlyField(source='subject.id')
 	subject_headline = serializers.ReadOnlyField(source='subject.headline')
@@ -180,10 +182,12 @@ class MeetingsubjectSerializer(serializers.ModelSerializer):
 			'listposition_on_report'
 		)
 
-class MeetingsubjectSerializerPOST(serializers.ModelSerializer):
+class MeetingSubjectSerializerPOST(serializers.ModelSerializer):
 	class Meta:
 		model = MeetingSubject
 		fields = (
+			# Meeting data to include
+			'meeting',
 			# Subject data to include
 			'subject',
 			# Meeting Subject data
@@ -195,10 +199,10 @@ class MeetingsubjectSerializerPOST(serializers.ModelSerializer):
 
 # Serializes Meetings
 class MeetingSerializer(serializers.ModelSerializer):
-	meeting_category = MeetingCategorySerializer()
-	entity = EntitySerializer()
-	participants = ParticipantSerializer(source='participant_set', many=True)
-	meeting_subjects = MeetingsubjectSerializer(source='meetingsubject_set', many=True)
+#	meeting_category = MeetingCategorySerializer()
+#	entity = EntitySerializer()
+	participants = ParticipantSerializer(source='participant_set', many=True, read_only=True)
+	meeting_subjects = MeetingSubjectSerializer(source='meetingsubject_set', many=True, read_only=True)
 
 	class Meta:
 		model = Meeting
@@ -219,11 +223,12 @@ class MeetingSerializer(serializers.ModelSerializer):
 			# Boolean
 			'is_current_meeting',
 		)
+		read_only_fields = ('account_name',)
 
 # Serializes Meetings
 class MeetingSerializerPOST(serializers.ModelSerializer):
 	participants = ParticipantSerializerPOST(source='participant_set', many=True)
-	meeting_subjects = MeetingsubjectSerializerPOST(source='meetingsubject_set', many=True)
+	meeting_subjects = MeetingSubjectSerializerPOST(source='meetingsubject_set', many=True)
 
 ### Under construction	
 	def create(self, validated_data):

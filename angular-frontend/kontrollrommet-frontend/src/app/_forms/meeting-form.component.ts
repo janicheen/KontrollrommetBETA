@@ -6,6 +6,8 @@ import { Meeting, Person, Entity, Subject, MeetingCategory, PersonToEntity, Meet
 import { MeetingService } from '../_services/index';
 import { DragulaService } from "ng2-dragula";
 
+import { SendParticipant } from "../_models/sendparticipant";
+
 @Component({
   selector: 'meeting-form',
   templateUrl: './meeting-form.component.html',
@@ -21,6 +23,7 @@ possible_categories: MeetingCategory[];
 
 model = new Meeting;
 submitted = false;
+
 
 constructor(
     private meetingService: MeetingService
@@ -114,28 +117,45 @@ onSubmit() {
         participants: [],
         meeting_subjects: []
     }  ;
-   
+    
+    var participants = this.model.participants
+    var meeting_subjects = this.model.meeting_subjects
+    delete this.model.participants
+    delete this.model.meeting_subjects
+
     send_model.meeting_category = this.model.meeting_category.id;
     send_model.entity = this.model.entity.id;
     send_model.requested_meetdate = this.model.requested_meetdate;
-    
-    for (let i in this.model.participants) {
-        console.log(i)
-        var send_participant: {[k: string]: any} = {};
-        send_participant.is_invited = true;
-        send_participant.person = this.model.participants[i].person.id;
-        send_model.participants.push(
-            send_participant);
-    }
-    for (let i in this.model.meeting_subjects) {
-        console.log(i)
-        var send_meetingsubject: {[k: string]: any} = {};        
-        send_meetingsubject.listposition_on_request = parseInt(i);
-        send_meetingsubject.subject = this.model.meeting_subjects[i].subject.id;
-        send_model.meeting_subjects.push(send_meetingsubject);
-    }
-    console.dir(send_model)
-    this.meetingService.createMeeting(send_model)
+    console.dir(this.model)
+
+    var meeting = this.meetingService.createMeeting(send_model).then(res => {
+        console.log(res)
+        
+        var send_participants = [];                
+        for (let i in participants) {
+            console.log(i)
+            var sendparticipant = {
+                is_invited : true, 
+                person : participants[i].person.id,
+                meeting : res.id
+            }
+        send_participants.push(sendparticipant)
+        }
+        
+        var send_meetingsubjects = []    
+        for (let i in meeting_subjects) {
+            console.log(i)
+            var send_meetingsubject = {
+                listposition_on_request : parseInt(i),
+                subject : meeting_subjects[i].subject.id,
+                meeting : res.id
+            }
+        send_meetingsubjects.push(send_meetingsubject)
+        }
+        console.dir(send_participants)
+        this.meetingService.createParticipants(send_participants);
+        this.meetingService.createMeetingSubjects(send_meetingsubjects);
+    })
     this.submitted = true;
 }
 

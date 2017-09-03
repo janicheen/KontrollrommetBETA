@@ -21,6 +21,9 @@ export class MeetingService {
   private personsbyentityUrl = 'http://127.0.0.1:8000/personsbyentity/';
   private subjectsbyentityUrl = 'http://127.0.0.1:8000/subjectsbyentity/';
   private meetingcategoriesUrl = 'http://127.0.0.1:8000/meetingcategories/';
+  private participantsUrl = 'http://127.0.0.1:8000/participants/';
+  private meetingsubjectsUrl = 'http://127.0.0.1:8000/meetingsubjects/';
+  
 
   private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
   private JWTheader = new Headers({'Authorization': 'JWT ' + this.usertoken})
@@ -80,7 +83,23 @@ export class MeetingService {
     return this.authHttp
       .post(this.meetingsUrl, JSON.stringify(data), {headers: this.headers})
       .toPromise()
-      .then(res => res.json().data as Meeting)
+      .then(response => response.json() as Meeting)
+      .catch(this.handleError);
+  }
+
+  createParticipants(data): Promise<MeetingParticipant[]> {
+    return this.authHttp
+      .post(this.participantsUrl, JSON.stringify(data), {headers: this.headers})
+      .toPromise()
+      .then(response => response.json() as MeetingParticipant)
+      .catch(this.handleError);
+  }
+  
+  createMeetingSubjects(data): Promise<MeetingSubject[]> {
+    return this.authHttp
+      .post(this.meetingsubjectsUrl, JSON.stringify(data), {headers: this.headers})
+      .toPromise()
+      .then(response => response.json() as MeetingSubject)
       .catch(this.handleError);
   }
 

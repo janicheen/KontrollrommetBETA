@@ -11,7 +11,7 @@ from rest_framework import routers
 from .views import UserViewSet, CurrentUser
 from .views import PersonViewSet, EntityViewSet
 from .views import EntitiesByUserView, PersonsByEntityViewSet
-from .views import MeetingViewSet, MeetingCategoriesView
+from .views import MeetingViewSet, MeetingCategoriesView, MeetingSubjectViewSet, ParticipantViewSet
 from .views import SubjectsByEntityViewSet
 
 
@@ -27,6 +27,10 @@ router.register(r'persons', PersonViewSet, 'persons')
 router.register(r'entities', EntityViewSet, 'entities')
 # Meeting
 router.register(r'meetings', MeetingViewSet, 'meetings')
+# Participants
+router.register(r'participants', ParticipantViewSet, 'participants')
+# Meetingsubjects
+router.register(r'meetingsubjects', MeetingSubjectViewSet, 'meetingsubjects')
 
 ### Viewsets with query params
 # Subjects-by-Entity Viewset, fetched through query param EntityID

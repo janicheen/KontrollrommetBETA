@@ -21,7 +21,7 @@ from core_database.models import Entity, Person, PersonToEntityRelation
 # Action Data Model
 from process_control.models import Subject, SubjectToEntityRelation
 # Application Data Models
-from meeting_manager.models import Meeting, MeetingCategory
+from meeting_manager.models import Meeting, MeetingCategory, Participant, MeetingSubject
 
 ### Serializers
 # User Serializers
@@ -32,7 +32,7 @@ from .serializers import EntitiesByPersonSerializer, PersonsByEntitySerializer
 # Action Data Serializers
 from .serializers import SubjectSerializer, SubjectsByEntitySerializer
 # Application Data Serializers
-from .serializers import MeetingSerializer, MeetingSerializerPOST, MeetingCategorySerializer
+from .serializers import MeetingSerializer, MeetingCategorySerializer, ParticipantSerializer, ParticipantSerializerPOST, MeetingSubjectSerializer, MeetingSubjectSerializerPOST
 
 
 ### Pure Viewsets ###
@@ -53,6 +53,31 @@ class PersonViewSet(viewsets.ModelViewSet):
 class EntityViewSet(viewsets.ModelViewSet):
 	serializer_class = EntitySerializer
 	queryset = Entity.objects.all()
+
+
+# Participant Viewset
+class ParticipantViewSet(viewsets.ModelViewSet):
+	serializer_class = ParticipantSerializer
+	queryset = Participant.objects.all()
+
+	# sets different serializers for read and write
+	def get_serializer_class(self):
+		if self.request.method == 'POST':
+			return ParticipantSerializerPOST
+		return ParticipantSerializer
+
+
+
+# Participant Viewset
+class MeetingSubjectViewSet(viewsets.ModelViewSet):
+	serializer_class = MeetingSubjectSerializer
+	queryset = MeetingSubject.objects.all()
+	
+	# sets different serializers for read and write
+	def get_serializer_class(self):
+		if self.request.method == 'POST':
+			return MeetingSubjectSerializerPOST
+		return MeetingSubjectSerializer
 
 
 ### Pure ListViews
@@ -79,12 +104,6 @@ class MeetingViewSet(viewsets.ModelViewSet):
 	def get_queryset(self):        
 		user = self.request.user
 		return Meeting.objects.filter(participants__user__id = user.id)
-	# sets different serializers for read and write
-	def get_serializer_class(self):
-		if self.request.method == 'POST':
-			return MeetingSerializerPOST
-		return MeetingSerializer
-
 
 ### Query parameter based views
 
