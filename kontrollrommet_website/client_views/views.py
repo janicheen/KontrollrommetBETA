@@ -11,6 +11,7 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 
 ### Models
 # Django User Model
@@ -32,7 +33,7 @@ from .serializers import EntitiesByPersonSerializer, PersonsByEntitySerializer
 # Action Data Serializers
 from .serializers import SubjectSerializer, SubjectsByEntitySerializer
 # Application Data Serializers
-from .serializers import MeetingSerializer, MeetingCategorySerializer, ParticipantSerializer, ParticipantSerializerPOST, MeetingSubjectSerializer, MeetingSubjectSerializerPOST
+from .serializers import MeetingSerializer, MeetingSerializerPOST, MeetingCategorySerializer, ParticipantSerializer, ParticipantSerializerPOST, MeetingSubjectSerializer, MeetingSubjectSerializerPOST
 
 
 ### Pure Viewsets ###
@@ -60,6 +61,14 @@ class ParticipantViewSet(viewsets.ModelViewSet):
 	serializer_class = ParticipantSerializer
 	queryset = Participant.objects.all()
 
+	# Redefines create so it can receive a list of object entries
+	def create(self, request, *args, **kwargs):
+		serializer = self.get_serializer(data=request.data, many=isinstance(request.data,list))
+		serializer.is_valid(raise_exception=True)
+		self.perform_create(serializer)
+		headers = self.get_success_headers(serializer.data)
+		return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 	# sets different serializers for read and write
 	def get_serializer_class(self):
 		if self.request.method == 'POST':
@@ -68,10 +77,18 @@ class ParticipantViewSet(viewsets.ModelViewSet):
 
 
 
-# Participant Viewset
+# Meetingsubject Viewset
 class MeetingSubjectViewSet(viewsets.ModelViewSet):
 	serializer_class = MeetingSubjectSerializer
 	queryset = MeetingSubject.objects.all()
+	
+	# Redefines create so it can receive a list of object entries
+	def create(self, request, *args, **kwargs):
+		serializer = self.get_serializer(data=request.data, many=isinstance(request.data,list))
+		serializer.is_valid(raise_exception=True)
+		self.perform_create(serializer)
+		headers = self.get_success_headers(serializer.data)
+		return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 	
 	# sets different serializers for read and write
 	def get_serializer_class(self):
@@ -104,6 +121,13 @@ class MeetingViewSet(viewsets.ModelViewSet):
 	def get_queryset(self):        
 		user = self.request.user
 		return Meeting.objects.filter(participants__user__id = user.id)
+
+	# sets different serializers for read and write
+	def get_serializer_class(self):
+		if self.request.method == 'POST':
+			return MeetingSerializerPOST
+		return MeetingSerializer
+
 
 ### Query parameter based views
 

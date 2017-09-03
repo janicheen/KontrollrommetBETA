@@ -3,9 +3,11 @@ import { Entity, MeetingParticipant, MeetingSubject, MeetingCategory } from '../
 
 export class Meeting {
   id: number; 
+  
   // Relational data
   meeting_category: MeetingCategory; 
   entity: Entity; 
+  // Relational data Read Only
   participants: MeetingParticipant[]; 
   meeting_subjects: MeetingSubject[];
   // Date data

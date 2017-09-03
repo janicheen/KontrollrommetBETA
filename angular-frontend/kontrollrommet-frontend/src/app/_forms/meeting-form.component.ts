@@ -109,50 +109,45 @@ onClickRemoveSubject(meetingsubject) {
 }
 
 onSubmit() {
-
+    // Set up a send model, populat this with correct data for POST meeting 
     var send_model = {
         meeting_category: null,
         entity: null,
         requested_meetdate: null,        
-        participants: [],
-        meeting_subjects: []
-    }  ;
-    
-    var participants = this.model.participants
-    var meeting_subjects = this.model.meeting_subjects
-    delete this.model.participants
-    delete this.model.meeting_subjects
-
+    } ;
     send_model.meeting_category = this.model.meeting_category.id;
     send_model.entity = this.model.entity.id;
     send_model.requested_meetdate = this.model.requested_meetdate;
-    console.dir(this.model)
-
+    console.dir(send_model)
+    
+    // Get meeding as return from API, and use this in POST to paricipants and meeting subjects 
     var meeting = this.meetingService.createMeeting(send_model).then(res => {
         console.log(res)
-        
+       // Loop to set correct data for sending participants
         var send_participants = [];                
-        for (let i in participants) {
+        for (let i in this.model.participants) {
             console.log(i)
             var sendparticipant = {
                 is_invited : true, 
-                person : participants[i].person.id,
+                person : this.model.participants[i].person.id,
                 meeting : res.id
             }
         send_participants.push(sendparticipant)
         }
-        
+        // Loop to set correct data for sending meeting subjects
         var send_meetingsubjects = []    
-        for (let i in meeting_subjects) {
+        for (let i in this.model.meeting_subjects) {
             console.log(i)
             var send_meetingsubject = {
                 listposition_on_request : parseInt(i),
-                subject : meeting_subjects[i].subject.id,
+                listposition_on_report : parseInt(i),
+                subject : this.model.meeting_subjects[i].subject.id,
                 meeting : res.id
             }
         send_meetingsubjects.push(send_meetingsubject)
         }
         console.dir(send_participants)
+        console.dir(send_meetingsubjects)
         this.meetingService.createParticipants(send_participants);
         this.meetingService.createMeetingSubjects(send_meetingsubjects);
     })

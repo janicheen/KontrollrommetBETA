@@ -11,7 +11,7 @@ import { MeetingService } from '../_services/index';
 })
 export class MeetingsComponent implements OnInit {
   // Variables to be used in component
-  meetings: Meeting[];
+  meetinglist: Meeting[];
   entities: Entity[];
   selectedMeeting: Meeting;
 
@@ -23,7 +23,9 @@ export class MeetingsComponent implements OnInit {
   // Method for displaying a meetings list
   getMeetings(): void {
     this.meetingService.getMeetings()
-    .then(meetings => this.meetings = meetings);
+    .then(meetings => {
+      this.meetinglist = meetings
+    });
     }
 
   // What to do when the component initiates
@@ -39,13 +41,14 @@ export class MeetingsComponent implements OnInit {
     this.router.navigate(['/meetingform']);
   }
 
-
+// ** NOT IN USE ***
   delete(meeting: Meeting): void {
   this.meetingService
       .delete(meeting.id)
       .then(() => {
-        this.meetings = this.meetings.filter(h => h !== meeting);
+        this.meetinglist = this.meetinglist.filter(h => h !== meeting);
         if (this.selectedMeeting === meeting) { this.selectedMeeting = null; }
       });
   }
+  
 }

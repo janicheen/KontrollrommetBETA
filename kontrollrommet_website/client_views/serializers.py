@@ -199,8 +199,8 @@ class MeetingSubjectSerializerPOST(serializers.ModelSerializer):
 
 # Serializes Meetings
 class MeetingSerializer(serializers.ModelSerializer):
-#	meeting_category = MeetingCategorySerializer()
-#	entity = EntitySerializer()
+	meeting_category = MeetingCategorySerializer()
+	entity = EntitySerializer()
 	participants = ParticipantSerializer(source='participant_set', many=True, read_only=True)
 	meeting_subjects = MeetingSubjectSerializer(source='meetingsubject_set', many=True, read_only=True)
 
@@ -223,51 +223,16 @@ class MeetingSerializer(serializers.ModelSerializer):
 			# Boolean
 			'is_current_meeting',
 		)
-		read_only_fields = ('account_name',)
 
 # Serializes Meetings
 class MeetingSerializerPOST(serializers.ModelSerializer):
-	participants = ParticipantSerializerPOST(source='participant_set', many=True)
-	meeting_subjects = MeetingSubjectSerializerPOST(source='meetingsubject_set', many=True)
-
-### Under construction	
-	def create(self, validated_data):
-		# Pop out all relative data from Recieved instance
-		meeting_category_data = validated_data.pop('meeting_category')
-		entity_data = validated_data.pop('entity')
-		participants_data = validated_data.pop('participants')
-		meeting_subjects_data = validated_data.pop('meeting_subjects')
-		# Create Meeting instance
-		meeting = Meeting.objects.create(**validated_data)
-		# Get proper instances from related models
-		meeting_category = MeetingCategory.objects.get(id = meeting_category_data.id)
-		entity = Entity.objects.get(id = entity_data.id)
-		# Create instances in the through models
-		for participant in participants_data:
-			Participant.objects.create(
-				meeting = Meeting.objects.get(id = participant.meeting_id),
-				person = Person.objects.get(id = participant.person_id), 
-				is_invited = participant.is_invited
-			)
-		for meeting_subject in meeting_subjects_data:
-			MeetingSubject.objects.create(
-				meeting = Meeting.objects.get(id = participant.meeting_id),
-				subject = Subject.objects.get(id = participant.subject_id),
-				edited_headline = participant.edited_headline,
-				edited_description = participant.edited_description,
-				listposition_on_request = participant.listposition_on_request,
-				listposition_on_report = participant.listposition_on_report
-			)
-		return meeting
-		
 	class Meta:
 		model = Meeting
 		fields = (
+			'id', 
 			# Relational data
 			'meeting_category',
 			'entity',
-			'participants',
-			'meeting_subjects',
 			# Date data
 			'requested_meetdate',
 			'meetingrequest_sent',
@@ -277,4 +242,4 @@ class MeetingSerializerPOST(serializers.ModelSerializer):
 			'report_completed',
 			# Boolean
 			'is_current_meeting',
-			)
+		)

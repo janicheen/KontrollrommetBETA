@@ -5,7 +5,7 @@
     <th>Selskap</th>
   </thead>
   <tbody>
-    <tr *ngFor="let meeting of meetings" [class.selected]="meeting === selectedMeeting" (click)="onSelect(meeting)">
+    <tr *ngFor="let meeting of meetinglist" [class.selected]="meeting === selectedMeeting" (click)="onSelect(meeting)">
       <td>{{meeting.requested_meetdate | date}}</td>
       <td>{{meeting.meeting_category.name}}</td>
       <td>{{meeting.entity.name}}</td>
