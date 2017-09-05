@@ -1,16 +1,23 @@
 // Angular dependencies
 import { Component, OnInit } from '@angular/core';
+import { NgModule }       from '@angular/core';
+
 // Models
 import { Meeting, User } from '../_models/index';
-// Services
-import { MeetingService, UserService } from '../_services/index';
+
+// External Services
+import { MeetingService } from '../meetings/index';
+import { UserService } from '../authentication/index';
+
+// Components
+import { MeetingsComponent } from '../meetings/index'
 
 @Component({
-  moduleId: module.id,
   selector: 'my-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: [ './dashboard.component.css' ]
 })
+
 export class DashboardComponent implements OnInit {
 
   meetings: Meeting[] = [];

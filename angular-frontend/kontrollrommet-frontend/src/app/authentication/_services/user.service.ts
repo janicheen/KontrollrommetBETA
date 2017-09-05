@@ -1,9 +1,11 @@
-﻿import { Injectable } from '@angular/core';
+﻿// Angular Dependencies
+import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-
+// rxjs
 import 'rxjs/add/operator/toPromise';
 
-import { User } from '../_models/index';
+// Models
+import { User } from "../../_models/index";
 
 @Injectable()
 export class UserService {

@@ -3,8 +3,10 @@ import { Component, OnInit }        from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location }                 from '@angular/common';
 
-import { Meeting }         from '../_models/index';
-import { MeetingService }  from '../_services/index';
+import { Meeting }         from '../../_models/index';
+
+import { MeetingService }  from '../index';
+
 @Component({
   selector: 'meeting-detail',
   templateUrl: './meeting-detail.component.html',

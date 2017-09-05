@@ -12,8 +12,9 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
  
-import { MeetingSearchService } from '../_services/index';
-import { Meeting } from '../_models/index';
+import { MeetingSearchService } from '../index';
+
+import { Meeting } from '../../_models/index';
  
 @Component({
   selector: 'meeting-search',

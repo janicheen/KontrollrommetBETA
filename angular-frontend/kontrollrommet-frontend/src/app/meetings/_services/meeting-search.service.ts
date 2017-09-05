@@ -4,7 +4,7 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
  
-import { Meeting } from '../_models/index';
+import { Meeting } from '../../_models/index';
  
 @Injectable()
 export class MeetingSearchService {

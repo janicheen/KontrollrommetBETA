@@ -1,98 +1,61 @@
-// Angular modules
+// *** This is the main module, connecting all other sub modules ***
+
+//***Angular modules***
 import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
-// angular2-jwt module
-import { AuthModule } from './auth.module'
-
-// Modules from Bootstrap
+// ***Foreign Modules***
+// Bootstrap UI 
 import { SortableModule } from 'ngx-bootstrap';
 import { DragulaModule } from 'ng2-dragula'
 
-// The Main Routing Module
-import { AppRoutingModule } from './router';
+// *** Routing Module ***
+import { AppRoutingModule } from './router.module';
+
+// ***Main Application Modules
+// Authentication module
+import { AuthenticationModule } from './authentication/authentication.module'
+import { MeetingsModule } from "./meetings/meetings.module";
+
+// *** WORK IN PROGRESS BEGIN ***
+// Application Components
+//dashboard
+import {DashboardComponent}   from './dashboard/index';
+// Services
+import { AlertService } from './_services/index';
+// *** WORK IN PROGRESS END ***
 
 // The Root Component
 import { AppComponent }         from './app.component';
 
-// Application Components
-//users
-import { UsersComponent } from './users/index';
-
-//login
-import { LoginComponent } from './login/index';
-
-//register
-import { RegisterComponent } from './register/index';
-
-//meetings
-import { 
-  MeetingDetailComponent,
-  MeetingsComponent,
-  MeetingSearchComponent
- }  from './meetings/index';
-
-//dashboard
-import { 
-  DashboardComponent
- }   from './dashboard/index';
-
-// Services
-import { 
-  AuthenticationService, 
-  UserService,
-  MeetingService,
-  AlertService
- } from './_services/index';
-
-// Guards
-import {
-  AuthGuard
-} from './_guards/index';
-
-// Forms
-import { MeetingFormComponent } from './_forms/index';
-
-@NgModule({ 
+@NgModule({
   imports: [ // Necessary Modules
-  // Angular modules
+  // Angular dependent modules
     BrowserModule,
     FormsModule,
-    HttpModule,
-  // angular2-jwt module
-    AuthModule,
+    HttpModule,   
   // Sortable module from Bootstrap
-  SortableModule.forRoot(),
+    SortableModule.forRoot(),
   // Dragula module from Bootstrap
-  DragulaModule,
-//The Main Routing module
-    AppRoutingModule
+    DragulaModule,
+  //The Routing module
+    AppRoutingModule,
+  // Main Application Modules
+    AuthenticationModule,
+    MeetingsModule,
   ],
   declarations: [ // Components and Directives
 //The Root Component
     AppComponent,
 //Application components
-    UsersComponent,
-    LoginComponent,
-    RegisterComponent,
-    MeetingsComponent,
-    MeetingDetailComponent,
-    MeetingSearchComponent,
     DashboardComponent,
-// Forms
-    MeetingFormComponent
   ],
   providers: [ // Services
     // Application services
-    MeetingService,
-    //Login services
-    AuthenticationService,
-    UserService,
     AlertService,
-    AuthGuard,
-   ],
+],
   bootstrap: [ AppComponent ] //root component
 })
 export class AppModule { }

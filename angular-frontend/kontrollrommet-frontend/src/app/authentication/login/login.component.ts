@@ -1,9 +1,12 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AlertService, AuthenticationService, UserService } from '../_services/index';
+// Services
+import { AuthenticationService, UserService } from '../index';
+import { AlertService } from '../../_services/index'
 
-import { User } from '../_models/index';
+// Models
+import { User } from '../../_models/index';
 
 @Component({
     moduleId: module.id,

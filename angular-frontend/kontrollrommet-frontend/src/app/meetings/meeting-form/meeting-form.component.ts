@@ -1,12 +1,12 @@
 // Angular dependencies
 import { Component, OnInit } from '@angular/core';
 // Models
-import { Meeting, Person, Entity, Subject, MeetingCategory, PersonToEntity, MeetingSubject, MeetingParticipant } from '../_models/index';
-// Services
-import { MeetingService } from '../_services/index';
+import { Meeting, Person, Entity, Subject, PersonToEntity, MeetingSubject, MeetingParticipant } from '../../_models/index';
+import { MeetingCategory } from '../../_categories/index';
+// Internal Services
+import { MeetingService } from '../_services/meeting.service';
+// Bootstrap service
 import { DragulaService } from "ng2-dragula";
-
-import { SendParticipant } from "../_models/sendparticipant";
 
 @Component({
   selector: 'meeting-form',

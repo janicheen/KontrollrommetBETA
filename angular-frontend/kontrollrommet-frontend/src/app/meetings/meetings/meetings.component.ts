@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Meeting, Entity} from '../_models/index';
-import { MeetingService } from '../_services/index';
+// Models
+import { Meeting, Entity} from '../../_models/index';
+// Internal Services
+import { MeetingService } from '../_services/meeting.service';
 
 @Component({
   selector: 'my-meetings',
   templateUrl: './meetings.component.html',
   styleUrls: [ './meetings.component.css' ]
 })
+
 export class MeetingsComponent implements OnInit {
   // Variables to be used in component
   meetinglist: Meeting[];
