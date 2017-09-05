@@ -5,4 +5,3 @@ export * from './meeting';
 export * from './meetingparticipant';
 export * from './meetingsubject';
 export * from './subject';
-export * from './persontoentity';

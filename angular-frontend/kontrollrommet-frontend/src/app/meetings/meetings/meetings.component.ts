@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 // Models
 import { Meeting, Entity} from '../../_models/index';
+
 // Internal Services
 import { MeetingService } from '../_services/meeting.service';
 

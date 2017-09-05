@@ -7,8 +7,8 @@ import 'rxjs/add/operator/toPromise';
 import { AuthHttp } from 'angular2-jwt';
 
 // Models
-import { Meeting, Entity, Person, Subject, MeetingCategory, PersonToEntity, MeetingParticipant, MeetingSubject } from '../../_models/index';
-
+import { Entity, Person, Subject,  Meeting, MeetingParticipant, MeetingSubject } from '../../_models/index';
+import { MeetingCategory } from '../../_categories/index';
 @Injectable()
 export class MeetingService {
 

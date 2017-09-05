@@ -1,16 +1,16 @@
 // Models
-import { Entity, MeetingParticipant, MeetingSubject, MeetingCategory } from '../_models/index';
-
+import { Entity, MeetingParticipant, MeetingSubject } from '../_models/index';
+import { MeetingCategory } from '../_categories/index';
 export class Meeting {
+  // API PK
   id: number; 
-  
   // Relational data
   meeting_category: MeetingCategory; 
   entity: Entity; 
   // Relational data Read Only
   participants: MeetingParticipant[]; 
   meeting_subjects: MeetingSubject[];
-  // Date data
+  // Frontend data
   requested_meetdate: number; 
   meetingrequest_sent: number; 
   meeting_started: number; 

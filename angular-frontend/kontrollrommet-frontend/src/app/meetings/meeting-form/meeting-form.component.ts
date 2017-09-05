@@ -1,7 +1,7 @@
 // Angular dependencies
 import { Component, OnInit } from '@angular/core';
 // Models
-import { Meeting, Person, Entity, Subject, PersonToEntity, MeetingSubject, MeetingParticipant } from '../../_models/index';
+import { Person, Entity, Subject,  Meeting, MeetingSubject, MeetingParticipant } from '../../_models/index';
 import { MeetingCategory } from '../../_categories/index';
 // Internal Services
 import { MeetingService } from '../_services/meeting.service';

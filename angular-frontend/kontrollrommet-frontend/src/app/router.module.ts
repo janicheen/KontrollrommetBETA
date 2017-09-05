@@ -1,16 +1,15 @@
 // Angular dependencies
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-// Application components
+// ***Application components***
+// UI_Mainframe
 import { DashboardComponent } from './dashboard/index';
-
-// Meetings
-import { MeetingsComponent, MeetingFormComponent } from './meetings/index';
 // Authentication
 import { UsersComponent, LoginComponent,  RegisterComponent, AuthGuard } from './authentication/index';
+// Meetings
+import { MeetingsComponent, MeetingFormComponent } from './meetings/index';
 
-// Here is the lising of all URL routes
+// Path structure for all URL routes
 const routes: Routes = [
   //From root site adress, redirect to here 
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

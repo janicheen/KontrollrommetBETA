@@ -1,9 +1,7 @@
 export class Person {
-    // Main identifier
+    // API PK
     id: number;
-    // FRONTEND data, public level
+    // Frontend data
     first_name: string;
     last_name: string;
-    // GET data, intimate level
-    
 }
