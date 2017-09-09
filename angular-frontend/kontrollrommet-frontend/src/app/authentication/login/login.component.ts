@@ -3,7 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 // Services
 import { AuthenticationService, UserService } from '../index';
-import { AlertService } from '../../_services/index'
+
+import { AlertService } from '../../main-ui/index'
 
 // Models
 import { User } from '../../_models/index';

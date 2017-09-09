@@ -9,24 +9,24 @@ import { HttpModule }    from '@angular/http';
 import { SortableModule } from 'ngx-bootstrap';
 import { DragulaModule } from 'ng2-dragula'
 
-// *** Routing Module ***
+// *** Other Modules ***
 import { AppRoutingModule } from '../router.module';
 
 // *** Application Elements
 //meetings
 import { MeetingsComponent }  from './index';
+import { MeetingListComponent } from "./index";
 import { MeetingFormComponent } from './index';
 
 // Services
-import { MeetingService } from './index';
+import { MeetingService } from './_services/meeting.service';
 
-@NgModule({ 
+@NgModule({
   imports: [ // Necessary Modules
   // Angular dependent modules
     CommonModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule,   
   // Sortable module from Bootstrap
     SortableModule.forRoot(),
   // Dragula module from Bootstrap
@@ -35,9 +35,8 @@ import { MeetingService } from './index';
     AppRoutingModule,
   ],
   declarations: [ // Components and Directives
-//Application components
     MeetingsComponent,
-  // Forms
+    MeetingListComponent,
     MeetingFormComponent
   ],
   providers: [ // Services
@@ -45,7 +44,7 @@ import { MeetingService } from './index';
     MeetingService,
   ],
   exports: [
-    MeetingsComponent
+    MeetingListComponent
   ] 
 })
 export class MeetingsModule { }

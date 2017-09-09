@@ -1,5 +1,6 @@
 // Components
 export * from './meetings/meetings.component';
+export * from './meeting-list/meeting-list.component'
 export * from './meeting-search/meeting-search.component';
 export * from './meeting-detail/meeting-detail.component';
 export * from './meeting-form/meeting-form.component';

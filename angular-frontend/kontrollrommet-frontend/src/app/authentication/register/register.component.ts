@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 // External Services
-import { AlertService } from '../../_services/index';
+import { AlertService } from '../../main-ui/index';
 
 // Internal Services
 import { UserService } from '../index';

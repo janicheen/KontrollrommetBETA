@@ -1,15 +1,5 @@
-<div>
-  <h1>Velkommen til Kontrollrommet, {{currentuser?.person.first_name}}! </h1>  
+<div >
+    <my-navigationframe></my-navigationframe>
 </div>
 
-<div>
-  <nav>
-    <a class="btn btn-default" role="button" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-    <a class="btn btn-default" role="button" routerLink="/useraccount" routerLinkActive="active">Din Brukerkonto</a>    
-    <a class="btn btn-default" role="button" routerLink="/login" routerLinkActive="active" *ngIf="!authService.loggedIn()">Login</a>    
-    <a class="btn btn-default" role="button" (click)="logout()" *ngIf="authService.loggedIn()">Logout</a>
-  </nav>
-</div>
 <router-outlet></router-outlet>
-
-<br>

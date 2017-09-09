@@ -3,7 +3,7 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 // ***Application components***
 // UI_Mainframe
-import { DashboardComponent } from './dashboard/index';
+import { DashboardComponent } from './main-ui/dashboard/dashboard.component';
 // Authentication
 import { UsersComponent, LoginComponent,  RegisterComponent, AuthGuard } from './authentication/index';
 // Meetings

@@ -9,13 +9,14 @@ import { AuthHttp } from 'angular2-jwt';
 // Models
 import { Entity, Person, Subject,  Meeting, MeetingParticipant, MeetingSubject } from '../../_models/index';
 import { MeetingCategory } from '../../_categories/index';
+
 @Injectable()
 export class MeetingService {
 
   // get token from storage
   private usertoken = localStorage.getItem('UserToken') 
   
-  // URLs to api server requests
+  // URLs to api server requests NB! Needs to be solved better
   private meetingsUrl = 'http://127.0.0.1:8000/meetings/?format=json';  
   private entitiesbyuserUrl = 'http://127.0.0.1:8000/entitiesbyuser/?format=json';
   private personsbyentityUrl = 'http://127.0.0.1:8000/personsbyentity/';
@@ -24,7 +25,7 @@ export class MeetingService {
   private participantsUrl = 'http://127.0.0.1:8000/participants/';
   private meetingsubjectsUrl = 'http://127.0.0.1:8000/meetingsubjects/';
   
-
+  // Sets the nescessary hearder to go with http request
   private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
   private JWTheader = new Headers({'Authorization': 'JWT ' + this.usertoken})
   private JWToptions = new RequestOptions({ headers: this.JWTheader, params: {'id': 1}});
@@ -34,7 +35,7 @@ export class MeetingService {
   
   // Get list of meetings from API
   getMeetings(): Promise<Meeting[]> {
-    console.log("getting meetings from API...")
+    console.log('getting meetings from API...');
     return this.authHttp
       .get(this.meetingsUrl)
       .toPromise()
