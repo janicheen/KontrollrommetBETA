@@ -7,7 +7,7 @@ import { Meeting, Entity} from '../../_models/index';
 import { MeetingService } from '../_services/meeting.service';
 
 @Component({
-  selector: 'my-meetings',
+  selector: 'app-meetings',
   templateUrl: './meetings.component.html',
   styleUrls: [ './meetings.component.css' ]
 })

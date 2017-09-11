@@ -8,7 +8,8 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/*.js.map": true,
-    "**/*.js": {"when": "$(basename).ts"}
+    "**/*.js": {"when": "$(basename).ts"},
+    "**/*.spec.ts": {"when": "$(basename).ts"}
   },
 }
 

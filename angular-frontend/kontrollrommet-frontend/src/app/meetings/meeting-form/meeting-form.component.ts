@@ -5,8 +5,12 @@ import { Person, Entity, Subject,  Meeting, MeetingSubject, MeetingParticipant }
 import { MeetingCategory } from '../../_categories/index';
 // Internal Services
 import { MeetingService } from '../_services/meeting.service';
+// External Services
+import { UserDataService } from '../../initialization/_services/user-data.service';
+import { CategoriesService } from '../../initialization/_services/categories.service';
+
 // Bootstrap service
-import { DragulaService } from "ng2-dragula";
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'meeting-form',
@@ -26,27 +30,29 @@ submitted = false;
 
 
 constructor(
-    private meetingService: MeetingService
+    private meetingService: MeetingService,
+    private userDataService: UserDataService,
+    private categoriesService: CategoriesService
 ) { }
 
 getEntities(): void {
-    this.meetingService.getEntities()
-    .then(entities => this.possible_entities = entities);
+    this.userDataService.getEntitiesByUser()
+    .subscribe(entities => this.possible_entities = entities);
 }
 
 getMeetingCategories(): void {
-    this.meetingService.getMeetingCategories()
+    this.categoriesService.getMeetingCategories()
     .then(categories => this.possible_categories = categories);
 }
 
 getParticipants(_id): void {
-    console.log("gotten this id", _id)
+    console.log('gotten this id', _id);
     this.meetingService.getParticipants(_id)
     .then(participants => this.possible_participants = participants);
     }
 
 getMeetingSubjects(_id): void {
-    console.log("gotten this id", _id)
+    console.log('gotten this id', _id);
     this.meetingService.getMeetingSubjects(_id)
     .then(meetingsubjects => this.possible_meetingsubjects = meetingsubjects);
     }
@@ -64,7 +70,7 @@ ngOnInit(): void {
 onChangeEntity(): void {
     // Populate these fields
     this.getParticipants(this.model.entity.id);
-    this.getMeetingSubjects(this.model.entity.id)
+    this.getMeetingSubjects(this.model.entity.id);
 }
 
 onSelectPerson(person: Person) {
@@ -118,7 +124,7 @@ onSubmit() {
     send_model.meeting_category = this.model.meeting_category.id;
     send_model.entity = this.model.entity.id;
     send_model.requested_meetdate = this.model.requested_meetdate;
-    console.dir(send_model)
+    console.dir(send_model);
     
     // Get meeding as return from API, and use this in POST to paricipants and meeting subjects 
     var meeting = this.meetingService.createMeeting(send_model).then(res => {
@@ -150,7 +156,7 @@ onSubmit() {
         console.dir(send_meetingsubjects)
         this.meetingService.createParticipants(send_participants);
         this.meetingService.createMeetingSubjects(send_meetingsubjects);
-    })
+    });
     this.submitted = true;
 }
 

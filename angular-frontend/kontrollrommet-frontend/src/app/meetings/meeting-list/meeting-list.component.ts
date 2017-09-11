@@ -5,7 +5,7 @@ import { MeetingService } from '../_services/meeting.service';
 import { Meeting, Entity} from '../../_models/index';
 
 @Component({
-    selector: 'my-meetinglist',
+    selector: 'app-meetinglist',
     templateUrl: 'meeting-list.component.html'
 })
 export class MeetingListComponent implements OnInit {

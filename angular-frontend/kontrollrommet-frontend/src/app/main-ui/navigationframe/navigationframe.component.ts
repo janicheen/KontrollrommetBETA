@@ -1,32 +1,33 @@
 // Angular dependencies
 import { Component, OnInit } from '@angular/core';
-import { NgModule }       from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Models
 import { User } from '../../_models/index';
+
 // External Services
-import { UserService,} from '../../authentication/_services/user.service'
-import { AuthenticationService,} from '../../authentication/_services/authentication.service'
+import { UserDataService } from '../../initialization/_services/user-data.service'
+import { AuthenticationService } from '../../authentication/_services/authentication.service'
 import { AlertService } from '../../main-ui/_services/alert.service';
 
 @Component({
-  selector: 'my-navigationframe',
+  selector: 'app-navigationframe',
   templateUrl: './navigationframe.component.html',
   styleUrls: [ './navigationframe.component.css' ]
 })
 
 export class NavigationFrameComponent implements OnInit {
-  currentuser: User
-  loggedin: Boolean
-  
+  currentuser: User;
+  loggedin: Boolean;
+
   constructor(
     private authService: AuthenticationService,
     private alertService: AlertService,
     private router: Router,
-    private userService: UserService
+    private userDataService: UserDataService
   ) {
-    const user$ = this.authService.getCurrentUser();
+    const user$ = this.userDataService.getCurrentUser();
     user$.subscribe(
       user => this.currentuser = user,
       error => this.alertService.error(error)
@@ -34,13 +35,13 @@ export class NavigationFrameComponent implements OnInit {
    }
 
   logout(): void {
-    alert("You are logging out")
-    this.authService.logout()
+    alert('You are logging out');
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 
   ngOnInit(): void {
-    this.userService.getCurrentUser()
-      .then(user => this.currentuser = user)
+    this.userDataService.getCurrentUser()
+    .subscribe(user => this.currentuser = user);
   }
 }
