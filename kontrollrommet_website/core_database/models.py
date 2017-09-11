@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 # Django dependencies
 from django.db import models
 from django.db.models.signals import post_save
@@ -19,7 +18,6 @@ from django.contrib.auth.models import User
 @python_2_unicode_compatible  # only if you need to support Python 2
 class EntityCategory(models.Model):
     name = models.CharField(max_length=50)
-
     def __str__(self):
         return '%s' % (self.name)
 
@@ -30,7 +28,6 @@ class EntityCategory(models.Model):
 @python_2_unicode_compatible  # only if you need to support Python 2
 class PersonfunctionCategory(models.Model):
     name = models.CharField(max_length=50)
-
     def __str__(self):
         return '%s' % (self.name)
 
@@ -38,7 +35,6 @@ class PersonfunctionCategory(models.Model):
 @python_2_unicode_compatible  # only if you need to support Python 2
 class EntityToPropertyRelationCategory(models.Model):
     name = models.CharField(max_length=50)
-
     def __str__(self):
             return '%s' % (self.name)
 

@@ -8,13 +8,14 @@ import 'rxjs/add/operator/map';
 import { AuthHttp } from 'angular2-jwt';
 
 // Models
-import { User, Entity } from '../../_models/index';
+import { User, Entity, Meeting } from '../../_models/index';
 
 @Injectable()
 export class UserDataService {
     // Properties
     private currentuserUrl = 'http://127.0.0.1:8000/currentuser/?format=json';  // URL to runserver local web api
     private entitiesbyuserUrl = 'http://127.0.0.1:8000/entitiesbyuser/?format=json';
+    private meetingsbyuserUrl = 'http://127.0.0.1:8000/meetingsbyuser/?format=json';
     private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
 
     private user: User;
@@ -33,8 +34,17 @@ export class UserDataService {
     getEntitiesByUser(): Observable<Entity[]> {
         console.log('getting user entities from API...');
         return this.authHttp.get(this.entitiesbyuserUrl)
-          .map(response => response.json() as Entity[])
-          .catch(this.handleError);
+        .map(response => response.json() as Entity[])
+        .catch(this.handleError);
+    }
+
+    // Get list of meetings from API
+    getMeetingsByUser(): Promise<Meeting[]> {
+        console.log('getting meetings from API...');
+        return this.authHttp.get(this.meetingsbyuserUrl)
+        .toPromise()
+        .then(response => response.json() as Meeting[])
+        .catch(this.handleError);
     }
 
     // private helper methods

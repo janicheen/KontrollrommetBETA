@@ -18,26 +18,49 @@ from rest_framework import status
 from django.contrib.auth.models import User
 
 # Core Data Models
-from core_database.models import Entity, Person, PersonToEntityRelation
+from core_database.models import Entity, Person, PersonToEntityRelation 
+# Category Models
+from core_database.models import EntityCategory, PersonfunctionCategory
+from meeting_manager.models import MeetingCategory
 # Action Data Model
 from process_control.models import Subject, SubjectToEntityRelation
 # Application Data Models
-from meeting_manager.models import Meeting, MeetingCategory, Participant, MeetingSubject
+from meeting_manager.models import Meeting, Participant, MeetingSubject
 
 ### Serializers
 # User Serializers
 from .serializers import UserSerializer
+# Category Serializers
+from .serializers import EntityCategorySerializer, MeetingCategorySerializer, PersonfunctionCategorySerializer 
 # Core Data Serializers
 from .serializers import EntitySerializer, PersonSerializer
+# Core Data Relational Serializers 
 from .serializers import EntitiesByPersonSerializer, PersonsByEntitySerializer
 # Action Data Serializers
-from .serializers import SubjectSerializer, SubjectsByEntitySerializer
+from .serializers import SubjectSerializer
+# Action Data Relational Serializers
+from .serializers import SubjectsByEntitySerializer
 # Application Data Serializers
-from .serializers import MeetingSerializer, MeetingSerializerPOST, MeetingCategorySerializer, ParticipantSerializer, ParticipantSerializerPOST, MeetingSubjectSerializer, MeetingSubjectSerializerPOST
+from .serializers import MeetingSerializer, MeetingSerializerPOST, ParticipantSerializer, ParticipantSerializerPOST, MeetingSubjectSerializer, MeetingSubjectSerializerPOST
 
 
 ### Pure Viewsets ###
-# -Viewsets that directly correspond to models
+
+# Entity Category Viewset
+class EntityCategoryViewSet(viewsets.ModelViewSet):
+    serializer_class = EntityCategorySerializer
+    queryset = EntityCategory.objects.all()
+
+# Meeting Category Viewset
+class MeetingCategoriesViewSet(viewsets.ModelViewSet):
+	serializer_class = MeetingCategorySerializer
+	queryset = MeetingCategory.objects.all()
+
+# Person to Entity Relation Category Viewset
+class PersonfunctionCategoryViewSet(viewsets.ModelViewSet):
+	serializer_class = PersonfunctionCategorySerializer
+	queryset = PersonfunctionCategory.objects.all()
+
 
 # User Viewset
 class UserViewSet(viewsets.ModelViewSet):
@@ -54,6 +77,17 @@ class PersonViewSet(viewsets.ModelViewSet):
 class EntityViewSet(viewsets.ModelViewSet):
 	serializer_class = EntitySerializer
 	queryset = Entity.objects.all()
+
+# Meetings Viewset
+class MeetingViewSet(viewsets.ModelViewSet):
+	serializer_class = MeetingSerializer
+	queryset = Meeting.objects.all()
+
+	# sets different serializers for read and write
+	def get_serializer_class(self):
+		if self.request.method == 'POST':
+			return MeetingSerializerPOST
+		return MeetingSerializer
 
 
 # Participant Viewset
@@ -74,7 +108,6 @@ class ParticipantViewSet(viewsets.ModelViewSet):
 		if self.request.method == 'POST':
 			return ParticipantSerializerPOST
 		return ParticipantSerializer
-
 
 
 # Meetingsubject Viewset
@@ -98,15 +131,20 @@ class MeetingSubjectViewSet(viewsets.ModelViewSet):
 
 
 ### Pure ListViews
-
 # -Listviews that directly correspond to models
-class MeetingCategoriesView(ListAPIView):
-	serializer_class = MeetingCategorySerializer
-	queryset = MeetingCategory.objects.all()
+
 
 ### Views based on current user
 
-# List entities related to current user
+# Current User
+class CurrentUser(RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request, format=None):
+        currentuser = User.objects.get(id=request.user.id)
+        serializer = UserSerializer(currentuser)
+        return Response(serializer.data)   
+
+# Entities by Current User
 class EntitiesByUserView(ListAPIView):
 	serializer_class = EntitySerializer
 	# makes a queryset of all entities where current user has some function 
@@ -114,20 +152,13 @@ class EntitiesByUserView(ListAPIView):
 		user = self.request.user
 		return Entity.objects.filter(persontoentityrelation__person__user__id = user.id)
 
-# Viewset for all Meetings, where current user is participant
-class MeetingViewSet(viewsets.ModelViewSet):
+# Meetings bu Current User as Participant
+class MeetingsByUserView(ListAPIView):
 	serializer_class = MeetingSerializer
 	# makes a queryset of all meetings where current user is participant 
 	def get_queryset(self):        
 		user = self.request.user
 		return Meeting.objects.filter(participants__user__id = user.id)
-
-	# sets different serializers for read and write
-	def get_serializer_class(self):
-		if self.request.method == 'POST':
-			return MeetingSerializerPOST
-		return MeetingSerializer
-
 
 ### Query parameter based views
 
@@ -149,13 +180,4 @@ class SubjectsByEntityViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 ### Views to get specific instances ###
-
-#View to get logged in user
-class CurrentUser(RetrieveAPIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request, format=None):
-        currentuser = User.objects.get(id=request.user.id)
-        serializer = UserSerializer(currentuser)
-        return Response(serializer.data)   
 

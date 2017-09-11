@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 # Django dependencies
 from django.conf.urls import url, include
-
 # REST framework dependencies
 from rest_framework import routers
 
-# Views
+# Category Views
+from .views import MeetingCategoriesViewSet, EntityCategoryViewSet, PersonfunctionCategoryViewSet
+# User Views
 from .views import UserViewSet, CurrentUser
+# Core Data Views
 from .views import PersonViewSet, EntityViewSet
+# Core Data Relational Views
 from .views import EntitiesByUserView, PersonsByEntityViewSet
-from .views import MeetingViewSet, MeetingCategoriesView, MeetingSubjectViewSet, ParticipantViewSet
+from .views import MeetingsByUserView
+# Meetings Views
+from .views import MeetingViewSet, MeetingSubjectViewSet, ParticipantViewSet
 from .views import SubjectsByEntityViewSet
 
 
@@ -19,6 +23,13 @@ from .views import SubjectsByEntityViewSet
 router = routers.DefaultRouter()
 
 ### General Viewsets
+# Entity Categories View
+router.register(r'entitycategories', EntityCategoryViewSet, 'entitycategories')
+# Meeting Categories View
+router.register(r'meetingcategories', MeetingCategoriesViewSet, 'meetingcategories')
+# Person to Entity Relation Categories View
+router.register(r'personfunctioncategories', PersonfunctionCategoryViewSet, 'personfunctioncategories')
+
 # User
 router.register(r'users', UserViewSet, 'users')
 # Person
@@ -33,20 +44,20 @@ router.register(r'participants', ParticipantViewSet, 'participants')
 router.register(r'meetingsubjects', MeetingSubjectViewSet, 'meetingsubjects')
 
 ### Viewsets with query params
-# Subjects-by-Entity Viewset, fetched through query param EntityID
-router.register(r'subjectsbyentity', SubjectsByEntityViewSet, 'subjectsbyentity')
-# Gets persons by entity, using ?id='id.entity'
+# Persons by Entity, query param=Entity.pk'
 router.register(r'personsbyentity', PersonsByEntityViewSet, 'personsbyentity')
+# Subjects by Entity Viewset, query param=Entity.pk
+router.register(r'subjectsbyentity', SubjectsByEntityViewSet, 'subjectsbyentity')
 
 
 ### Generic views 
 genericviewsurl = [
-    # get current user
+    # current user
     url(r'^currentuser', CurrentUser.as_view()),
     # entities by user
     url(r'^entitiesbyuser', EntitiesByUserView.as_view(), name='entitiesbyuser'),
-    # meeting categories
-    url(r'^meetingcategories', MeetingCategoriesView.as_view(), name='meetingcategories'),
+    # meetings by user
+    url(r'^meetingsbyuser', MeetingsByUserView.as_view(), name='meetingsbyuser'),
 
 ]
 

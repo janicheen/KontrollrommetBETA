@@ -3,20 +3,20 @@ import { Entity, MeetingParticipant, MeetingSubject } from '../_models/index';
 import { MeetingCategory } from '../_categories/index';
 export class Meeting {
   // API PK
-  id: number; 
+  id: number;
   // Relational data
-  meeting_category: MeetingCategory; 
-  entity: Entity; 
+  meeting_category: MeetingCategory;
+  entity: Entity;
   // Relational data Read Only
-  participants: MeetingParticipant[]; 
+  participants: MeetingParticipant[];
   meeting_subjects: MeetingSubject[];
   // Frontend data
-  requested_meetdate: number; 
-  meetingrequest_sent: number; 
-  meeting_started: number; 
-  meeting_completed: number; 
-  report_started: number; 
-  report_completed: number; 
+  requested_meetdate: number;
+  meetingrequest_sent: number;
+  meeting_started: number;
+  meeting_completed: number;
+  report_started: number;
+  report_completed: number;
   // Boolean
-  is_current_meeting: boolean; 
+  is_current_meeting: boolean;
 }

@@ -7,17 +7,34 @@ from rest_framework import serializers
 # Django User Model
 from django.contrib.auth.models import User
 # Core Data Models
-from core_database.models import Entity, Person, PersonToEntityRelation
+from core_database.models import Entity, Person, PersonToEntityRelation, EntityCategory, PersonfunctionCategory
 # Action Data Model
 from process_control.models import Subject, SubjectToEntityRelation
 #Application Data Models
 from meeting_manager.models import Meeting, Participant, MeetingSubject, MeetingCategory
 
-### Category List Serializers
-# Serializes list of Meeting Categories
+### Category Serializers
+
+# Entity Categories
+class EntityCategorySerializer(serializers.ModelSerializer):
+	class Meta:
+		model = EntityCategory
+		fields = (
+			'id', 
+			'name'
+			)
+# Meeting Categories
 class MeetingCategorySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = MeetingCategory
+		fields = (
+			'id', 
+			'name'
+			)
+# Person to Entity Relation Categories
+class PersonfunctionCategorySerializer(serializers.ModelSerializer):
+	class Meta:
+		model = PersonfunctionCategory
 		fields = (
 			'id', 
 			'name'

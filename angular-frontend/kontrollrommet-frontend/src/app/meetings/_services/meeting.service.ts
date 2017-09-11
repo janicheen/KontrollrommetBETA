@@ -29,16 +29,6 @@ export class MeetingService {
     private authHttp: AuthHttp
   ) { }
 
-  // Get list of meetings from API
-  getMeetings(): Promise<Meeting[]> {
-    console.log('getting meetings from API...');
-    return this.authHttp
-      .get(this.meetingsUrl)
-      .toPromise()
-      .then(response => response.json() as Meeting[])
-      .catch(this.handleError);
-  }
-
   getParticipants(ident): Promise<Person[]> {
   console.log('getting participants from API...');
   this.options = new RequestOptions({params: {'id': ident}});
