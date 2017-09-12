@@ -13,9 +13,9 @@ import { CategoriesService } from '../../initialization/_services/categories.ser
 import { DragulaService } from 'ng2-dragula';
 
 @Component({
-  selector: 'meeting-form',
-  templateUrl: './meeting-form.component.html',
-  styleUrls: [ './meeting-form.component.css' ]
+  selector: 'new-meeting',
+  templateUrl: './new-meeting.component.html',
+  styleUrls: [ './new-meeting.component.css' ]
 })
 
 export class MeetingFormComponent {

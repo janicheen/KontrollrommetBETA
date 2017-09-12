@@ -11,34 +11,34 @@ from django.contrib.auth.models import User
 
 ### Category models### 
 
-# Person Categories
+# Person Category
 # TBA category index to identify who is user of system, contact, contributor, tenant, etc. NOT relational status.
 
-# Entity Categories
+# Entity Category
 @python_2_unicode_compatible  # only if you need to support Python 2
 class EntityCategory(models.Model):
     name = models.CharField(max_length=50)
     def __str__(self):
         return '%s' % (self.name)
 
-# Property Categories
+# Property Category
 #TBA category index to identify properties
 
-# Person-to-Entity relation categories
+# Person-to-Entity relation category
 @python_2_unicode_compatible  # only if you need to support Python 2
 class PersonfunctionCategory(models.Model):
     name = models.CharField(max_length=50)
     def __str__(self):
         return '%s' % (self.name)
 
-# Entity-to-Property relation categories
+# Entity-to-Property relation category
 @python_2_unicode_compatible  # only if you need to support Python 2
 class EntityToPropertyRelationCategory(models.Model):
     name = models.CharField(max_length=50)
     def __str__(self):
             return '%s' % (self.name)
 
-# Property-to-Person relation categories
+# Property-to-Person relation category
 # Direct relation to Property 
 
 ### Core Tables ###
@@ -102,7 +102,7 @@ class PersonToEntityRelation(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
     function = models.ForeignKey(PersonfunctionCategory, on_delete=models.CASCADE)
-
+    #created_time =
     def __str__(self):
         return '%s - %s - %s' % (self.person, self.function, self.entity)
 
@@ -111,7 +111,7 @@ class EntityToPropertyRelation(models.Model):
     entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
     propertyitem = models.ForeignKey(Property, on_delete=models.CASCADE)
     relation = models.ForeignKey(EntityToPropertyRelationCategory, on_delete=models.CASCADE)
-
+    #created_time = 
 
 # Property-to-Person relation
 #TBA

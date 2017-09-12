@@ -20,6 +20,7 @@ import { MeetingFormComponent } from './index';
 
 // Services
 import { MeetingService } from './_services/meeting.service';
+import { NewMeetingsubjectComponent } from './new-meetingsubject/new-meetingsubject.component';
 
 @NgModule({
   imports: [ // Necessary Modules
@@ -37,8 +38,9 @@ import { MeetingService } from './_services/meeting.service';
   declarations: [ // Components and Directives
     MeetingsComponent,
     MeetingListComponent,
-    MeetingFormComponent
-  ],
+    MeetingFormComponent,
+    NewMeetingsubjectComponent
+],
   providers: [ // Services
     // Application services
     MeetingService,
