@@ -3,6 +3,8 @@
 // Angular modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+// Bootstrap Modules
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 // Routing Module ***
 import { AppRoutingModule } from './router.module';
 // Application Modules
@@ -20,6 +22,7 @@ import { AppComponent } from './app.component';
 @NgModule({
   imports: [ // Necessary Modules
     BrowserModule,
+    NgbModule.forRoot(),
     AppRoutingModule,
     AuthenticationModule,
     MainUIModule,

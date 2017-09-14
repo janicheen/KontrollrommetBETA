@@ -193,8 +193,8 @@ class MeetingSubjectSerializer(serializers.ModelSerializer):
 			'subject_id',
 			'subject_headline',
 			# Meeting Subject data
-			'edited_headline',
-			'edited_description',
+			'request_headline',
+			'request_description',
 			'listposition_on_request',
 			'listposition_on_report'
 		)
@@ -208,8 +208,8 @@ class MeetingSubjectSerializerPOST(serializers.ModelSerializer):
 			# Subject data to include
 			'subject',
 			# Meeting Subject data
-			'edited_headline',
-			'edited_description',
+			'request_headline',
+			'request_description',
 			'listposition_on_request',
 			'listposition_on_report'
 		)

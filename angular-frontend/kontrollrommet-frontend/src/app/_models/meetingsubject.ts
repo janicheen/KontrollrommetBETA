@@ -5,8 +5,8 @@ export class MeetingSubject {
     // Subject data
     subject: Subject;
     // Meeting Subject data
-    edited_headline: string;
-    edited_description: string;
+    request_headline: string;
+    request_description: string;
     listposition_on_request: number;
     listposition_on_report: number;
 }

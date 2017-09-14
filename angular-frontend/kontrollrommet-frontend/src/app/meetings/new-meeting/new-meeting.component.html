@@ -1,68 +1,75 @@
 <div class="container">
-	<h2>Ny Møteinnkalling</h2>
+    <h2>Ny Møteinnkalling</h2>
 
-	<div class="row">	
-		<div class="col-md-6">
-			<form (ngSubmit)="onSubmit()" #meetingForm="ngForm">
-				<div class="form-group">
-					<label for="entity">Velg Boligselskap</label>
-					<select class="form-control" name="entity" id="entity" required [(ngModel)]="model.entity" (change)="onChangeEntity()">
-						<option *ngFor="let entity of possible_entities" [ngValue]="entity">{{entity.name}}</option>
-					</select>
-				</div>
-				
-				<div name="restofform" *ngIf="model.entity">
-					<div class="form-group">
-						<label for="meetingcategory">Møtekategori</label>							
-						<select class="form-control" name="category" required [(ngModel)]="model.meeting_category">
-							<option *ngFor="let category of possible_categories" [ngValue]="category">{{category.name}}</option>
-						</select>
-					</div>
+    <div class="row">	
+        <div class="col-md-6">
+            <form (ngSubmit)="onSubmit()" #meetingForm="ngForm">
+                <div class="form-group">
+                    <label for="entity">Velg Boligselskap</label>
+                    <select class="form-control" name="entity" id="entity" required [(ngModel)]="model.entity" (change)="onChangeEntity()">
+                        <option *ngFor="let entity of possible_entities" [ngValue]="entity">{{entity.name}}</option>
+                    </select>
+                </div>
+                
+                <div name="restofform" *ngIf="model.entity">
+                    <div class="form-group">
+                        <label for="meetingcategory">Møtekategori</label>							
+                        <select class="form-control" name="category" required [(ngModel)]="model.meeting_category">
+                            <option *ngFor="let category of possible_categories" [ngValue]="category">{{category.name}}</option>
+                        </select>
+                    </div>
 
-					<div class="form-group">
-						<label for="date">Foreslått Møtedato</label>
-						<input type="date" class="form-control" name="date" id="date" required [(ngModel)]="model.requested_meetdate" >
-					</div>
+                    <div class="form-group">
+                      <label for="date">Foreslått Møtedato</label>
+                      <input type="date" class="form-control" name="date" id="date" required [(ngModel)]="model.requested_meetdate" ngbDatepicker #d="ngbDatepicker">
+                    </div>
 
-					<div class='wrapper'>
-						<label>Inviterte</label>
-						<ul class='container' [dragula]='"another-bag"' [dragulaModel]='model.participants'>
-							<li *ngFor="let participant of model.participants">
-								{{participant.person.first_name}} {{participant.person.last_name}}
-								<button class="delete" (click)="onClickRemoveParticipant(participant); $event.stopPropagation()">x</button>									
-							</li>	
-						</ul>
-					</div>
+                    <div class='wrapper'>
+                        <label>Inviterte</label>
+                        <ul class='container' [dragula]='"another-bag"' [dragulaModel]='model.participants'>
+                            <li *ngFor="let participant of model.participants">
+                                {{participant.person.first_name}} {{participant.person.last_name}}
+                                <button class="delete" (click)="onClickRemoveParticipant(participant); $event.stopPropagation()">x</button>									
+                            </li>	
+                        </ul>
+                    </div>
 
-					<div class='wrapper'>
-						<label>Agenda</label>
-						<ul class='container' [dragula]='"another-bag"' [dragulaModel]='model.meeting_subjects'>
-							<li *ngFor="let meetingsubject of model.meeting_subjects">
-								{{meetingsubject.subject.headline}}
-								<button class="delete" (click)="onClickRemoveSubject(meetingsubject); $event.stopPropagation()">x</button>	
-							</li>
-						</ul>
-					</div>
+                    <div class='wrapper'>
+                        <label>Agenda</label>
+                        <ul class='container' [dragula]='"another-bag"' [dragulaModel]='model.meeting_subjects'>
+                            <li *ngFor="let meetingsubject of model.meeting_subjects">
+                                {{meetingsubject.subject.headline}}
+                                <button class="delete" (click)="onClickRemoveSubject(meetingsubject); $event.stopPropagation()">x</button>	
+                            </li>
+                        </ul>
+                    </div>
 
-					<button type="submit" class="btn btn-success" [disabled]="!meetingForm.form.valid">Submit</button>
-				</div>
-			</form>	
-		</div>
+                    <button type="submit" class="btn btn-success" [disabled]="!meetingForm.form.valid">Lag innkalling</button>
+                </div>
+            </form>	
+        </div>
 
-		<div class="col-md-6">
-			<div class="panel panel-default">
-				<label class="panel-heading">Foreslåtte møtedeltakere</label>
-				<ul class="list-unstyled panel-body scroll-area">	
-					<li *ngFor="let person of possible_participants" (click)="onSelectPerson(person)">{{person.first_name}} {{person.last_name}}</li>
-				</ul>
-			</div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <label class="panel-heading">Foreslåtte møtedeltakere</label>
+                <ul class="list-unstyled panel-body scroll-area">	
+                    <li *ngFor="let person of possible_participants" (click)="onSelectPerson(person)">{{person.first_name}} {{person.last_name}}</li>
+                </ul>
+            </div>
 
-			<div class="panel panel-default">
-				<label class="panel-heading">Foreslåtte agendapunkter</label>
-				<ul class="list-unstyled panel-body">	
-					<li *ngFor="let subject of possible_meetingsubjects" (click)="onSelectSubject(subject)">{{subject.headline}}</li>
-				</ul>		
-			</div>
-		</div>
-	</div>
+            <div class="panel panel-default">
+                <label class="panel-heading">Foreslåtte agendapunkter</label>
+                <ul class="list-unstyled panel-body">	
+                    <li *ngFor="let subject of possible_meetingsubjects" (click)="onSelectSubject(subject)">{{subject.headline}}</li>
+                </ul>
+                <button *ngIf="model.entity" type="button" class="btn btn-default" data-toggle="modal" data-target="#NewMeetingSubjectModal">Nytt agendapunkt</button>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="NewMeetingSubjectModal" tabindex="-1" role="dialog">
+                <app-new-meetingsubject></app-new-meetingsubject>                    
+            </div>
+          <!-- Modal End -->
+         
+        </div>
+    </div>
 </div>

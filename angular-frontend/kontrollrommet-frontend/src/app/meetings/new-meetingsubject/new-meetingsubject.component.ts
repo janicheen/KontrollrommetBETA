@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from '../../_models/index';
 
 @Component({
   selector: 'app-new-meetingsubject',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new-meetingsubject.component.css']
 })
 export class NewMeetingsubjectComponent implements OnInit {
+  new_subject = new Subject;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSubmit() {
+    console.log(this.new_subject)
   }
 
 }

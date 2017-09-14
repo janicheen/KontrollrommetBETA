@@ -5,17 +5,19 @@ import { FormsModule }    from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
 // ***Foreign Modules***
-// Bootstrap UI 
+// Bootstrap UI
 import { SortableModule } from 'ngx-bootstrap';
-import { DragulaModule } from 'ng2-dragula'
+import { DragulaModule } from 'ng2-dragula';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 // *** Other Modules ***
 import { AppRoutingModule } from '../router.module';
 
 // *** Application Elements
-//meetings
-import { MeetingsComponent }  from './index';
-import { MeetingListComponent } from "./index";
+// meetings
+import { MeetingsComponent } from './index';
+import { MeetingListComponent } from './index';
 import { MeetingFormComponent } from './index';
 
 // Services
@@ -28,11 +30,12 @@ import { NewMeetingsubjectComponent } from './new-meetingsubject/new-meetingsubj
     CommonModule,
     FormsModule,
     HttpModule,
-  // Sortable module from Bootstrap
+  // Modules from Bootstrap
     SortableModule.forRoot(),
+    NgbModule,
   // Dragula module from Bootstrap
     DragulaModule,
-  //The Routing module
+  // The Routing module
     AppRoutingModule,
   ],
   declarations: [ // Components and Directives
@@ -47,6 +50,6 @@ import { NewMeetingsubjectComponent } from './new-meetingsubject/new-meetingsubj
   ],
   exports: [
     MeetingListComponent
-  ] 
+  ]
 })
 export class MeetingsModule { }

@@ -64,7 +64,7 @@ ngOnInit(): void {
     this.getMeetingCategories();
     this.model.participants = [];
     this.model.meeting_subjects = [];
-    
+
 }
 // What to do when entity field is chosen
 onChangeEntity(): void {
@@ -74,7 +74,7 @@ onChangeEntity(): void {
 }
 
 onSelectPerson(person: Person) {
-    // Construct instance of MeetingParticipant from selected item, and add it as participant in the current meeting instance 
+    // Construct instance of MeetingParticipant from selected item, and add it as participant in the current meeting instance
     var meetingparticipant = new MeetingParticipant;
     meetingparticipant.person = person;
     this.model.participants.push(meetingparticipant);
@@ -86,7 +86,7 @@ onSelectPerson(person: Person) {
 }
 
 onSelectSubject(subject: Subject) {
-    // Construct instance of MeetingSubject from selected item, and add it as meeting subject in the current meeting instance 
+    // Construct instance of MeetingSubject from selected item, and add it as meeting subject in the current meeting instance
     var meetingsubject = new MeetingSubject;
     meetingsubject.subject = subject;
     // meetingsubject.listposition_on_request = TBA add position.
@@ -115,45 +115,45 @@ onClickRemoveSubject(meetingsubject) {
 }
 
 onSubmit() {
-    // Set up a send model, populat this with correct data for POST meeting 
+    // Set up a send model, populate this with correct data for POST meeting
     var send_model = {
         meeting_category: null,
         entity: null,
-        requested_meetdate: null,        
+        requested_meetdate: null,
     } ;
     send_model.meeting_category = this.model.meeting_category.id;
     send_model.entity = this.model.entity.id;
     send_model.requested_meetdate = this.model.requested_meetdate;
     console.dir(send_model);
-    
-    // Get meeding as return from API, and use this in POST to paricipants and meeting subjects 
+
+    // Get meeting as return from API, and use this in POST to paricipants and meeting subjects
     var meeting = this.meetingService.createMeeting(send_model).then(res => {
-        console.log(res)
+        console.log(res);
        // Loop to set correct data for sending participants
-        var send_participants = [];                
+        var send_participants = [];
         for (let i in this.model.participants) {
-            console.log(i)
+            console.log(i);
             var sendparticipant = {
-                is_invited : true, 
+                is_invited : true,
                 person : this.model.participants[i].person.id,
                 meeting : res.id
-            }
-        send_participants.push(sendparticipant)
+            };
+        send_participants.push(sendparticipant);
         }
         // Loop to set correct data for sending meeting subjects
-        var send_meetingsubjects = []    
+        var send_meetingsubjects = [];
         for (let i in this.model.meeting_subjects) {
-            console.log(i)
+            console.log(i);
             var send_meetingsubject = {
                 listposition_on_request : parseInt(i),
                 listposition_on_report : parseInt(i),
                 subject : this.model.meeting_subjects[i].subject.id,
                 meeting : res.id
-            }
-        send_meetingsubjects.push(send_meetingsubject)
+            };
+        send_meetingsubjects.push(send_meetingsubject);
         }
-        console.dir(send_participants)
-        console.dir(send_meetingsubjects)
+        console.dir(send_participants);
+        console.dir(send_meetingsubjects);
         this.meetingService.createParticipants(send_participants);
         this.meetingService.createMeetingSubjects(send_meetingsubjects);
     });
