@@ -25,6 +25,8 @@ from rest_framework_jwt.views import obtain_jwt_token
 urlpatterns = [
 	# Collected set of views meant for client frontend
     url(r'^', include('client_views.urls')),
+    # Colleced set of views from process_control
+    url(r'^process_control/', include('process_control.urls')),
 	# the standard django admin API
     url(r'^admin/', admin.site.urls),
     #JWT token authentication view

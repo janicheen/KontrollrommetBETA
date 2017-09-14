@@ -6,7 +6,7 @@ from django.conf.urls import url, include
 from rest_framework import routers
 
 # Category Views
-from .views import MeetingCategoriesViewSet, EntityCategoryViewSet, PersonfunctionCategoryViewSet
+from .views import MeetingCategoriesViewSet, EntityCategoryViewSet, PersonToEntityRelationCategoryViewSet
 # User Views
 from .views import UserViewSet, CurrentUser
 # Core Data Views
@@ -28,7 +28,7 @@ router.register(r'entitycategories', EntityCategoryViewSet, 'entitycategories')
 # Meeting Categories View
 router.register(r'meetingcategories', MeetingCategoriesViewSet, 'meetingcategories')
 # Person to Entity Relation Categories View
-router.register(r'personfunctioncategories', PersonfunctionCategoryViewSet, 'personfunctioncategories')
+router.register(r'persontoentityrelationcategories', PersonToEntityRelationCategoryViewSet, 'persontoentityrelationcategories')
 
 # User
 router.register(r'users', UserViewSet, 'users')

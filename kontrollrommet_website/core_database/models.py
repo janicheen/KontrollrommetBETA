@@ -26,7 +26,7 @@ class EntityCategory(models.Model):
 
 # Person-to-Entity relation category
 @python_2_unicode_compatible  # only if you need to support Python 2
-class PersonfunctionCategory(models.Model):
+class PersonToEntityRelationCategory(models.Model):
     name = models.CharField(max_length=50)
     def __str__(self):
         return '%s' % (self.name)
@@ -101,7 +101,7 @@ class Property(models.Model):
 class PersonToEntityRelation(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
-    function = models.ForeignKey(PersonfunctionCategory, on_delete=models.CASCADE)
+    relation = models.ForeignKey(PersonToEntityRelationCategory, on_delete=models.CASCADE)
     #created_time =
     def __str__(self):
         return '%s - %s - %s' % (self.person, self.function, self.entity)

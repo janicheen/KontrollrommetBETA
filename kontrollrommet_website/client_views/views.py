@@ -20,7 +20,7 @@ from django.contrib.auth.models import User
 # Core Data Models
 from core_database.models import Entity, Person, PersonToEntityRelation 
 # Category Models
-from core_database.models import EntityCategory, PersonfunctionCategory
+from core_database.models import EntityCategory, PersonToEntityRelationCategory
 from meeting_manager.models import MeetingCategory
 # Action Data Model
 from process_control.models import Subject, SubjectToEntityRelation
@@ -31,7 +31,7 @@ from meeting_manager.models import Meeting, Participant, MeetingSubject
 # User Serializers
 from .serializers import UserSerializer
 # Category Serializers
-from .serializers import EntityCategorySerializer, MeetingCategorySerializer, PersonfunctionCategorySerializer 
+from .serializers import EntityCategorySerializer, MeetingCategorySerializer, PersonToEntityRelationCategorySerializer 
 # Core Data Serializers
 from .serializers import EntitySerializer, PersonSerializer
 # Core Data Relational Serializers 
@@ -57,9 +57,9 @@ class MeetingCategoriesViewSet(viewsets.ModelViewSet):
 	queryset = MeetingCategory.objects.all()
 
 # Person to Entity Relation Category Viewset
-class PersonfunctionCategoryViewSet(viewsets.ModelViewSet):
-	serializer_class = PersonfunctionCategorySerializer
-	queryset = PersonfunctionCategory.objects.all()
+class PersonToEntityRelationCategoryViewSet(viewsets.ModelViewSet):
+	serializer_class = PersonToEntityRelationCategorySerializer
+	queryset = PersonToEntityRelationCategory.objects.all()
 
 
 # User Viewset

@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'django_extensions',
     # Django REST Framework
     'rest_framework',
+    # DRF-generator (autogenerate stuff)
+    'drf_generators',
     # Installed Apps
     'core_database.apps.CoreDatabaseConfig',
     'process_control.apps.ProcessControlConfig',
