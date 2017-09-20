@@ -75,7 +75,7 @@ onChangeEntity(): void {
 
 onSelectPerson(person: Person) {
     // Construct instance of MeetingParticipant from selected item, and add it as participant in the current meeting instance
-    var meetingparticipant = new MeetingParticipant;
+    let meetingparticipant = new MeetingParticipant;
     meetingparticipant.person = person;
     this.model.participants.push(meetingparticipant);
     // Remove the selected instance from list of possible participants
@@ -87,7 +87,7 @@ onSelectPerson(person: Person) {
 
 onSelectSubject(subject: Subject) {
     // Construct instance of MeetingSubject from selected item, and add it as meeting subject in the current meeting instance
-    var meetingsubject = new MeetingSubject;
+    let meetingsubject = new MeetingSubject;
     meetingsubject.subject = subject;
     // meetingsubject.listposition_on_request = TBA add position.
     this.model.meeting_subjects.push(meetingsubject);
@@ -116,7 +116,7 @@ onClickRemoveSubject(meetingsubject) {
 
 onSubmit() {
     // Set up a send model, populate this with correct data for POST meeting
-    var send_model = {
+    let send_model = {
         meeting_category: null,
         entity: null,
         requested_meetdate: null,
@@ -127,24 +127,27 @@ onSubmit() {
     console.dir(send_model);
 
     // Get meeting as return from API, and use this in POST to paricipants and meeting subjects
-    var meeting = this.meetingService.createMeeting(send_model).then(res => {
+    let meeting = this.meetingService.createMeeting(send_model).then(res => {
         console.log(res);
        // Loop to set correct data for sending participants
-        var send_participants = [];
+        let send_participants = [];
         for (let i in this.model.participants) {
-            console.log(i);
-            var sendparticipant = {
-                is_invited : true,
-                person : this.model.participants[i].person.id,
-                meeting : res.id
-            };
-        send_participants.push(sendparticipant);
+            if (this.model.participants.hasOwnProperty(i)) {
+                 console.log(i);
+                // tslint:disable-next-line:prefer-const
+                let sendparticipant = {
+                    is_invited : true,
+                    person : this.model.participants[i].person.id,
+                    meeting : res.id
+                };
+                send_participants.push(sendparticipant);
+            }
         }
         // Loop to set correct data for sending meeting subjects
-        var send_meetingsubjects = [];
+        let send_meetingsubjects = [];
         for (let i in this.model.meeting_subjects) {
             console.log(i);
-            var send_meetingsubject = {
+            let send_meetingsubject = {
                 listposition_on_request : parseInt(i),
                 listposition_on_report : parseInt(i),
                 subject : this.model.meeting_subjects[i].subject.id,

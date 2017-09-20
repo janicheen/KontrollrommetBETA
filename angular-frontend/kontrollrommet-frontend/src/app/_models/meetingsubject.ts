@@ -1,4 +1,4 @@
-import { Subject } from "./index";
+import { Subject } from './index';
 
 export class MeetingSubject {
     id: number;

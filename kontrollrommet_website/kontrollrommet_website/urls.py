@@ -23,10 +23,14 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 #Url patterns
 urlpatterns = [
-	# Collected set of views meant for client frontend
+	# Collected set of specific views meant for client frontend
     url(r'^', include('client_views.urls')),
+    # Colleced set of views from core_database
+    url(r'^core_database/', include('core_database.urls')),
     # Colleced set of views from process_control
     url(r'^process_control/', include('process_control.urls')),
+    # Colleced set of views from meeting_manager
+    url(r'^meeting_manager/', include('meeting_manager.urls')),
 	# the standard django admin API
     url(r'^admin/', admin.site.urls),
     #JWT token authentication view

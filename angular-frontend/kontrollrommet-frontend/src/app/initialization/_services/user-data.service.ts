@@ -47,6 +47,16 @@ export class UserDataService {
         .catch(this.handleError);
     }
 
+    createCase(send_model): Promise<Case> {
+    }
+
+    createSubject(send_subject): Promise<Subject> {
+    }
+
+    createSubjectToEntityRelation(send_subjecttoentityrelation): Promise<SubjectToEntityRelation> {
+    }
+
+
     // private helper methods
     private handleError(error: any): Promise<any> {
         console.error('This is the error handler speaking:', error); // for demo purposes only

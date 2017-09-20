@@ -43,7 +43,6 @@ from .serializers import SubjectsByEntitySerializer
 # Application Data Serializers
 from .serializers import MeetingSerializer, MeetingSerializerPOST, ParticipantSerializer, ParticipantSerializerPOST, MeetingSubjectSerializer, MeetingSubjectSerializerPOST
 
-
 ### Pure Viewsets ###
 
 # Entity Category Viewset
