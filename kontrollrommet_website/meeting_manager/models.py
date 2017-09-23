@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 #Django dependencies
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-
 # Models
-from core_database.models import Entity, Person
+from core_database.models import Person, Entity, Property 
 from process_control.models import Subject
 from django.contrib.auth.models import User
 
 
 ### Category models ###
-
 # Meeting category
 @python_2_unicode_compatible  # only if you need to support Python 2
 class MeetingCategory(models.Model):
@@ -21,12 +18,12 @@ class MeetingCategory(models.Model):
         return '%s' % (self.name)
 
 
-### Main Meeting Table ###
+### Main Meeting Model ###
 
 # Meeting
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Meeting(models.Model):
-    # Simple Relational data
+    # Category
     meeting_category = models.ForeignKey(MeetingCategory, on_delete=models.CASCADE)
     entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
     # Relational data with added through model

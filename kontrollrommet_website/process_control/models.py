@@ -4,9 +4,8 @@ from __future__ import unicode_literals
 from django.utils import timezone
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-
 # Models
-from core_database.models import Entity, Person
+from core_database.models import Person, Entity, Property
 from django.contrib.auth.models import User
 
 ### Category Models ###
@@ -25,14 +24,19 @@ class SubjectToEntityRelationCategory(models.Model):
 class Case(models.Model):
 	case_created = models.DateTimeField(default=timezone.now())
 	case_createdBy = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+	case_ended = models.DateTimeField(blank=True, null=True)
+
 	def __str__(self):
 		return str(self.id)
+
+
 ### Case Item Models ###
 
 #Subject 
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Subject(models.Model):
 	case_number = models.ForeignKey(Case, on_delete=models.CASCADE)
+	
 	headline = models.CharField(max_length=300, blank=True)
 	description = models.TextField(blank=True)
 
