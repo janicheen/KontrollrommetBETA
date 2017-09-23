@@ -1,3 +1,9 @@
+"""
+This module defines the core triangular model of Person-Entity-Property.
+It icludes the core models, relational models and category models to go with it.
+It also contains signal listeners that to automatic operations on core models
+"""
+
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 # Django dependencies
@@ -5,14 +11,17 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.encoding import python_2_unicode_compatible
-
 #Django User model
 from django.contrib.auth.models import User
 
 ### Category models### 
 
-# Person Category
-# TBA category index to identify who is user of system, contact, contributor, tenant, etc. NOT relational status.
+# Person Category (NOT relational status).
+@python_2_unicode_compatible  # only if you need to support Python 2
+class PersonCategory(models.Model):
+    name = models.CharField(max_length=50)
+    def __str__(self):
+        return '%s' % (self.name)
 
 # Entity Category
 @python_2_unicode_compatible  # only if you need to support Python 2
@@ -22,7 +31,11 @@ class EntityCategory(models.Model):
         return '%s' % (self.name)
 
 # Property Category
-#TBA category index to identify properties
+@python_2_unicode_compatible  # only if you need to support Python 2
+class PropertyCategory(models.Model):
+    name = models.CharField(max_length=50)
+    def __str__(self):
+        return '%s' % (self.name)
 
 # Person-to-Entity relation category
 @python_2_unicode_compatible  # only if you need to support Python 2
@@ -36,21 +49,23 @@ class PersonToEntityRelationCategory(models.Model):
 class EntityToPropertyRelationCategory(models.Model):
     name = models.CharField(max_length=50)
     def __str__(self):
-            return '%s' % (self.name)
+        return '%s' % (self.name)
 
 # Property-to-Person relation category
-# Direct relation to Property 
+@python_2_unicode_compatible  # only if you need to support Python 2
+class PropertyToPersonRelationCategory(models.Model):
+    name = models.CharField(max_length=50)
+    def __str__(self):
+        return '%s' % (self.name)
 
 ### Core Tables ###
 
 # Person Table
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Person(models.Model):
-    #Basic credentials
+    # Basic credentials
     first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    # Contact details
-    
+    last_name = models.CharField(max_length=50)    
     #Attatched user identification
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 
@@ -61,21 +76,6 @@ class Person(models.Model):
 
     def __str__(self):
         return '%s' % (self.full_name)
-
-# Singal listener that automatically creates related Person instance, when new user is created 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Person.objects.create(user=instance)
-
-# Signal listener, that automatically edits user entry in Person instance, when user is edited.
-# PS! Should be looked at. 
-# As long as the ID(primary key) is permanent, user data and person data can be edited separately, and be linked together.
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    relatedperson = Person.objects.get(user=instance)
-    relatedperson.user = instance
-    relatedperson.save()
 
 # Entity Table
 @python_2_unicode_compatible  # only if you need to support Python 2
@@ -104,14 +104,40 @@ class PersonToEntityRelation(models.Model):
     relation = models.ForeignKey(PersonToEntityRelationCategory, on_delete=models.CASCADE)
     #created_time =
     def __str__(self):
-        return '%s - %s - %s' % (self.person, self.function, self.entity)
+        return '%s - %s - %s' % (self.person, self.relation, self.entity)
 
 # Entity-to-Property relation
 class EntityToPropertyRelation(models.Model):
     entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
-    propertyitem = models.ForeignKey(Property, on_delete=models.CASCADE)
+    _property = models.ForeignKey(Property, on_delete=models.CASCADE)
     relation = models.ForeignKey(EntityToPropertyRelationCategory, on_delete=models.CASCADE)
     #created_time = 
+    def __str__(self):
+        return '%s - %s - %s' % (self.entity, self.relation, self._property)
 
 # Property-to-Person relation
-#TBA
+class PropertyToPersonRelation(models.Model):
+    _property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    relation = models.ForeignKey(PropertyToPersonRelationCategory, on_delete=models.CASCADE)
+    #created_time = 
+    def __str__(self):
+        return '%s - %s - %s' % (self._property, self.relation, self.person)
+
+
+### Signal listeners that perform automatic operations on models
+
+# Singal listener that automatically creates related Person instance, when new user is created 
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Person.objects.create(user=instance)
+
+# Signal listener, that automatically edits user entry in Person instance, when user is edited.
+# PS! Should be looked at. As long as the ID(primary key) is permanent, user data and person data can be edited separately, and be linked together.
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    relatedperson = Person.objects.get(user=instance)
+    relatedperson.user = instance
+    relatedperson.save()
+

@@ -6,23 +6,22 @@ from rest_framework import serializers
 
 # Django User Model
 from django.contrib.auth.models import User
-# Core Data Models
-from core_database.models import Entity, Person, PersonToEntityRelation, EntityCategory, PersonToEntityRelationCategory
-# Action Data Model
-from process_control.models import Subject, SubjectToEntityRelation
-#Application Data Models
-from meeting_manager.models import Meeting, Participant, MeetingSubject, MeetingCategory
+# Core Database
+from core_database.models import EntityCategory, PersonToEntityRelationCategory
+from core_database.models import Person, Entity, Property
+from core_database.models import PersonToEntityRelation  
+# Process Control
+from process_control.models import Subject
+from process_control.models import SubjectToEntityRelation
+# Meeting Manager Application 
+from meeting_manager.models import MeetingCategory
+from meeting_manager.models import Meeting, Participant, MeetingSubject
+
+from core_database.serializers import PersonSerializer, EntitySerializer
 
 ### Category Serializers
 
-# Entity Categories
-class EntityCategorySerializer(serializers.ModelSerializer):
-	class Meta:
-		model = EntityCategory
-		fields = (
-			'id', 
-			'name'
-			)
+
 # Meeting Categories
 class MeetingCategorySerializer(serializers.ModelSerializer):
 	class Meta:
@@ -31,37 +30,8 @@ class MeetingCategorySerializer(serializers.ModelSerializer):
 			'id', 
 			'name'
 			)
-# Person to Entity Relation Categories
-class PersonToEntityRelationCategorySerializer(serializers.ModelSerializer):
-	class Meta:
-		model = PersonToEntityRelationCategory
-		fields = (
-			'id', 
-			'name'
-			)
 
 
-### Pure data model serializers
-# Serializes pure person data
-class PersonSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Person
-		fields = (
-			'id', 
-			'first_name', 
-			'last_name'
-			)
-
-# Serializes pure entity data
-class EntitySerializer(serializers.ModelSerializer):
-	category_name = serializers.StringRelatedField(source='category')
-	class Meta:
-		model = Entity
-		fields = (
-			'id', 
-			'name', 
-			'category_name'
-			)
 # Serializes pure Subject data
 class SubjectSerializer(serializers.ModelSerializer):
 	class Meta:

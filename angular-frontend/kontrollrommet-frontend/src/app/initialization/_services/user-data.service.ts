@@ -13,9 +13,10 @@ import { User, Entity, Meeting } from '../../_models/index';
 @Injectable()
 export class UserDataService {
     // Properties
-    private currentuserUrl = 'http://127.0.0.1:8000/currentuser/?format=json';  // URL to runserver local web api
+    private currentuserUrl = 'currentuser';  // URL to runserver local web api
     private entitiesbyuserUrl = 'http://127.0.0.1:8000/entitiesbyuser/?format=json';
     private meetingsbyuserUrl = 'http://127.0.0.1:8000/meetingsbyuser/?format=json';
+
     private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
 
     private user: User;
@@ -27,8 +28,9 @@ export class UserDataService {
     // Method for getting data on currently logged in user
     getCurrentUser(): Observable<User> {
         console.log('getting current user...');
-        return this.authHttp.get(this.currentuserUrl)
-        .map(res => res.json());
+        return this.authHttp.get('currentuser/')
+        .map(res => res.json())
+        .catch(this.handleError);
     }
 
     getEntitiesByUser(): Observable<Entity[]> {

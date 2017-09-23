@@ -5,7 +5,6 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 // Angular2 JWT dependencies
 import { AuthHttp } from 'angular2-jwt';
-
 // Models
 import { Person, Subject,  Meeting, MeetingParticipant, MeetingSubject } from '../../_models/index';
 import { MeetingCategory } from '../../_categories/index';

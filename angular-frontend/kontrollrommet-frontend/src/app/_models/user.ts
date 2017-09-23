@@ -3,6 +3,6 @@
 export class User {
     id: number;
     username: string;
-    email: string
-    person: Person
+    email: string;
+    person: Person;
 }
