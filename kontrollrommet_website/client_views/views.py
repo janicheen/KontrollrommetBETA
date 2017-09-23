@@ -17,9 +17,9 @@ from rest_framework import status
 # Django User Model
 from django.contrib.auth.models import User
 # Core Databse 
-from core_database.models import EntityCategory, PersonToEntityRelationCategory
-from core_database.models import Person, Entity, Property
-from core_database.models import PersonToEntityRelation
+from resources.models import EntityCategory, PersonToEntityRelationCategory
+from resources.models import Person, Entity, Property
+from resources.models import PersonToEntityRelation
 # Meeting Manager Application
 from meeting_manager.models import MeetingCategory, SubjectToEntityRelationCategory
 from meeting_manager.models import Meeting, Subject
@@ -29,7 +29,7 @@ from meeting_manager.models import Participant, MeetingSubject, SubjectToEntityR
 # User Serializer
 from .serializers import UserSerializer
 # Core Database
-from core_database.serializers import PersonSerializer, EntitySerializer
+from resources.serializers import PersonSerializer, EntitySerializer
 # Process Control
 from .serializers import SubjectSerializer
 # Meeting Manager Application

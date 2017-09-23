@@ -57,11 +57,11 @@ INSTALLED_APPS = [
     # DRF-generator (autogenerate stuff)
     'drf_generators',
     # Installed Apps
-    'core_database.apps.CoreDatabaseConfig',
+    'resources.apps.ResourcesConfig',
+    'process.apps.ProcessConfig',
     'process_control.apps.ProcessControlConfig',
     'client_views.apps.ClientViewsConfig',
     'meeting_manager.apps.MeetingManagerConfig',
-    'project_manager.apps.ProjectManagerConfig',
     # Djangostuff
     'django.contrib.admin',
     'django.contrib.auth',

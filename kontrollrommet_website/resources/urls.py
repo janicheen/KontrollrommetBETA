@@ -3,7 +3,7 @@ from django.conf.urls import url
 # Rest Framework dependencies
 from rest_framework.routers import DefaultRouter
 # Views
-from core_database import views
+from resources import views
 
 router = DefaultRouter()
 # Categories

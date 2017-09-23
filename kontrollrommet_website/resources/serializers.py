@@ -1,12 +1,12 @@
 # Django Dependencies
 from rest_framework.serializers import ModelSerializer
 # Category models
-from core_database.models import PersonCategory, EntityCategory, PropertyCategory 
-from core_database.models import PersonToEntityRelationCategory, EntityToPropertyRelationCategory, PropertyToPersonRelationCategory 
+from resources.models import PersonCategory, EntityCategory, PropertyCategory 
+from resources.models import PersonToEntityRelationCategory, EntityToPropertyRelationCategory, PropertyToPersonRelationCategory 
 # Core Models
-from core_database.models import Person, Entity, Property
+from resources.models import Person, Entity, Property
 # Relational Models
-from core_database.models import PersonToEntityRelation, EntityToPropertyRelation, PropertyToPersonRelation
+from resources.models import PersonToEntityRelation, EntityToPropertyRelation, PropertyToPersonRelation
 
 ### Category Models ###
 

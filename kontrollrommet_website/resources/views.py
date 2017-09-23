@@ -2,15 +2,15 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView
 # Serializers
-from core_database.serializers import PersonCategorySerializer, EntityCategorySerializer, PropertyCategorySerializer 
-from core_database.serializers import PersonToEntityRelationCategorySerializer, EntityToPropertyRelationCategorySerializer, PropertyToPersonRelationCategorySerializer
-from core_database.serializers import PersonSerializer, EntitySerializer, PropertySerializer
-from core_database.serializers import PersonToEntityRelationSerializer, EntityToPropertyRelationSerializer, PropertyToPersonRelationSerializer
+from resources.serializers import PersonCategorySerializer, EntityCategorySerializer, PropertyCategorySerializer 
+from resources.serializers import PersonToEntityRelationCategorySerializer, EntityToPropertyRelationCategorySerializer, PropertyToPersonRelationCategorySerializer
+from resources.serializers import PersonSerializer, EntitySerializer, PropertySerializer
+from resources.serializers import PersonToEntityRelationSerializer, EntityToPropertyRelationSerializer, PropertyToPersonRelationSerializer
 # Models
-from core_database.models import PersonCategory, EntityCategory, PropertyCategory 
-from core_database.models import PersonToEntityRelationCategory, EntityToPropertyRelationCategory, PropertyToPersonRelationCategory
-from core_database.models import Person, Entity, Property
-from core_database.models import PersonToEntityRelation, EntityToPropertyRelation, PropertyToPersonRelation
+from resources.models import PersonCategory, EntityCategory, PropertyCategory 
+from resources.models import PersonToEntityRelationCategory, EntityToPropertyRelationCategory, PropertyToPersonRelationCategory
+from resources.models import Person, Entity, Property
+from resources.models import PersonToEntityRelation, EntityToPropertyRelation, PropertyToPersonRelation
 
 ### Category Viewsets ###
 class PersonCategoryViewSet(ModelViewSet):
