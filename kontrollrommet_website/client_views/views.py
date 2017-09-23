@@ -21,24 +21,21 @@ from resources.models import EntityCategory, PersonToEntityRelationCategory
 from resources.models import Person, Entity, Property
 from resources.models import PersonToEntityRelation
 # Meeting Manager Application
-from meeting_manager.models import MeetingCategory, SubjectToEntityRelationCategory
-from meeting_manager.models import Meeting, Subject
-from meeting_manager.models import MeetingParticipant, MeetingSubject, SubjectToEntityRelation
+from meeting_manager.models import MeetingCategory
+from meeting_manager.models import Meeting
+from meeting_manager.models import MeetingParticipant, MeetingSubject
 
 ### Serializers
 # User Serializer
 from .serializers import UserSerializer
 # Core Database
 from resources.serializers import PersonSerializer, EntitySerializer
-# Process Control
-from .serializers import SubjectSerializer
 # Meeting Manager Application
 from .serializers import MeetingCategorySerializer
 from .serializers import MeetingSerializer, MeetingParticipantSerializer, MeetingSubjectSerializer 
 from .serializers import MeetingSerializerPOST, MeetingParticipantSerializerPOST, MeetingSubjectSerializerPOST
 # Special Serializers
 from .serializers import EntitiesByPersonSerializer, PersonsByEntitySerializer
-from .serializers import SubjectsByEntitySerializer
 
 
 ### Pure Viewsets ###
@@ -128,16 +125,6 @@ class MeetingsByUserView(ListAPIView):
     def get_queryset(self):        
         user = self.request.user
         return Meeting.objects.filter(meetingparticipants__user__id = user.id)
-
-class SubjectsByEntityViewSet(viewsets.ReadOnlyModelViewSet):
-    serializer_class = SubjectSerializer
-    # makes a queryset with all subjects matching the requested entity 
-    def get_queryset(self):
-        id = self.request.query_params.get('id', None)
-        queryset = Subject.objects.filter(subjecttoentityrelation__entity__id = id)
-        return queryset
-
-
 
 ### Views by Query parameter
 

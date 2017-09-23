@@ -1,23 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 # REST Framework dependencies
 from rest_framework import serializers
 
-# Django User Model
-from django.contrib.auth.models import User
-# Core Database
-from resources.models import EntityCategory, PersonToEntityRelationCategory
-from resources.models import Person, Entity, Property
-from resources.models import PersonToEntityRelation  
-# Meeting Manager Application 
-from meeting_manager.models import MeetingCategory, SubjectCategory, SubjectToEntityRelationCategory
-from meeting_manager.models import Meeting, Subject
-from meeting_manager.models import MeetingParticipant, MeetingSubject, SubjectToEntityRelation
-
-from resources.serializers import PersonSerializer, EntitySerializer
-
-### Category Serializers
+#Models
+from meeting_manager.models import MeetingCategory
+from meeting_manager.models import Meeting
+from meeting_manager.models import MeetingParticipant, MeetingSubject
 
 
 # Meeting Categories
@@ -28,82 +17,6 @@ class MeetingCategorySerializer(serializers.ModelSerializer):
 			'id', 
 			'name'
 			)
-
-
-# Serializes pure Subject data
-class SubjectSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Subject
-		fields = (
-			'id',
-			'headline',
-			'description'
-		)
-
-### User data serializer ###
-# Serializes user data with added person data 
-class UserSerializer(serializers.ModelSerializer):
-	# Hook relevant Person instance to the User instance
-	person = PersonSerializer()
-	class Meta:
-		model = User
-		fields = (
-			'id', 
-			'username', 
-			'email', 
-			'person'
-			)
-
-### Serializers adding relational data
-# Serializes entity data with added person relation data
-class EntitiesByPersonSerializer(serializers.ModelSerializer):
-	person = PersonSerializer()
-	entity = EntitySerializer()
-	person_to_entity_relation_name = serializers.StringRelatedField(source='function')
-	class Meta:
-		model = PersonToEntityRelation
-		fields = (
-			'id',
-			# Person related data
-			'person',
-			# Entity related data
-			'entity', 
-			# Relational data 
-			'person_to_entity_relation_name'
-			)
-
-# Serializes person data with added entity relation data 
-class PersonsByEntitySerializer(serializers.ModelSerializer):
-	person_id = serializers.ReadOnlyField(source='person.id')
-	person_firstname = serializers.ReadOnlyField(source='person.first_name')
-	person_lastname = serializers.ReadOnlyField(source='person.last_name')
-	function = serializers.StringRelatedField()
-	class Meta:
-		model = PersonToEntityRelation
-		fields = (
-			'person_id',
-			'person_firstname', 
-			'person_lastname', 
-			'function'
-			)
-
-# Serializes Subjects with added entity relation data
-class SubjectsByEntitySerializer(serializers.ModelSerializer):
-	subject_id = serializers.ReadOnlyField(source='subject.id')
-	headline = serializers.ReadOnlyField(source='subject.headline')
-	description = serializers.ReadOnlyField(source='subject.description')
-	class Meta:
-		model = SubjectToEntityRelation
-		fields = (
-			'subject_id',
-			'headline',
-			'description',
-			'relation'
-			)
-
-
-### Application Serializers
-
 # Serializes meeting meetingparticipants in meeting_manager
 class MeetingParticipantSerializer(serializers.ModelSerializer):
 	meeting_id = serializers.ReadOnlyField(source='meeting.id')
@@ -185,7 +98,7 @@ class MeetingSubjectSerializerPOST(serializers.ModelSerializer):
 # Serializes Meetings
 class MeetingSerializer(serializers.ModelSerializer):
 	meeting_category = MeetingCategorySerializer()
-	entity = EntitySerializer()
+	executive_entity = EntitySerializer()
 	meetingparticipants = MeetingParticipantSerializer(source='participant_set', many=True, read_only=True)
 	meetingsubjects = MeetingSubjectSerializer(source='meetingsubject_set', many=True, read_only=True)
 

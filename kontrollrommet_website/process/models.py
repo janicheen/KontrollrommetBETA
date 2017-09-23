@@ -1,5 +1,5 @@
 """
-This module defines the triangular model for Project Management.
+This module defines the triangular model for Process.
 It icludes the core models, relational models and category models to go with it.
 """
 
@@ -10,6 +10,9 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 #Django User model
 from django.contrib.auth.models import User
+# Models
+from resources.models import Person, Entity, Property 
+
 
 ### Category models### 
 
@@ -61,17 +64,19 @@ class ResultToPlanRelationCategory(models.Model):
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Plan(models.Model):
     # Basic credentials
-    headline = models.CharField(max_length=250)
     category = models.ForeignKey(PlanCategory, on_delete=models.CASCADE)
-
+    executive_entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
+    headline = models.CharField(max_length=250)
+    description = models.TextField(blank=True)
     def __str__(self):
         return '%s' % (self.headline)
 
 # Action Table
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Action(models.Model):
-    headline = models.CharField(max_length=250)
     category = models.ForeignKey(ActionCategory, on_delete=models.CASCADE)
+    executive_entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
+    headline = models.CharField(max_length=250)
 
     def __str__(self):
         return '%s' % (self.headline)
@@ -79,8 +84,9 @@ class Action(models.Model):
 # Result Table
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Result(models.Model):
-    headline = models.CharField(max_length=250)
     category = models.ForeignKey(ResultCategory, on_delete=models.CASCADE)
+    executive_entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
+    headline = models.CharField(max_length=250)
     def __str__(self):
         return '%s' % (self.headline)
 

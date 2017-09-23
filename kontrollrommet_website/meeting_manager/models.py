@@ -18,29 +18,6 @@ class MeetingCategory(models.Model):
     def __str__(self):
         return '%s' % (self.name)
 
-# Subject category
-@python_2_unicode_compatible  # only if you need to support Python 2
-class SubjectCategory(models.Model):
-    name = models.CharField(max_length=50)
-    def __str__(self):
-        return '%s' % (self.name)
-
-# Descision category
-@python_2_unicode_compatible  # only if you need to support Python 2
-class DescisionCategory(models.Model):
-    name = models.CharField(max_length=50)
-    def __str__(self):
-        return '%s' % (self.name)
-
-# Subject-to-Entity Relation category
-@python_2_unicode_compatible  # only if you need to support Python 2
-class SubjectToEntityRelationCategory(models.Model):
-	name = models.CharField(max_length=50)
-
-	def __str__(self):
-		return '%s' % (self.name)
-
-
 ### Core Meeting Models ###
 
 # Meeting
@@ -49,7 +26,7 @@ class Meeting(models.Model):
     # Category
     meeting_category = models.ForeignKey(MeetingCategory, on_delete=models.CASCADE)
     # Data relating to resources
-    entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
+    executive_entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
     meetingparticipants = models.ManyToManyField(Person, through='MeetingParticipant')
     # Data relating to process
     meetingsubjects = models.ManyToManyField(Plan, through='Meetingsubject')
@@ -68,7 +45,7 @@ class Meeting(models.Model):
     is_current_meeting = models.BooleanField(default=False)
 
     def __str__(self):
-        return '%s - %s - %s' % (self.meeting_category, self.entity, self.requested_meetdate)
+        return '%s - %s - %s' % (self.meeting_category, self.executive_entity, self.requested_meetdate)
 
 
 ### Relational data
@@ -76,7 +53,7 @@ class Meeting(models.Model):
 #Plan To Meeting Relation
 @python_2_unicode_compatible  # only if you need to support Python 2
 class MeetingSubject(models.Model):
-    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+    plan_item = models.ForeignKey(Plan, on_delete=models.CASCADE)
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
     # Meeting Request data
     request_headline = models.CharField(max_length=300, blank=True)
@@ -89,12 +66,12 @@ class MeetingSubject(models.Model):
     report_text = models.TextField(blank=True)
 
     def __str__(self):
-        return '%s - %s' % (self.meeting, self.plan)
+        return '%s - %s' % (self.meeting, self.plan_item)
 
     class Meta:
         # Forbids a meeting subject to have the same listposition in the same meeting
         # Forbids a meeting to have several instances of the same meeting subject
-        unique_together = (('meeting', 'subject'), ('meeting', 'listposition_on_request'), ('meeting', 'listposition_on_report'))
+        unique_together = (('meeting', 'plan_item'), ('meeting', 'listposition_on_request'), ('meeting', 'listposition_on_report'))
         ordering = ('meeting', 'listposition_on_request')
 
 # Person to Meeting Relation
@@ -119,12 +96,3 @@ class MeetingParticipant(models.Model):
     def __str__(self):
         return '%s - %s' % (self.person, self.meeting)
 
-# Subject-to-Entity relation
-@python_2_unicode_compatible  # only if you need to support Python 2
-class SubjectToEntityRelation(models.Model):
-	subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-	entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
-	relation = models.ForeignKey(SubjectToEntityRelationCategory, on_delete=models.CASCADE)
-
-	def __str__(self):
-		return '%s - %s - %s' % (self.subject, self.relation, self.entity)
