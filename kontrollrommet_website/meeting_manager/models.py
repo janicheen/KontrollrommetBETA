@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 # Models
 from resources.models import Person, Entity, Property 
+from process.models import Plan, Action, Result 
 from django.contrib.auth.models import User
 
 
@@ -47,11 +48,11 @@ class SubjectToEntityRelationCategory(models.Model):
 class Meeting(models.Model):
     # Category
     meeting_category = models.ForeignKey(MeetingCategory, on_delete=models.CASCADE)
-    # Belongs To
+    # Data relating to resources
     entity = models.ForeignKey(Entity, on_delete=models.CASCADE, null=True)
-    # Relational data with added through model
-    participants = models.ManyToManyField(Person, through='Participant')
-    meeting_subjects = models.ManyToManyField('Subject', through='Meetingsubject')
+    meetingparticipants = models.ManyToManyField(Person, through='MeetingParticipant')
+    # Data relating to process
+    meetingsubjects = models.ManyToManyField(Plan, through='Meetingsubject')
     # Dates
     requested_meetdate = models.DateField(blank=True, null=True)
     # Time Stamps
@@ -69,25 +70,13 @@ class Meeting(models.Model):
     def __str__(self):
         return '%s - %s - %s' % (self.meeting_category, self.entity, self.requested_meetdate)
 
-#Subject 
-@python_2_unicode_compatible  # only if you need to support Python 2
-class Subject(models.Model):
-    # Relation
-    entity_relation = models.ManyToManyField(Entity, through='SubjectToEntityRelation')
-    # Data
-    headline = models.CharField(max_length=300, blank=True)
-    description = models.TextField(blank=True)
-
-    def __str__(self):
-		return '%s' % (self.headline)
-
 
 ### Relational data
 
-#Subject To Meeting Relation
+#Plan To Meeting Relation
 @python_2_unicode_compatible  # only if you need to support Python 2
 class MeetingSubject(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
     # Meeting Request data
     request_headline = models.CharField(max_length=300, blank=True)
@@ -96,11 +85,11 @@ class MeetingSubject(models.Model):
     # Meeting Report data
     report_headline = models.CharField(max_length=300, blank=True)
     report_description = models.TextField(blank=True)
-    report_text = models.TextField(blank=True)
     listposition_on_report = models.IntegerField(blank=True, null=True)
+    report_text = models.TextField(blank=True)
 
     def __str__(self):
-        return '%s - %s' % (self.meeting, self.subject)
+        return '%s - %s' % (self.meeting, self.plan)
 
     class Meta:
         # Forbids a meeting subject to have the same listposition in the same meeting
@@ -110,7 +99,7 @@ class MeetingSubject(models.Model):
 
 # Person to Meeting Relation
 @python_2_unicode_compatible  # only if you need to support Python 2
-class Participant(models.Model):
+class MeetingParticipant(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
     # Data

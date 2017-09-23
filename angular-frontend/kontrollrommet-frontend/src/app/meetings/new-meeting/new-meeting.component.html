@@ -26,18 +26,18 @@
 
                     <div class='wrapper'>
                         <label>Inviterte</label>
-                        <ul class='container' [dragula]='"another-bag"' [dragulaModel]='model.participants'>
-                            <li *ngFor="let participant of model.participants">
+                        <ul class='container' [dragula]='"another-bag"' [dragulaModel]='model.meetingparticipants'>
+                            <li *ngFor="let participant of model.meetingparticipants">
                                 {{participant.person.first_name}} {{participant.person.last_name}}
-                                <button class="delete" (click)="onClickRemoveParticipant(participant); $event.stopPropagation()">x</button>									
+                                <button class="delete" (click)="onClickRemoveMeetingParticipant(participant); $event.stopPropagation()">x</button>									
                             </li>	
                         </ul>
                     </div>
 
                     <div class='wrapper'>
                         <label>Agenda</label>
-                        <ul class='container' [dragula]='"another-bag"' [dragulaModel]='model.meeting_subjects'>
-                            <li *ngFor="let meetingsubject of model.meeting_subjects">
+                        <ul class='container' [dragula]='"another-bag"' [dragulaModel]='model.meetingsubjects'>
+                            <li *ngFor="let meetingsubject of model.meetingsubjects">
                                 {{meetingsubject.subject.headline}}
                                 <button class="delete" (click)="onClickRemoveSubject(meetingsubject); $event.stopPropagation()">x</button>	
                             </li>
@@ -53,7 +53,7 @@
             <div class="panel panel-default">
                 <label class="panel-heading">Foreslåtte møtedeltakere</label>
                 <ul class="list-unstyled panel-body scroll-area">	
-                    <li *ngFor="let person of possible_participants" (click)="onSelectPerson(person)">{{person.first_name}} {{person.last_name}}</li>
+                    <li *ngFor="let person of possible_meetingparticipants" (click)="onSelectPerson(person)">{{person.first_name}} {{person.last_name}}</li>
                 </ul>
             </div>
 

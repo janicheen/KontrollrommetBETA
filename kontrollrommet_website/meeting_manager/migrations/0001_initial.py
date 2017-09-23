@@ -62,7 +62,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Participant',
+            name='MeetingParticipant',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('is_invited', models.BooleanField(default=False)),
@@ -141,7 +141,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='meeting',
             name='participants',
-            field=models.ManyToManyField(through='meeting_manager.Participant', to='resources.Person'),
+            field=models.ManyToManyField(through='meeting_manager.MeetingParticipant', to='resources.Person'),
         ),
         migrations.AlterUniqueTogether(
             name='participant',

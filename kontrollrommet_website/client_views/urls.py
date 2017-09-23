@@ -12,7 +12,7 @@ router = routers.DefaultRouter()
 
 router.register(r'meetingcategories', views.MeetingCategoriesViewSet, 'meetingcategories')
 router.register(r'meetings', views.MeetingViewSet, 'meetings')
-router.register(r'participants', views.ParticipantViewSet, 'participants')
+router.register(r'meetingparticipants', views.MeetingParticipantViewSet, 'meetingparticipants')
 router.register(r'meetingsubjects', views.MeetingSubjectViewSet, 'meetingsubjects')
 ### Viewsets with query params
 router.register(r'subjectsbyentity', views.SubjectsByEntityViewSet, 'subjectsbyentity')

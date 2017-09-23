@@ -12,15 +12,15 @@
         </h3>
         
         Deltakere:
-        <ul class="participants">
-          <li *ngFor="let participant of meetinglist.selectedmeeting.participants">
+        <ul class="meetingparticipants">
+          <li *ngFor="let participant of meetinglist.selectedmeeting.meetingparticipants">
             <span>{{participant.person_first_name}} {{participant.person_last_name}}</span>
           </li>
         </ul>
     
         Agenda:
         <ul class="subjects">
-          <li *ngFor="let subject of meetinglist.selectedmeeting.meeting_subjects">
+          <li *ngFor="let subject of meetinglist.selectedmeeting.meetingsubjects">
             <span>{{subject.subject_headline}}</span>
           </li>
         </ul>

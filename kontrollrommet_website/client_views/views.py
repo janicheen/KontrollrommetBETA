@@ -23,7 +23,7 @@ from resources.models import PersonToEntityRelation
 # Meeting Manager Application
 from meeting_manager.models import MeetingCategory, SubjectToEntityRelationCategory
 from meeting_manager.models import Meeting, Subject
-from meeting_manager.models import Participant, MeetingSubject, SubjectToEntityRelation
+from meeting_manager.models import MeetingParticipant, MeetingSubject, SubjectToEntityRelation
 
 ### Serializers
 # User Serializer
@@ -34,8 +34,8 @@ from resources.serializers import PersonSerializer, EntitySerializer
 from .serializers import SubjectSerializer
 # Meeting Manager Application
 from .serializers import MeetingCategorySerializer
-from .serializers import MeetingSerializer, ParticipantSerializer, MeetingSubjectSerializer 
-from .serializers import MeetingSerializerPOST, ParticipantSerializerPOST, MeetingSubjectSerializerPOST
+from .serializers import MeetingSerializer, MeetingParticipantSerializer, MeetingSubjectSerializer 
+from .serializers import MeetingSerializerPOST, MeetingParticipantSerializerPOST, MeetingSubjectSerializerPOST
 # Special Serializers
 from .serializers import EntitiesByPersonSerializer, PersonsByEntitySerializer
 from .serializers import SubjectsByEntitySerializer
@@ -62,10 +62,10 @@ class MeetingViewSet(viewsets.ModelViewSet):
         return MeetingSerializer
 
 
-# Participant Viewset
-class ParticipantViewSet(viewsets.ModelViewSet):
-    serializer_class = ParticipantSerializer
-    queryset = Participant.objects.all()
+# MeetingParticipant Viewset
+class MeetingParticipantViewSet(viewsets.ModelViewSet):
+    serializer_class = MeetingParticipantSerializer
+    queryset = MeetingParticipant.objects.all()
 
     # Redefines create so it can receive a list of object entries
     def create(self, request, *args, **kwargs):
@@ -78,8 +78,8 @@ class ParticipantViewSet(viewsets.ModelViewSet):
     # sets different serializers for read and write
     def get_serializer_class(self):
         if self.request.method == 'POST':
-            return ParticipantSerializerPOST
-        return ParticipantSerializer
+            return MeetingParticipantSerializerPOST
+        return MeetingParticipantSerializer
 
 
 # Meetingsubject Viewset
@@ -121,13 +121,13 @@ class EntitiesByUserView(ListAPIView):
         user = self.request.user
         return Entity.objects.filter(persontoentityrelation__person__user__id = user.id)
 
-# Meetings bu Current User as Participant
+# Meetings bu Current User as MeetingParticipant
 class MeetingsByUserView(ListAPIView):
     serializer_class = MeetingSerializer
     # makes a queryset of all meetings where current user is participant 
     def get_queryset(self):        
         user = self.request.user
-        return Meeting.objects.filter(participants__user__id = user.id)
+        return Meeting.objects.filter(meetingparticipants__user__id = user.id)
 
 class SubjectsByEntityViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = SubjectSerializer

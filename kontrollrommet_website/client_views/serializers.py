@@ -13,7 +13,7 @@ from resources.models import PersonToEntityRelation
 # Meeting Manager Application 
 from meeting_manager.models import MeetingCategory, SubjectCategory, SubjectToEntityRelationCategory
 from meeting_manager.models import Meeting, Subject
-from meeting_manager.models import Participant, MeetingSubject, SubjectToEntityRelation
+from meeting_manager.models import MeetingParticipant, MeetingSubject, SubjectToEntityRelation
 
 from resources.serializers import PersonSerializer, EntitySerializer
 
@@ -104,14 +104,14 @@ class SubjectsByEntitySerializer(serializers.ModelSerializer):
 
 ### Application Serializers
 
-# Serializes meeting participants in meeting_manager
-class ParticipantSerializer(serializers.ModelSerializer):
+# Serializes meeting meetingparticipants in meeting_manager
+class MeetingParticipantSerializer(serializers.ModelSerializer):
 	meeting_id = serializers.ReadOnlyField(source='meeting.id')
 	person_id = serializers.ReadOnlyField(source='person.id')
 	person_first_name = serializers.ReadOnlyField(source='person.first_name')
 	person_last_name = serializers.ReadOnlyField(source='person.last_name')
 	class Meta:
-		model = Participant
+		model = MeetingParticipant
 		fields = (
 			'id',
 			# Meeting data to include
@@ -120,7 +120,7 @@ class ParticipantSerializer(serializers.ModelSerializer):
 			'person_id',
 			'person_first_name',
 			'person_last_name',
-			# Participant data
+			# MeetingParticipant data
 			'is_invited',
 			'is_attending',
 			'is_leading',
@@ -128,16 +128,16 @@ class ParticipantSerializer(serializers.ModelSerializer):
 			'sent_meetingrequest',
 			'accepted_invite'	
 			)
-# Serializes meeting participants in meeting_manager
-class ParticipantSerializerPOST(serializers.ModelSerializer):
+# Serializes meeting meetingparticipants in meeting_manager
+class MeetingParticipantSerializerPOST(serializers.ModelSerializer):
 	class Meta:
-		model = Participant
+		model = MeetingParticipant
 		fields = (
 			# Meeting data to include
 			'meeting',
 			# Person data to include
 			'person',
-			# Participant data
+			# MeetingParticipant data
 			'is_invited',
 			'is_attending',
 			'is_leading',
@@ -186,8 +186,8 @@ class MeetingSubjectSerializerPOST(serializers.ModelSerializer):
 class MeetingSerializer(serializers.ModelSerializer):
 	meeting_category = MeetingCategorySerializer()
 	entity = EntitySerializer()
-	participants = ParticipantSerializer(source='participant_set', many=True, read_only=True)
-	meeting_subjects = MeetingSubjectSerializer(source='meetingsubject_set', many=True, read_only=True)
+	meetingparticipants = MeetingParticipantSerializer(source='participant_set', many=True, read_only=True)
+	meetingsubjects = MeetingSubjectSerializer(source='meetingsubject_set', many=True, read_only=True)
 
 	class Meta:
 		model = Meeting
@@ -196,8 +196,8 @@ class MeetingSerializer(serializers.ModelSerializer):
 			# Relational data
 			'meeting_category',
 			'entity',
-			'participants',
-			'meeting_subjects',
+			'meetingparticipants',
+			'meetingsubjects',
 			# Date data
 			'requested_meetdate',
 			'meetingrequest_sent',

@@ -3,7 +3,7 @@ from rest_framework.serializers import ModelSerializer
 # Models
 from meeting_manager.models import MeetingCategory, SubjectToEntityRelationCategory
 from meeting_manager.models import Meeting, Subject 
-from meeting_manager.models import MeetingSubject, Participant, SubjectToEntityRelation
+from meeting_manager.models import MeetingSubject, MeetingParticipant, SubjectToEntityRelation
 
 class MeetingCategorySerializer(ModelSerializer):
 
@@ -40,10 +40,10 @@ class MeetingSubjectSerializer(ModelSerializer):
         depth = 0
         fields = '__all__'
 
-class ParticipantSerializer(ModelSerializer):
+class MeetingParticipantSerializer(ModelSerializer):
 
     class Meta:
-        model = Participant
+        model = MeetingParticipant
         depth = 0
         fields = '__all__'
 

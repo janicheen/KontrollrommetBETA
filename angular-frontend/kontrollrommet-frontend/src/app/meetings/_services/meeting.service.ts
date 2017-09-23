@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 // Angular2 JWT dependencies
 import { AuthHttp } from 'angular2-jwt';
 // Models
-import { Person, Subject,  Meeting, MeetingParticipant, MeetingSubject } from '../../_models/index';
+import { Person, Subject,  Meeting, MeetingMeetingParticipant, MeetingSubject } from '../../_models/index';
 import { MeetingCategory } from '../../_categories/index';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class MeetingService {
   private meetingsUrl = 'http://127.0.0.1:8000/meetings/?format=json';
   private personsbyentityUrl = 'http://127.0.0.1:8000/personsbyentity/';
   private subjectsbyentityUrl = 'http://127.0.0.1:8000/subjectsbyentity/';
-  private participantsUrl = 'http://127.0.0.1:8000/participants/';
+  private meetingparticipantsUrl = 'http://127.0.0.1:8000/meetingparticipants/';
   private meetingsubjectsUrl = 'http://127.0.0.1:8000/meetingsubjects/';
 
   // Sets the nescessary hearder to go with http request
@@ -28,8 +28,8 @@ export class MeetingService {
     private authHttp: AuthHttp
   ) { }
 
-  getParticipants(ident): Promise<Person[]> {
-  console.log('getting participants from API...');
+  getMeetingParticipants(ident): Promise<Person[]> {
+  console.log('getting meetingparticipants from API...');
   this.options = new RequestOptions({params: {'id': ident}});
     return this.authHttp
       .get(this.personsbyentityUrl, this.options)
@@ -55,11 +55,11 @@ export class MeetingService {
       .catch(this.handleError);
   }
 
-  createParticipants(data): Promise<MeetingParticipant[]> {
+  createMeetingParticipants(data): Promise<MeetingMeetingParticipant[]> {
     return this.authHttp
-      .post(this.participantsUrl, JSON.stringify(data), {headers: this.headers})
+      .post(this.meetingparticipantsUrl, JSON.stringify(data), {headers: this.headers})
       .toPromise()
-      .then(response => response.json() as MeetingParticipant)
+      .then(response => response.json() as MeetingMeetingParticipant)
       .catch(this.handleError);
   }
 
