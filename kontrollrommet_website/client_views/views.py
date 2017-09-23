@@ -20,13 +20,10 @@ from django.contrib.auth.models import User
 from core_database.models import EntityCategory, PersonToEntityRelationCategory
 from core_database.models import Person, Entity, Property
 from core_database.models import PersonToEntityRelation
-# Process Control
-from process_control.models import Subject
-from process_control.models import SubjectToEntityRelation
 # Meeting Manager Application
-from meeting_manager.models import MeetingCategory
-from meeting_manager.models import Meeting
-from meeting_manager.models import Participant, MeetingSubject
+from meeting_manager.models import MeetingCategory, SubjectToEntityRelationCategory
+from meeting_manager.models import Meeting, Subject
+from meeting_manager.models import Participant, MeetingSubject, SubjectToEntityRelation
 
 ### Serializers
 # User Serializer

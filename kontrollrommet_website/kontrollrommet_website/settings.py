@@ -50,6 +50,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Django Extensions package
     'django_extensions',
     # Django REST Framework
     'rest_framework',
@@ -60,7 +61,7 @@ INSTALLED_APPS = [
     'process_control.apps.ProcessControlConfig',
     'client_views.apps.ClientViewsConfig',
     'meeting_manager.apps.MeetingManagerConfig',
-    
+    'project_manager.apps.ProjectManagerConfig',
     # Djangostuff
     'django.contrib.admin',
     'django.contrib.auth',
