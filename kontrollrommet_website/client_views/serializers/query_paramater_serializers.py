@@ -6,22 +6,9 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 # Models
 from resources.models import PersonToEntityRelation, EntityToPropertyRelation, PropertyToPersonRelation
-# Serializer - Picked from custom made for client viewing
-from client_views.serializers import PersonSerializer, EntitySerializer
+# Serializers
+from resources.serializers import PersonSerializer, EntitySerializer, PropertySerializer
 
-### User data serializer ###
-# Serializes user data with added person data 
-class UserSerializer(serializers.ModelSerializer):
-	# Hook relevant Person instance to the User instance
-	person = PersonSerializer()
-	class Meta:
-		model = User
-		fields = (
-			'id', 
-			'username', 
-			'email', 
-			'person'
-			)
 
 ### Serializers adding relational data
 # Serializes entity data with added person relation data
