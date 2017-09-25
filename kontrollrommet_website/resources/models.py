@@ -65,7 +65,8 @@ class PropertyToPersonRelationCategory(models.Model):
 class Person(models.Model):
     # Basic credentials
     first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)    
+    last_name = models.CharField(max_length=50)
+    category = models.ForeignKey(EntityCategory, on_delete=models.CASCADE)
     #Attatched user identification
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 
@@ -90,6 +91,7 @@ class Entity(models.Model):
 @python_2_unicode_compatible  # only if you need to support Python 2
 class Property(models.Model):
     name = models.CharField(max_length=100)
+    category = models.ForeignKey(PropertyCategory, on_delete=models.CASCADE)
 
     def __str__(self):
         return '%s' % (self.name)
@@ -101,28 +103,28 @@ class Property(models.Model):
 class PersonToEntityRelation(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
-    relation = models.ForeignKey(PersonToEntityRelationCategory, on_delete=models.CASCADE)
+    relation_category = models.ForeignKey(PersonToEntityRelationCategory, on_delete=models.CASCADE)
     #created_time =
     def __str__(self):
-        return '%s - %s - %s' % (self.person, self.relation, self.entity)
+        return '%s - %s - %s' % (self.person, self.relation_category, self.entity)
 
 # Entity-to-Property relation
 class EntityToPropertyRelation(models.Model):
     entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
     _property = models.ForeignKey(Property, on_delete=models.CASCADE)
-    relation = models.ForeignKey(EntityToPropertyRelationCategory, on_delete=models.CASCADE)
+    relation_category = models.ForeignKey(EntityToPropertyRelationCategory, on_delete=models.CASCADE)
     #created_time = 
     def __str__(self):
-        return '%s - %s - %s' % (self.entity, self.relation, self._property)
+        return '%s - %s - %s' % (self.entity, self.relation_category, self._property)
 
 # Property-to-Person relation
 class PropertyToPersonRelation(models.Model):
     _property = models.ForeignKey(Property, on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    relation = models.ForeignKey(PropertyToPersonRelationCategory, on_delete=models.CASCADE)
+    relation_category = models.ForeignKey(PropertyToPersonRelationCategory, on_delete=models.CASCADE)
     #created_time = 
     def __str__(self):
-        return '%s - %s - %s' % (self._property, self.relation, self.person)
+        return '%s - %s - %s' % (self._property, self.relation_category, self.person)
 
 
 ### Signal listeners that perform automatic operations on models

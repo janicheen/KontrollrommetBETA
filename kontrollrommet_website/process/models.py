@@ -97,27 +97,27 @@ class Result(models.Model):
 class PlanToActionRelation(models.Model):
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
-    relation = models.ForeignKey(PlanToActionRelationCategory, on_delete=models.CASCADE)
+    relation_category = models.ForeignKey(PlanToActionRelationCategory, on_delete=models.CASCADE)
     #created_time =
     def __str__(self):
-        return '%s - %s - %s' % (self.plan, self.relation, self.action)
+        return '%s - %s - %s' % (self.plan, self.relation_category, self.action)
 
 # Action-to-Result relation
 class ActionToResultRelation(models.Model):
     action = models.ForeignKey(Action, on_delete=models.CASCADE)
     result = models.ForeignKey(Result, on_delete=models.CASCADE)
-    relation = models.ForeignKey(ActionToResultRelationCategory, on_delete=models.CASCADE)
+    relation_category = models.ForeignKey(ActionToResultRelationCategory, on_delete=models.CASCADE)
     #created_time = 
     def __str__(self):
-        return '%s - %s - %s' % (self.action, self.relation, self.result)
+        return '%s - %s - %s' % (self.action, self.relation_category, self.result)
 
 # Result-to-Plan relation
 class ResultToPlanRelation(models.Model):
     result = models.ForeignKey(Result, on_delete=models.CASCADE)
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
-    relation = models.ForeignKey(ResultToPlanRelationCategory, on_delete=models.CASCADE)
+    relation_category = models.ForeignKey(ResultToPlanRelationCategory, on_delete=models.CASCADE)
     #created_time = 
     def __str__(self):
-        return '%s - %s - %s' % (self.result, self.relation, self.plan)
+        return '%s - %s - %s' % (self.result, self.relation_category, self.plan)
 
 

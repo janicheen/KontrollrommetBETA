@@ -1,7 +1,7 @@
+import { EntityCategory } from '../_categories/index';
+
 export class Entity {
     id: number;
-    // Frontend Data
     name: string;
-    // To be removed
-    category_name: string;
+    category: EntityCategory;
 }

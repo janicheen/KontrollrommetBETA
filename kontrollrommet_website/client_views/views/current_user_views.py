@@ -21,6 +21,7 @@ from meeting_manager.models import MeetingParticipant, MeetingSubject
 ### Serializers
 # General Serializers
 from resources.serializers import PersonSerializer, EntitySerializer, PropertySerializer
+from resources.serializers import PersonToEntityRelationSerializer, EntityToPropertyRelationSerializer, PropertyToPersonRelationSerializer
 from meeting_manager.serializers import MeetingSerializer
 # Serializers specially designed for client view
 from client_views.serializers import UserSerializer
@@ -36,13 +37,21 @@ class CurrentUser(RetrieveAPIView):
         serializer = UserSerializer(currentuser)
         return Response(serializer.data) 
 
-# Get list of Entities where Current User i related
+# Get list of Entities where Current User is related
 class EntitiesByUserView(ListAPIView):
     serializer_class = EntitySerializer
     # queryset: all entities where current user has some function 
     def get_queryset(self):        
         user = self.request.user
         return Entity.objects.filter(persontoentityrelation__person__user__id = user.id)
+
+# Get list of PersonToEntity relations where Current User is related
+class PersonToEntityRelationByUserView(ListAPIView):
+    serializer_class = PersonToEntityRelationSerializer
+    # queryset: all entities where current user has some function 
+    def get_queryset(self):        
+        user = self.request.user
+        return PersonToEntityRelation.objects.filter(person__user__id = user.id)
 
 # Get Meetings where Current User is MeetingParticipant
 class MeetingsByUserView(ListAPIView):
