@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 import { tokenNotExpired } from 'angular2-jwt';
 import { AuthHttp } from 'angular2-jwt';
 // Models
-import { User } from '../../_models/index';
+import { User } from '../_models/index';
 
 @Injectable()
 export class AuthenticationService {

@@ -1,14 +1,14 @@
 // Angular modules
-import { NgModule }       from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpModule }    from '@angular/http';
+import { HttpModule } from '@angular/http';
 // Routing Module
-import { AppRoutingModule } from '../router.module';
-import { MeetingsModule } from '../meetings/meetings.module'
+import { AppRoutingModule } from '../app-routing.module';
+import { MeetingsModule } from '../meetings/meetings.module';
 
 // Components
-import { DashboardComponent } from './dashboard/dashboard.component'  
-import { NavigationFrameComponent }  from './navigationframe/navigationframe.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NavigationFrameComponent } from './navigationframe/navigationframe.component';
 
 // Services
 import { AlertService } from './_services/alert.service';
@@ -22,7 +22,7 @@ import { AlertService } from './_services/alert.service';
   ],
   declarations: [
     NavigationFrameComponent,
-    DashboardComponent
+//    DashboardComponent
   ],
   providers: [ 
     AlertService

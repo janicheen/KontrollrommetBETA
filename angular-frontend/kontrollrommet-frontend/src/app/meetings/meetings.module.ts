@@ -12,7 +12,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 // *** Other Modules ***
-import { AppRoutingModule } from '../router.module';
+import { AppRoutingModule } from '../app-routing.module';
 
 // *** Application Elements
 // meetings

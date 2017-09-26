@@ -1,11 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
 // Services
 import { AuthenticationService, UserService } from '../index';
-
-import { AlertService } from '../../main-ui/index'
-
+import { AlertService } from '../../main-ui/index';
 // Models
 import { User } from '../../_models/index';
 
@@ -16,7 +13,7 @@ import { User } from '../../_models/index';
 
 export class LoginComponent implements OnInit {
     model: any = {};
-    user: User
+    user: User;
     loading = false;
     returnUrl: string;
 
@@ -40,7 +37,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
-                    console.log("login error")
+                    console.log("login error");
                     this.alertService.error(error);
                     this.loading = false;
                 }
