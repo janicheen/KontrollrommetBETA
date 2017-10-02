@@ -4,12 +4,12 @@ import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Models
-import { User } from '../../_models/index';
+import { User } from '../_models/index';
 
 // External Services
-import { UserDataService } from '../../initialization/_services/user-data.service'
-import { AuthenticationService } from '../../authentication/_services/authentication.service'
-import { AlertService } from '../../main-ui/_services/alert.service';
+import { AuthService } from '../authentication/auth.service';
+// import { AlertService } from '../../main-ui/_services/alert.service';
+// import { UserDataService } from '../../initialization/_services/user-data.service'
 
 @Component({
   selector: 'app-navigationframe',
@@ -21,8 +21,12 @@ export class NavigationFrameComponent implements OnInit {
   currentuser: User;
   loggedin: Boolean;
 
-  constructor(
-    private authService: AuthenticationService,
+  ngOnInit(): void {
+  }
+
+}
+/*   constructor(
+    private authService: AuthService,
     private alertService: AlertService,
     private router: Router,
     private userDataService: UserDataService
@@ -45,3 +49,4 @@ export class NavigationFrameComponent implements OnInit {
     .subscribe(user => this.currentuser = user);
   }
 }
+ */

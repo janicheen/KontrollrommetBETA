@@ -7,12 +7,14 @@ from rest_framework import routers
 # Views
 from client_views import views
 
+
 # Set up router for viewset
 router = routers.DefaultRouter()
 
 ### Generic views 
 genericviewsurl = [
     # current user views
+    url(r'^createuser', views.CreateUser.as_view(), name='createuser'),
     url(r'^currentuser', views.CurrentUser.as_view(), name='currentuser'),
     url(r'^meetingsbyuser', views.MeetingsByUserView.as_view(), name='meetingsbyuser'),
     url(r'^entitiesbyuser', views.EntitiesByUserView.as_view(), name='entitiesbyuser'),

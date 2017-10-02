@@ -4,8 +4,11 @@ from __future__ import unicode_literals
 # REST Framework dependencies
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.generics import ListAPIView
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 ### Models
 # Django User Model
@@ -29,12 +32,23 @@ from client_views.serializers import UserSerializer
 
 ### Views based on current user
 
+# Create User
+class CreateUser(CreateAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = UserSerializer
+    def post(self, request, format=None):
+        serializer = UserSerializer(data=request.data, fields=('id', 'first_name', 'last_name', 'username', 'password', 'email'))
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+   
 # Get Current User
 class CurrentUser(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
     def get(self, request, format=None):
         currentuser = User.objects.get(id=request.user.id)
-        serializer = UserSerializer(currentuser)
+        serializer = UserSerializer(currentuser, fields=('id', 'username', 'email', 'person'))
         return Response(serializer.data) 
 
 # Get list of Entities where Current User is related

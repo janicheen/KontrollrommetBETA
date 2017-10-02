@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 ### Case Model ###
 # Case Model - Assigning case number that is hooked to all other case elements
 class Case(models.Model):
-	case_created = models.DateTimeField(default=timezone.now())
+	case_created = models.DateTimeField(default=timezone.now)
 	case_createdBy = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
 	case_ended = models.DateTimeField(blank=True, null=True)
 

@@ -66,7 +66,7 @@ class Person(models.Model):
     # Basic credentials
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    category = models.ForeignKey(EntityCategory, on_delete=models.CASCADE)
+    category = models.ForeignKey(EntityCategory, on_delete=models.CASCADE, null=True, blank=True,)
     #Attatched user identification
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 
@@ -132,8 +132,13 @@ class PropertyToPersonRelation(models.Model):
 # Singal listener that automatically creates related Person instance, when new user is created 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
+    print('my_signal received')
     if created:
-        Person.objects.create(user=instance)
+        Person.objects.create(
+            user=instance, 
+            first_name=instance.first_name, 
+            last_name=instance.last_name,
+            )
 
 # Signal listener, that automatically edits user entry in Person instance, when user is edited.
 # PS! Should be looked at. As long as the ID(primary key) is permanent, user data and person data can be edited separately, and be linked together.

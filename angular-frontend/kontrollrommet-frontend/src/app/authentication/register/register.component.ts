@@ -1,39 +1,36 @@
 ﻿// Angular Dependencies
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+// Services
+import { AuthService } from '../index';
+// Models
+import { User } from '../../_models/index';
 
-// External Services
+/* // External Services
 import { AlertService } from '../../main-ui/index';
 
 // Internal Services
 import { UserService } from '../index';
 
+ */
 
-@Component({
-    moduleId: module.id,
+ @Component({
+    selector: 'app-register',
     templateUrl: 'register.component.html'
 })
+export class RegisterComponent implements OnInit {
+    user = new User;
 
-export class RegisterComponent {
-    model: any = {};
-    loading = false;
+    constructor(private authService: AuthService) { }
 
-    constructor(
-        private router: Router,
-        private userService: UserService,
-        private alertService: AlertService) { }
-
-    register() {
-        this.loading = true;
-        this.userService.create(this.model)
-            .subscribe(
-                data => {
-                    this.alertService.success('Registration successful', true);
-                    this.router.navigate(['/login']);
-                },
-                error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                });
+    ngOnInit() {
     }
+
+    onRegister(form: NgForm) {
+        this.user.first_name = form.value.firstname;
+        this.user.last_name = form.value.lastname;
+        this.user.email = form.value.email;
+        this.user.password = form.value.password;
+        this.authService.registerUser(this.user);
+      }
 }

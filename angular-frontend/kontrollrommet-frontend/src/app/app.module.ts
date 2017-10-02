@@ -13,9 +13,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './authentication/index';
 import { RegisterComponent } from './authentication/index';
-import { NavigationFrameComponent } from './main-ui/index';
+import { NavigationFrameComponent } from './navigationframe/navigationframe.component';
 // Services
-import { AuthenticationService } from './authentication/authentication.service';
+import { AuthService } from './authentication/auth.service';
 
 
 // *** UNSTRUCTURED ***
@@ -32,9 +32,9 @@ import { AuthenticationService } from './authentication/authentication.service';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+/*     LoginComponent,
     RegisterComponent,
-    NavigationFrameComponent
+    NavigationFrameComponent */
   ],
   imports: [
     BrowserModule,
@@ -48,7 +48,7 @@ import { AuthenticationService } from './authentication/authentication.service';
     // MeetingsModule
   ],
   providers: [
-    AuthenticationService
+    AuthService
     // UserDataService,
     // CategoriesService,
     // { provide: HTTP_INTERCEPTORS, useClass: MyInterceptorService, multi: true }
