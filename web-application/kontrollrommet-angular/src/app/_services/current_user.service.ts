@@ -2,14 +2,14 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 // rxjs Dependencies
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 // Angular2 JWT dependencies
 import { AuthHttp } from 'ng-jwt';
 // Models
 import { User } from '../_models/index';
-import { Entity, Meeting } from '../_models/index';
+import { Entity, Meeting, MeetingParticipant } from '../_models/index';
 
 @Injectable()
 export class CurrentUserService {
@@ -37,6 +37,12 @@ export class CurrentUserService {
         .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
     }
 
+    getMeetingParticipantByUser(): Observable<MeetingParticipant[]> {
+        console.log('getting meetings related to user');
+        return this.authHttp.get('http://127.0.0.1:8000/client_views/meetingparticipantbyuser/')
+        .map(res => res.json())
+        .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
+    }
 /*     // private helper methods
     private handleError(error: any): Promise<any> {
         console.error('This is the error handler speaking:', error); // for demo purposes only

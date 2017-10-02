@@ -4,6 +4,8 @@ from rest_framework.serializers import ModelSerializer
 from meeting_manager.models import MeetingCategory
 from meeting_manager.models import Meeting
 from meeting_manager.models import MeetingSubject, MeetingParticipant
+# Dynamic Serializer
+from client_views.serializers import DynamicFieldsModelSerializer
 
 class MeetingCategorySerializer(ModelSerializer):
 
@@ -26,9 +28,9 @@ class MeetingSubjectSerializer(ModelSerializer):
         depth = 1
         fields = '__all__'
 
-class MeetingParticipantSerializer(ModelSerializer):
+class MeetingParticipantSerializer(DynamicFieldsModelSerializer):
 
     class Meta:
         model = MeetingParticipant
-        depth = 1
+        depth = 2
         fields = '__all__'

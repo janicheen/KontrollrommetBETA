@@ -16,7 +16,7 @@ genericviewsurl = [
     # current user views
     url(r'^createuser', views.CreateUser.as_view(), name='createuser'),
     url(r'^currentuser', views.CurrentUser.as_view(), name='currentuser'),
-    url(r'^meetingsbyuser', views.MeetingsByUserView.as_view(), name='meetingsbyuser'),
+    url(r'^meetingparticipantbyuser', views.MeetingParticipantByUserView.as_view(), name='meetingparticipantbyuser'),
     url(r'^entitiesbyuser', views.EntitiesByUserView.as_view(), name='entitiesbyuser'),
     url(r'^persontoentityrelationbyuser', views.PersonToEntityRelationByUserView.as_view(), name='persontoentityrelationbyuser'),
     # query parameter views

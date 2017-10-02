@@ -1,9 +1,10 @@
-import { Person } from "./index";
+import { Person, Meeting } from './index';
 
-export class MeetingMeetingParticipant {
+export class MeetingParticipant {
     id: number;
-    // Person data
+    // relational data
     person: Person;
+    meeting: Meeting;
     // MeetingParticipant data
     is_invited: boolean;
     is_attending: boolean;

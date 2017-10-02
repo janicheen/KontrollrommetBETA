@@ -1,7 +1,7 @@
 // Angular dependencies
 import { Component, OnInit } from '@angular/core';
 // Models
-import { Person, Entity, Subject,  Meeting, MeetingSubject, MeetingMeetingParticipant } from '../../_models/index';
+import { Person, Entity, Subject,  Meeting, MeetingSubject, MeetingParticipant } from '../../_models/index';
 import { MeetingCategory } from '../../_categories/index';
 // Internal Services
 import { MeetingService } from '../_services/meeting.service';
@@ -74,8 +74,8 @@ onChangeEntity(): void {
 }
 
 onSelectPerson(person: Person) {
-    // Construct instance of MeetingMeetingParticipant from selected item, and add it as participant in the current meeting instance
-    let meetingparticipant = new MeetingMeetingParticipant;
+    // Construct instance of MeetingParticipant from selected item, and add it as participant in the current meeting instance
+    let meetingparticipant = new MeetingParticipant;
     meetingparticipant.person = person;
     this.model.meetingparticipants.push(meetingparticipant);
     // Remove the selected instance from list of possible meetingparticipants

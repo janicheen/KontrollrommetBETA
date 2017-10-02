@@ -9,7 +9,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, AllowAny
-
 ### Models
 # Django User Model
 from django.contrib.auth.models import User
@@ -20,12 +19,11 @@ from resources.models import PersonToEntityRelation
 from meeting_manager.models import MeetingCategory
 from meeting_manager.models import Meeting
 from meeting_manager.models import MeetingParticipant, MeetingSubject
-
 ### Serializers
 # General Serializers
 from resources.serializers import PersonSerializer, EntitySerializer, PropertySerializer
 from resources.serializers import PersonToEntityRelationSerializer, EntityToPropertyRelationSerializer, PropertyToPersonRelationSerializer
-from meeting_manager.serializers import MeetingSerializer
+from meeting_manager.serializers import MeetingSerializer, MeetingParticipantSerializer, MeetingSubjectSerializer
 # Serializers specially designed for client view
 from client_views.serializers import UserSerializer
 
@@ -47,7 +45,7 @@ class CreateUser(CreateAPIView):
 class CurrentUser(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
     def get(self, request, format=None):
-        currentuser = User.objects.get(id=request.user.id)
+        currentuser = self.request.user
         serializer = UserSerializer(currentuser, fields=('id', 'username', 'email', 'person'))
         return Response(serializer.data) 
 
@@ -68,10 +66,12 @@ class PersonToEntityRelationByUserView(ListAPIView):
         return PersonToEntityRelation.objects.filter(person__user__id = user.id)
 
 # Get Meetings where Current User is MeetingParticipant
-class MeetingsByUserView(ListAPIView):
-    serializer_class = MeetingSerializer
-    # makes a queryset of all meetings where current user is participant 
-    def get_queryset(self):        
+class MeetingParticipantByUserView(ListAPIView):
+    serializer_class = MeetingParticipantSerializer
+    # makes a queryset of all meetings where current user is participant
+    def get_queryset(self):
         user = self.request.user
-        return Meeting.objects.filter(meetingparticipants__user__id = user.id)
-
+        return MeetingParticipant.objects.filter(person__user__id = user.id)
+    # removes fields that should not be sent to client
+    def get_serializer(self, *args, **kwargs):
+        return MeetingParticipantSerializer(skip_fields=('person',), *args, **kwargs)

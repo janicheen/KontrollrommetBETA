@@ -1,6 +1,6 @@
 import { Person } from "./index";
 
-export class MeetingMeetingParticipant {
+export class MeetingParticipant {
     id: number;
     // Person data
     person: Person;

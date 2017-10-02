@@ -4,10 +4,10 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 // rxjs Dependencies
 import 'rxjs/add/operator/toPromise';
 // Angular2 JWT dependencies
-import { AuthHttp } from 'angular2-jwt';
+import { AuthHttp } from 'ng-jwt';
 // Models
-import { Person, Subject,  Meeting, MeetingParticipant, MeetingSubject } from '../../_models/index';
-import { MeetingCategory } from '../../_categories/index';
+import { Person, Subject,  Meeting, MeetingParticipant, MeetingSubject } from '../_models/index';
+import { MeetingCategory } from '../_categories/index';
 
 @Injectable()
 export class MeetingService {

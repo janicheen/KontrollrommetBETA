@@ -16,8 +16,9 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
     """
 
     def __init__(self, *args, **kwargs):
-        # Don't pass the 'fields' arg up to the superclass
+        # Don't pass the 'fields' and 'skip_fields' arg up to the superclass
         fields = kwargs.pop('fields', None)
+        skip_fields = kwargs.pop('skip_fields', None)
         # Instantiate the superclass normally
         super(DynamicFieldsModelSerializer, self).__init__(*args, **kwargs)
         if fields is not None:
@@ -26,6 +27,12 @@ class DynamicFieldsModelSerializer(serializers.ModelSerializer):
             existing = set(self.fields.keys())
             for field_name in existing - allowed:
                 self.fields.pop(field_name)
+        if skip_fields is not None:
+            # Drop any fields that are specified in the `skip_fields` argument.
+            skipped = set(skip_fields)
+            for field_name in skipped:
+                self.fields.pop(field_name)
+
 
 
 # Serializes user data with added person data 

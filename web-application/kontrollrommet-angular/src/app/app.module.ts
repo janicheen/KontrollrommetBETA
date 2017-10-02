@@ -18,12 +18,14 @@ import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { NavigationFrameComponent } from './navigationframe/navigationframe.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
 // Services
 import { AuthenticationService} from 'ng-jwt';
 import { Auth } from 'ng-jwt';
 import { AuthService } from './authentication/auth.service';
 import { CurrentUserService } from './_services/current_user.service';
 import { DataService } from './_services/data.service';
+import { MeetingService } from './meetings/meeting.service';
 
 
 
@@ -44,7 +46,8 @@ import { DataService } from './_services/data.service';
     RegisterComponent,
     LoginComponent,
     NavigationFrameComponent,
-    DashboardComponent
+    DashboardComponent,
+    MeetingListComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +74,7 @@ import { DataService } from './_services/data.service';
     DataService,
     // Client views
     CurrentUserService,
+    MeetingService
     // UserDataService,
     // CategoriesService,
     // { provide: HTTP_INTERCEPTORS, useClass: MyInterceptorService, multi: true }
