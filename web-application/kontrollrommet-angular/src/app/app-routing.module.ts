@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './authentication/index';
 import { RegisterComponent } from './authentication/index';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MeetingsComponent } from './meetings/meetings/meetings.component';
 
 
 // ***Application components***
@@ -12,14 +13,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 // import { DashboardComponent } from './main-ui/dashboard/dashboard.component';
 // Authentication
 // import { UsersComponent, LoginComponent,  RegisterComponent, AuthGuard } from './authentication/index';
-// Meetings
-// import { MeetingsComponent, MeetingFormComponent } from './meetings/index';
 
 // Path structure for all URL routes
 /* const routes: Routes = [
   // From root site adress, redirect to here
   // Paths to main application urls, protected from unauthorized access by AuthGuard
-  { path: 'meeting_management', component: MeetingsComponent, canActivate: [AuthGuard]},
 //  { path: 'project_management', component: ProjectsComponent, canActivate: [AuthGuard]},
   // Forms
   { path: 'meetingform', component: MeetingFormComponent, canActivate: [AuthGuard]},
@@ -32,6 +30,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'meeting_management', component: MeetingsComponent},
   { path: '**', redirectTo: 'login' }
 ];
 

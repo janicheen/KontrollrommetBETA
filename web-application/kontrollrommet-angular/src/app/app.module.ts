@@ -26,6 +26,7 @@ import { AuthService } from './authentication/auth.service';
 import { CurrentUserService } from './_services/current_user.service';
 import { DataService } from './_services/data.service';
 import { MeetingService } from './meetings/meeting.service';
+import { MeetingsComponent } from './meetings/meetings/meetings.component';
 
 
 
@@ -47,6 +48,7 @@ import { MeetingService } from './meetings/meeting.service';
     LoginComponent,
     NavigationFrameComponent,
     DashboardComponent,
+    MeetingsComponent,
     MeetingListComponent
   ],
   imports: [

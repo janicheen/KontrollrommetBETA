@@ -1,14 +1,18 @@
-<table class="table table-condensed table-bordered table-hover">
-  <thead>
-    <th>Møtedato</th>
-    <th>Møtetype</th>
-    <th>Selskap</th>
-  </thead>
-  <tbody>
-    <tr class='clickable-row' *ngFor="let meeting of meetings" [class.active]="meeting === selectedmeeting" (click)="onSelect(meeting)">
-      <td>{{ meeting.meeting.requested_meetdate | date}}</td>
-      <td>{{ meeting.meeting.meeting_category.name }}</td>
-      <td>{{ meeting.meeting.executive_entity.name}}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="row">    
+  <table class="table table-condensed table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Møtedato</th>
+        <th>Møtetype</th>
+        <th>Selskap</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class='clickable-row' *ngFor="let meeting of meetings" [class.active]="meeting === selectedmeeting" (click)="onSelect(meeting)">
+        <td>{{ meeting.meeting.requested_meetdate | date}}</td>
+        <td>{{ meeting.meeting.meeting_category.name }}</td>
+        <td>{{ meeting.meeting.executive_entity.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

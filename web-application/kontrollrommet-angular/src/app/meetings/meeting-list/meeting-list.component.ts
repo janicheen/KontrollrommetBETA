@@ -16,7 +16,7 @@ export class MeetingListComponent implements OnInit {
     // Properties of the component
     meetings: MeetingParticipant[];
     meetinglist: Meeting[];
-    selectedmeeting: Meeting;
+    selectedmeeting: MeetingParticipant;
 
     constructor(
         private meetingService: MeetingService,
@@ -24,7 +24,7 @@ export class MeetingListComponent implements OnInit {
     ) { }
 
      // When a meeting is selected from the list
-    onSelect(meeting: Meeting): void {
+    onSelect(meeting: MeetingParticipant): void {
         this.selectedmeeting = meeting;
         console.log(this.selectedmeeting);
     }

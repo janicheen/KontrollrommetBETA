@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 // Services
 import { AuthService } from '../auth.service';
+import { DataService } from '../../_services/data.service';
 
 
 /* import { Router, ActivatedRoute } from '@angular/router';
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private authService: AuthService,
+        private dataService: DataService,
         private router: Router,
         private activatedroute: ActivatedRoute,
     ) { }
@@ -43,6 +45,7 @@ export class LoginComponent implements OnInit {
                 // If login returns sucessful, this operation is performed
                 if (data) {
                     console.log('login sucessful');
+                    this.dataService.loadInitialData();
                     this.router.navigate([this.returnUrl]);
                 // It login returns unsuccessful, this operation is performed
                 } else {

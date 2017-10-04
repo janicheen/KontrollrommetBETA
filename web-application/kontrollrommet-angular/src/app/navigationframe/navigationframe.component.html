@@ -1,16 +1,18 @@
-<div class="row">
-  <span *ngIf="authService.loggedIn()">
-      <h3>Velkommen til Kontrollrommet, {{ currentuser.person.first_name }}!</h3>
-  </span> 
-</div>
+<div class="container">
+  <div class="row">
+    <span *ngIf="authService.loggedIn()">
+      <h1>Velkommen til Kontrollrommet, {{ currentuser.person.first_name }}!</h1>
+    </span> 
+  </div>
 
-<div class="row">
+  <div class="row">
     <nav>
-        <a class="btn btn-default" role="button" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-        <a class="btn btn-default" role="button" routerLink="/meeting_management" routerLinkActive="active">Møtevirksomhet</a>
-        <a class="btn btn-default" role="button" routerLink="/project_management" routerLinkActive="active">Prosjektstyring</a>
-        <a class="btn btn-default" role="button" routerLink="/useraccount" routerLinkActive="active">Din Brukerkonto</a>    
-        <a class="btn btn-default" role="button" routerLink="/login" routerLinkActive="active" *ngIf="!authService.loggedIn()">Login</a>    
-        <a class="btn btn-default" role="button" (click)="logout()" *ngIf="authService.loggedIn()">Logout</a>
+      <a class="btn btn-default" role="button" routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a class="btn btn-default" role="button" routerLink="/meeting_management" routerLinkActive="active">Møtevirksomhet</a>
+      <a class="btn btn-default" role="button" routerLink="/project_management" routerLinkActive="active">Prosjektstyring</a>
+      <a class="btn btn-default" role="button" routerLink="/useraccount" routerLinkActive="active">Din Brukerkonto</a>    
+      <a class="btn btn-default" role="button" routerLink="/login" routerLinkActive="active" *ngIf="!authService.loggedIn()">Login</a>    
+      <a class="btn btn-default" role="button" (click)="logout()" *ngIf="authService.loggedIn()">Logout</a>
     </nav>
+  </div>
 </div>

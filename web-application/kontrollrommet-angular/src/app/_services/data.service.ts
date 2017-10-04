@@ -17,27 +17,33 @@ export class DataService {
   constructor(
     private currentuserService: CurrentUserService
   ) {
-     this.loadInitialData();
+//     this.loadInitialData();
    }
 
-
   loadInitialData() {
+    this.loadCurrentUser();
+    this.loadMeetingParticipantByUser();
+  }
+
+  loadCurrentUser() {
     this.currentuserService.getCurrentUser()
     .subscribe(
       data => {
-        console.log(data);
+        console.log('loading current user...', data);
         this.currentuser.next(data);
       },
-      err => console.log('Error getting current user')
+      err => console.log('Error loading current user')
     );
+  }
 
+  loadMeetingParticipantByUser() {
     this.currentuserService.getMeetingParticipantByUser()
     .subscribe(
       data => {
-        console.log(data);
+        console.log('loading meeting participant by user...', data);
         this.meetingparticipations.next(data);
       },
-      err => console.log('Error getting current user')
+      err => console.log('Error loading current user')
     );
   }
 
