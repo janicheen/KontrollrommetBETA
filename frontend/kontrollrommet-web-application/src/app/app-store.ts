@@ -13,11 +13,11 @@ import { State } from './state';
 }
  */
 const state = new State();
-
 const store = new BehaviorSubject<State>(state);
 
 export class AppStore {
     store = store;
+
     changes = store.asObservable()
     .distinctUntilChanged()
     // log new state
@@ -30,5 +30,10 @@ export class AppStore {
     setState(state: State) {
         console.log('setState ', state); // log update
         this.store.next(state);
+    }
+
+    updateState(property: string, data) {
+        const currentState = this.getState();
+        this.setState(Object.assign({}, currentState, { [property]: data }));
     }
 }
