@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('kontrollrommet-angular App', () => {
+describe('kontrollrommet-web-application App', () => {
   let page: AppPage;
 
   beforeEach(() => {
