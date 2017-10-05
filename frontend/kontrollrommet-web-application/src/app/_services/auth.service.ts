@@ -8,8 +8,8 @@ import {Observable} from 'rxjs/Observable';
 // Models
 import { User } from '../_models/index';
 // Services
-import { HttpService } from '../_services/http.service';
-import { AuthenticationService, Auth } from 'ng-jwt';
+import { AuthenticationService } from 'ng-jwt';
+import { DataService } from './data.service';
 
 
 @Injectable()
@@ -18,27 +18,16 @@ export class AuthService {
 
     constructor(
         // private router: Router,
-        private httpService: HttpService,
+        private dataService: DataService,
         private jwtauthService: AuthenticationService,
-        private jwtAuth: Auth
     ) { }
 
     registerUser(user: User) {
-        console.log('registering...', user);
-        this.httpService.createUser(user);
+        this.dataService.registerUser(user);
     }
 
     loginUser(username: string, password: string): Observable<boolean> {
-        console.log('running loginUser');
-        return this.jwtauthService.login(username, password);
-    }
-
-    logoutUser() {
-        this.jwtauthService.logout();
-    }
-
-    isloggedIn() {
-        return this.jwtAuth.loggedIn();
+        return this.dataService.loginUser(username, password);
     }
 
  /*  getToken() { */

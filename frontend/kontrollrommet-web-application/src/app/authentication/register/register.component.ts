@@ -24,12 +24,15 @@ export class RegisterComponent implements OnInit {
   }
 
     onRegister(form: NgForm) {
+      // Gather form data in model
       this.user.first_name = form.value.firstname;
       this.user.last_name = form.value.lastname;
       this.user.username = form.value.username;
       this.user.email = form.value.email;
       this.user.password = form.value.password;
+      // Send data to component service
       this.authService.registerUser(this.user);
+      // navigate to new page
       this.router.navigate(['/login']);
     }
 }

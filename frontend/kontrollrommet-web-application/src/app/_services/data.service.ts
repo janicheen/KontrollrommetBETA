@@ -1,26 +1,25 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+
 import 'rxjs/Rx';
 // Models
 import { User, MeetingParticipant } from '../_models/index';
-import { State } from '../state';
 
 // Services
 import { HttpService } from './http.service';
+import {  Auth as jwtAuth } from 'ng-jwt';
+import { AuthenticationService as jwtAuthService } from 'ng-jwt';
+
 // Store
 import { AppStore } from '../app-store';
 
 @Injectable()
 export class DataService {
 
-    datastore = new State;
-/*     state = new State();
-    datastore = new BehaviorSubject<State>(this.state)
-    .asObservable()
-    .distinctUntilChanged();
- */
     constructor(
         private httpService: HttpService,
+        private jwtauth: jwtAuth,
+        private jwtauthservice: jwtAuthService,
         private appStore: AppStore
     ) {}
 
@@ -29,56 +28,46 @@ export class DataService {
         this.loadMeetingParticipantByUser();
     }
 
+    // Gets data from http and loads into the Store
     loadCurrentUser() {
-        console.log('running loadcurrentuser');
-        this.getCurrentUser()
-        .then(() => {
-            this.appStore.updateState('user', this.datastore.user);
-        });
-    }
-
-    // Request data from HTTP services
-    getCurrentUser() {
-        return new Promise(() => {
-            this.httpService.getCurrentUser()
-            .subscribe(
-            data => {
-                console.log('getting current user from http service...', data);
-                this.datastore.user = data;
-                },
-                err => console.log('Error loading current user')
-            );
-        });
-    }
-
-    // Update Store
-    updateCurrentUser() {
-        console.log('running update currentuser');
-        this.appStore.updateState('user', this.datastore.user);
-    }
-
-
-    /* // Update Store
-    loadCurrentUser() {
-        console.log('running loadcurrentuser');
-        this.getCurrentUser();
-        data = this.datastore.asObservable()
-        .distinctUntilChanged()
-        // log new state
-        .do(data => this.appStore.updateState('user', data.user));
-    }
- */
-    loadMeetingParticipantByUser() {
-        this.httpService.getMeetingParticipantByUser()
+        this.httpService.getCurrentUser()
         .subscribe(
         data => {
-            console.log('loading meeting participant by user into appstore...', data);
-            const currentState = this.appStore.getState();
-            this.appStore.setState(Object.assign({}, currentState, { 'meetingparticipations': data }));
+            console.log('gotten current user from http service...', data);
+            this.appStore.updateState('user', data);
             },
             err => console.log('Error loading current user')
         );
     }
+    // Gets data from http and loads into the Store
+    loadMeetingParticipantByUser() {
+        this.httpService.getMeetingParticipantByUser()
+        .subscribe(
+        data => {
+            console.log('gotten meeting participation from http service...', data);
+            this.appStore.updateState('meetingparticipations', data);
+        },
+            err => console.log('Error loading current user')
+        );
+    }
 
+    // Direct Http method
+    registerUser(user) {
+        console.log('registering user...', user);
+        this.httpService.createUser(user);
+    }
+
+    loginUser(username: string, password: string): Observable<boolean> {
+        console.log('running loginUser');
+        return this.jwtauthservice.login(username, password);
+    }
+
+    isloggedIn() {
+        return this.jwtauth.loggedIn();
+    }
+
+    logoutUser() {
+        this.jwtauthservice.logout();
+    }
 }
 

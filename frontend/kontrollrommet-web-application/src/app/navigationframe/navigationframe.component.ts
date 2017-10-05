@@ -8,7 +8,7 @@ import 'rxjs/Rx';
 // Models
 import { User } from '../_models/index';
 // External Services
-import { AuthService } from '../_services/auth.service';
+import { DataService } from '../_services/data.service';
 import { AppStore } from '../app-store';
 // import { AlertService } from '../../main-ui/_services/alert.service';
 // import { UserDataService } from '../../initialization/_services/user-data.service'
@@ -24,7 +24,7 @@ export class NavigationFrameComponent implements OnInit {
 
   constructor(
     private store: AppStore,
-    public authService: AuthService,
+    public dataService: DataService,
     private router: Router,
     ) {
       this.store
@@ -37,7 +37,7 @@ export class NavigationFrameComponent implements OnInit {
 
   logout(): void {
     console.log('logging out');
-    this.authService.logoutUser();
+    this.dataService.logoutUser();
     this.router.navigate(['/login']);
   }
 
