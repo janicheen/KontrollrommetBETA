@@ -37,7 +37,7 @@ export class AuthService {
         this.jwtauthService.logout();
     }
 
-    loggedIn() {
+    isloggedIn() {
         return this.jwtAuth.loggedIn();
     }
 

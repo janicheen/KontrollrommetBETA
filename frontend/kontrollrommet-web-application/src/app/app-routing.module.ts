@@ -6,6 +6,8 @@ import { LoginComponent } from './authentication/index';
 import { RegisterComponent } from './authentication/index';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MeetingsComponent } from './meetings/meetings/meetings.component';
+// Guard
+import { AuthGuard } from './authentication/auth.guard';
 
 
 // ***Application components***
@@ -29,9 +31,9 @@ const appRoutes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'meeting_management', component: MeetingsComponent},
-  { path: '**', redirectTo: 'login' }
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+  { path: 'meeting_management', component: MeetingsComponent, canActivate: [AuthGuard]},
+  { path: '**', redirectTo: '/dashboard' }
 ];
 
 @NgModule({

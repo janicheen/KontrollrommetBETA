@@ -1,38 +1,36 @@
 // *** This is the main module, connecting all other sub modules ***
 
 // Angular modules
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
 // Angular JWT
 import { NgJwtModule } from 'ng-jwt';
 // Bootstrap Module
 // import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 // Routing Module ***
 import { AppRoutingModule } from './app-routing.module';
+
 // Application Components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { NavigationFrameComponent } from './navigationframe/navigationframe.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MeetingsComponent } from './meetings/meetings/meetings.component';
 import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
+
 // Services
-import { AuthenticationService} from 'ng-jwt';
-import { Auth } from 'ng-jwt';
+import { AuthenticationService, Auth } from 'ng-jwt';
 import { AuthService } from './authentication/auth.service';
 import { CurrentUserService } from './_services/current_user.service';
 import { DataService } from './_services/data.service';
 import { MeetingService } from './meetings/meeting.service';
-import { MeetingsComponent } from './meetings/meetings/meetings.component';
-
-
+import { AuthGuard } from './authentication/auth.guard';
 
 // *** UNSTRUCTURED ***
 // import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
-
 // import { AuthenticationModule } from './authentication/authentication.module';
 // import { MainUIModule } from './main-ui/main-ui.module';
 // import { MeetingsModule } from './meetings/meetings.module';
@@ -68,18 +66,16 @@ import { MeetingsComponent } from './meetings/meetings/meetings.component';
     // MeetingsModule
   ],
   providers: [
-    // JWT module
+    // JWT services
     AuthenticationService, Auth,
-    // Authentication
+    // Authentication service
     AuthService,
-    // Data
+    AuthGuard,
+    // Data service
     DataService,
     // Client views
     CurrentUserService,
     MeetingService
-    // UserDataService,
-    // CategoriesService,
-    // { provide: HTTP_INTERCEPTORS, useClass: MyInterceptorService, multi: true }
   ],
   bootstrap: [ AppComponent ]
 })
