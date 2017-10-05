@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
+
 // Internal Services
 import { MeetingService } from '../meeting.service';
 import { DataService } from '../../_services/data.service';
 // External Services
+import { AppStore } from '../../app-store';
 
 // Models
 import { Meeting, Entity, MeetingParticipant} from '../../_models/index';
@@ -15,13 +18,18 @@ import { Meeting, Entity, MeetingParticipant} from '../../_models/index';
 export class MeetingListComponent implements OnInit {
     // Properties of the component
     meetings: MeetingParticipant[];
-    meetinglist: Meeting[];
     selectedmeeting: MeetingParticipant;
 
     constructor(
         private meetingService: MeetingService,
-        private dataService: DataService
-    ) { }
+        private dataService: DataService,
+        private appStore: AppStore
+    ) {
+        this.appStore
+        .changes
+        .pluck('meetingparticipations')
+        .subscribe((meetings: MeetingParticipant[]) => this.meetings = meetings);
+     }
 
      // When a meeting is selected from the list
     onSelect(meeting: MeetingParticipant): void {
@@ -30,12 +38,6 @@ export class MeetingListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.dataService.meetingparticipations.subscribe(
-            (data: MeetingParticipant[]) => {
-                this.meetings = data;
-                console.log('meetingparticipations set in component', this.meetings);
-            }
-        );
     }
 
 }

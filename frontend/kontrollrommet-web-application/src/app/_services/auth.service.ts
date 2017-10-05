@@ -8,7 +8,7 @@ import {Observable} from 'rxjs/Observable';
 // Models
 import { User } from '../_models/index';
 // Services
-import { CurrentUserService } from '../_services/current_user.service';
+import { HttpService } from '../_services/http.service';
 import { AuthenticationService, Auth } from 'ng-jwt';
 
 
@@ -18,14 +18,14 @@ export class AuthService {
 
     constructor(
         // private router: Router,
-        private currentuserService: CurrentUserService,
+        private httpService: HttpService,
         private jwtauthService: AuthenticationService,
         private jwtAuth: Auth
     ) { }
 
     registerUser(user: User) {
         console.log('registering...', user);
-        this.currentuserService.createUser(user);
+        this.httpService.createUser(user);
     }
 
     loginUser(username: string, password: string): Observable<boolean> {

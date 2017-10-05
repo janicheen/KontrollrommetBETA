@@ -2,7 +2,7 @@
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 // Services
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../_services/auth.service';
 import { DataService } from '../../_services/data.service';
 
 

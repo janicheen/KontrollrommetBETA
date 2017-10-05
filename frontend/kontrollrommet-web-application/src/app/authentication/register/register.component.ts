@@ -1,9 +1,10 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 // Models
 import { User } from '../../_models/index';
 // Services
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../_services/auth.service';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class RegisterComponent implements OnInit {
     user = new User;
 
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private router: Router
     ) { }
 
   ngOnInit() {
@@ -28,5 +30,6 @@ export class RegisterComponent implements OnInit {
       this.user.email = form.value.email;
       this.user.password = form.value.password;
       this.authService.registerUser(this.user);
+      this.router.navigate(['/login']);
     }
 }

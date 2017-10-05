@@ -8,7 +8,7 @@ import { AuthHttp } from 'angular2-jwt';
 // Models
 import { User } from '../_models/index';
 // Services
-import { CurrentUserService } from '../_services/current_user.service';
+import { CurrentUserService } from '../_services/http.service';
 
 @Injectable()
 export class AuthService {

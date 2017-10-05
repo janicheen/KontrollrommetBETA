@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
 // Models
 import { User } from '../_models/index';
 // External Services
-import { AuthService } from '../authentication/auth.service';
-import { DataService } from '../_services/data.service';
+import { AuthService } from '../_services/auth.service';
+import { AppStore } from '../app-store';
 // import { AlertService } from '../../main-ui/_services/alert.service';
 // import { UserDataService } from '../../initialization/_services/user-data.service'
 
@@ -22,28 +23,22 @@ export class NavigationFrameComponent implements OnInit {
     loggedin: Boolean;
 
   constructor(
+    private store: AppStore,
     public authService: AuthService,
-    public dataService: DataService,
     private router: Router,
-    ) {}
+    ) {
+      this.store
+      .changes
+      .pluck('user')
+      .subscribe((user: User) => this.currentuser = user);
+    }
 
-  ngOnInit(): void {
-    this.dataService.currentuser.subscribe(
-      (data: User) => {
-        this.currentuser = data;
-        console.log('currentuser set in component', this.currentuser);
-      }
-    );
-  }
+  ngOnInit(): void {}
 
   logout(): void {
-    alert('You are logging out');
+    console.log('logging out');
     this.authService.logoutUser();
     this.router.navigate(['/login']);
   }
 
-  /* ngOnInit(): void {
-    this.userDataService.getCurrentUser()
-    .subscribe(user => this.currentuser = user);
-  } */
 }

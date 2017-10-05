@@ -12,7 +12,7 @@ import { User } from '../_models/index';
 import { Entity, Meeting, MeetingParticipant } from '../_models/index';
 
 @Injectable()
-export class CurrentUserService {
+export class HttpService {
     private headers = new Headers({'Accept': 'application/json', 'Content-Type': 'application/json'});
     private options = new RequestOptions({ headers: this.headers });
 
@@ -20,6 +20,8 @@ export class CurrentUserService {
         private authHttp: AuthHttp,
         private http: Http
     ) { }
+
+    // *** Regular HTTP requests //
 
     createUser(user) {
         console.log('creating user', JSON.stringify({ user }));
@@ -29,7 +31,8 @@ export class CurrentUserService {
         .subscribe();
     }
 
-    // Method for getting data on currently logged in user
+    // *** AuthHTTP requests //
+
     getCurrentUser(): Observable<User> {
         console.log('getting current user from server...');
         return this.authHttp.get('http://127.0.0.1:8000/client_views/currentuser/')
