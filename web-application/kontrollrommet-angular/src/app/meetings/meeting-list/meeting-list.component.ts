@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 // Internal Services
 import { MeetingService } from '../meeting.service';
 import { DataService } from '../../_services/data.service';
@@ -6,12 +7,11 @@ import { DataService } from '../../_services/data.service';
 
 // Models
 import { Meeting, Entity, MeetingParticipant} from '../../_models/index';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'app-meetinglist',
-    templateUrl: 'meeting-list.component.html'
-})
+    templateUrl: 'meeting-list.component.html',
+ })
 export class MeetingListComponent implements OnInit {
     // Properties of the component
     meetings: MeetingParticipant[];

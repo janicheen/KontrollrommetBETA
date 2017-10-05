@@ -31,14 +31,14 @@ export class CurrentUserService {
 
     // Method for getting data on currently logged in user
     getCurrentUser(): Observable<User> {
-        console.log('getting current user...');
+        console.log('getting current user from server...');
         return this.authHttp.get('http://127.0.0.1:8000/client_views/currentuser/')
         .map(res => res.json())
         .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
     }
 
     getMeetingParticipantByUser(): Observable<MeetingParticipant[]> {
-        console.log('getting meetings related to user');
+        console.log('getting meetings related to user from server...');
         return this.authHttp.get('http://127.0.0.1:8000/client_views/meetingparticipantbyuser/')
         .map(res => res.json())
         .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if

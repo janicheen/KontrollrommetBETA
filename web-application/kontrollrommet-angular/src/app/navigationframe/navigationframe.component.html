@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <span *ngIf="authService.loggedIn()">
-      <h1>Velkommen til Kontrollrommet, {{ currentuser.person.first_name }}!</h1>
+      <h1>Velkommen til Kontrollrommet, {{ currentuser.person?.first_name }}!</h1>
     </span> 
   </div>
 

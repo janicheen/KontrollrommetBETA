@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 // Models
 import { Meeting, User } from '../_models/index';
 // External Services
+import { DataService } from '../_services/data.service';
 // Components
 
 @Component({
@@ -18,7 +19,10 @@ export class DashboardComponent implements OnInit {
   loggedin: Boolean;
   meetings: Meeting[] = [];
 
-  constructor() {}
+  constructor(
+    private dataService: DataService,
+  ) {}
 
   ngOnInit(): void {}
+
 }
