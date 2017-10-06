@@ -26,6 +26,7 @@ import { AuthenticationService as jwtAuthenticationService, Auth as jwtAuth } fr
 import { AuthGuard } from './_guards/auth.guard';
 import { HttpService } from './_services/http.service';
 import { DataService } from './_services/data.service';
+import { ActionService } from './actions/action.service';
 import { MeetingService } from './meetings/meeting.service';
 import { AuthService } from './authentication/authentication.service';
 
@@ -73,8 +74,9 @@ import { AuthService } from './authentication/authentication.service';
     // Guards
     AuthGuard,
     // Main Service units
-    DataService,
     HttpService,
+    DataService,
+    ActionService,
     // Component Collective Services
     AuthService,
     MeetingService,

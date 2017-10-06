@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 // Services
 import { DataService } from '../_services/data.service';
+import { ActionService } from '../actions/action.service';
 // Models
 import { User } from '../_models/index';
 
@@ -14,6 +15,7 @@ export class AuthService {
     constructor(
         // private router: Router,
         private dataService: DataService,
+        private actionService: ActionService,
         private router: Router
     ) { }
 
@@ -34,7 +36,8 @@ export class AuthService {
                 // If login returns sucessful, this operation is performed
                 if (data) {
                     console.log('login sucessful');
-                    this.dataService.loadInitialData();
+                    this.actionService.updateCurrentUser();
+                    // this.dataService.loadInitialData();
                     this.router.navigate([returnUrl]);
                 // It login returns unsuccessful, this operation is performed
                 } else {

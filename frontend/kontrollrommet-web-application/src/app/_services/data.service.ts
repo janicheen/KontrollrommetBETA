@@ -24,11 +24,7 @@ export class DataService {
         private appStore: AppStore
     ) {}
 
-    loadInitialData() {
-        this.loadCurrentUser();
-        this.loadMeetingParticipantByUser();
-    }
-
+/* 
     // Gets data from http and loads into the Store
     loadCurrentUser() {
         this.httpService.getCurrentUser()
@@ -39,7 +35,7 @@ export class DataService {
             },
             err => console.log('Error loading current user')
         );
-    }
+    } */
     // Gets data from http and loads into the Store
     loadMeetingParticipantByUser() {
         this.httpService.getMeetingParticipantByUser()
@@ -52,6 +48,11 @@ export class DataService {
         );
     }
 
+    // Gets data from http and loads into the Store
+    getCurrentUser(): Observable<User> {
+        return this.httpService.getCurrentUser();
+    }
+
     // *** Authentication Processing ***
 
     // Direct Http method
@@ -59,7 +60,7 @@ export class DataService {
         console.log('registering user...', user);
         this.httpService.createUser(user);
     }
-
+    // Returns a true/false in login is successful
     loginUser(username: string, password: string): Observable<boolean> {
         console.log('sending login data to jwt auth service');
         return this.jwtauthservice.login(username, password);
