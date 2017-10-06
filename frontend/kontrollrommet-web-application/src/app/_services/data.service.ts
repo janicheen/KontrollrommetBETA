@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
 import 'rxjs/Rx';
 // Models
 import { User, MeetingParticipant } from '../_models/index';
@@ -51,6 +50,8 @@ export class DataService {
         );
     }
 
+    // *** Authentication Processing ***
+
     // Direct Http method
     registerUser(user) {
         console.log('registering user...', user);
@@ -58,7 +59,7 @@ export class DataService {
     }
 
     loginUser(username: string, password: string): Observable<boolean> {
-        console.log('running loginUser');
+        console.log('sending login data to jwt auth service');
         return this.jwtauthservice.login(username, password);
     }
 

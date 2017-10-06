@@ -26,34 +26,20 @@ export class LoginComponent implements OnInit {
     constructor(
         private authService: AuthService,
         private dataService: DataService,
-        private router: Router,
         private activatedroute: ActivatedRoute,
     ) { }
 
     ngOnInit() {
-        // get return url from route parameters or default to '/'
+        // get returnurl from route parameter 'returnUrl' or default to '/'
          this.returnUrl = this.activatedroute.snapshot.queryParams['returnUrl'] || '/';
     }
 
+    // Collect form data, pass it on to designated component collective service
     onLogin(form: NgForm) {
         const username = form.value.username;
         const password = form.value.password;
-        console.log(username, password);
-        this.authService.loginUser(username, password)
-        .subscribe(
-            data => {
-                // If login returns sucessful, this operation is performed
-                if (data) {
-                    console.log('login sucessful');
-                    this.dataService.loadInitialData();
-                    this.router.navigate([this.returnUrl]);
-                // It login returns unsuccessful, this operation is performed
-                } else {
-                    console.log('failure to log in');
-                    this.router.navigate([this.returnUrl]);
-                }
-            },
-            error => console.log(error)
-        );
+
+        console.log('passing login data on to auth service');
+        this.authService.loginUser(username, password, this.returnUrl);
     }
 }

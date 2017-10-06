@@ -2,13 +2,13 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/Rx';
 // import { tokenNotExpired } from 'angular2-jwt';
 // import { AuthHttp } from 'angular2-jwt';
 
 // Models
 import { User } from '../_models/index';
 // Services
-import { AuthenticationService } from 'ng-jwt';
 import { DataService } from './data.service';
 
 
@@ -19,32 +19,33 @@ export class AuthService {
     constructor(
         // private router: Router,
         private dataService: DataService,
-        private jwtauthService: AuthenticationService,
+        private router: Router
     ) { }
 
+    // Recives form data from component, passes it to data service
     registerUser(user: User) {
         this.dataService.registerUser(user);
     }
 
-    loginUser(username: string, password: string): Observable<boolean> {
-        return this.dataService.loginUser(username, password);
+    // Receives form data from component, passes it on to data service
+    loginUser(username: string, password: string, returnUrl: string) {
+        return this.dataService.loginUser(username, password)
+        .toPromise()
+        .then(
+            (data) => {
+                // If login returns sucessful, this operation is performed
+                if (data) {
+                    console.log('login sucessful');
+                    this.dataService.loadInitialData();
+                    this.router.navigate([returnUrl]);
+                // It login returns unsuccessful, this operation is performed
+                } else {
+                    console.log('failure to log in');
+                    this.router.navigate([returnUrl]);
+                }
+            },
+            error => console.log(error)
+        );
     }
 
- /*  getToken() { */
-/*     firebase.auth().currentUser.getToken()
-      .then(
-        (token: string) => this.token = token
-      );
- */   /*  return this.token;
-  } */
-
-  /* isAuthenticated() {
-    return this.token != null;
-  } */
-
- /*  // Check if someone is logged in
-  loggedIn() {
-    return tokenNotExpired('UserToken');
-  }
- */
 }
