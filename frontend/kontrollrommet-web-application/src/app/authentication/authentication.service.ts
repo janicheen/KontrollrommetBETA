@@ -35,13 +35,13 @@ export class AuthService {
             (data) => {
                 // If login returns sucessful, this operation is performed
                 if (data) {
-                    console.log('login sucessful');
+                    console.log('got answer from data service and login was sucessful! TRUE');
                     this.actionService.loadInitialData();
                     // this.dataService.loadInitialData();
                     this.router.navigate([returnUrl]);
                 // It login returns unsuccessful, this operation is performed
                 } else {
-                    console.log('failure to log in');
+                    console.log('got answer from data servie and login failed. FALSE');
                     this.router.navigate([returnUrl]);
                 }
             },

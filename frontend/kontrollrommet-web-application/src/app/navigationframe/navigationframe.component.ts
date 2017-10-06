@@ -8,10 +8,8 @@ import 'rxjs/Rx';
 // Models
 import { User } from '../_models/index';
 // External Services
-import { DataService } from '../_services/data.service';
 import { AppStore } from '../app-store';
-// import { AlertService } from '../../main-ui/_services/alert.service';
-// import { UserDataService } from '../../initialization/_services/user-data.service'
+import { ActionService } from '../actions/action.service';
 
 @Component({
     selector: 'app-navigationframe',
@@ -20,24 +18,24 @@ import { AppStore } from '../app-store';
 })
 export class NavigationFrameComponent implements OnInit {
     currentuser: User;
-    loggedin: Boolean;
+    loggedin: boolean;
 
   constructor(
     private store: AppStore,
-    public dataService: DataService,
+    public actionService: ActionService,
     private router: Router,
     ) {
-      this.store
-      .changes
-      .pluck('user')
+      this.store.changes.pluck('user')
       .subscribe((user: User) => this.currentuser = user);
+      this.store.changes.pluck('isLoggedin')
+      .subscribe((isloggedin: boolean) => this.loggedin = isloggedin);
     }
 
   ngOnInit(): void {}
 
   logout(): void {
     console.log('logging out');
-    this.dataService.logoutUser();
+    this.actionService.logoutUser();
     this.router.navigate(['/login']);
   }
 

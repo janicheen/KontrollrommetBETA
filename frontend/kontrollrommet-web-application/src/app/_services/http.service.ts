@@ -24,7 +24,7 @@ export class HttpService {
     // *** Regular HTTP requests //
 
     createUser(user) {
-        console.log('creating user', JSON.stringify({ user }));
+        console.log('sending new user data to server...', JSON.stringify({ user }));
         return this.http.post('http://127.0.0.1:8000/client_views/createuser/', JSON.stringify(user), this.options)
         .map(res => res.json()) // ...and calling .json() on the response to return data
         .catch((error: any) => Observable.throw(error.json().error || 'Server error')) // ...errors if

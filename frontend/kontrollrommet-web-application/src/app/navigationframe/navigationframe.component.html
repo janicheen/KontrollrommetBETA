@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
-    <span *ngIf="dataService.isloggedIn()">
-      <h1>Velkommen til Kontrollrommet, {{ currentuser.person?.first_name }}!</h1>
+    <span *ngIf="loggedin">
+      <h1>Velkommen til Kontrollrommet, {{ currentuser?.person.first_name }}!</h1>
     </span> 
   </div>
 
@@ -11,8 +11,8 @@
       <a class="btn btn-default" role="button" routerLink="/meeting_management" routerLinkActive="active">Møtevirksomhet</a>
       <a class="btn btn-default" role="button" routerLink="/project_management" routerLinkActive="active">Prosjektstyring</a>
       <a class="btn btn-default" role="button" routerLink="/useraccount" routerLinkActive="active">Din Brukerkonto</a>    
-      <a class="btn btn-default" role="button" routerLink="/login" routerLinkActive="active" *ngIf="!dataService.isloggedIn()">Login</a>    
-      <a class="btn btn-default" role="button" (click)="logout()" *ngIf="dataService.isloggedIn()">Logout</a>
+      <a class="btn btn-default" role="button" routerLink="/login" routerLinkActive="active" *ngIf="!loggedin">Login</a>    
+      <a class="btn btn-default" role="button" (click)="logout()" *ngIf="loggedin">Logout</a>
     </nav>
   </div>
 </div>

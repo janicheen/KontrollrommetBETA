@@ -41,9 +41,9 @@ export class DataService {
         return this.jwtauthservice.login(username, password);
     }
 
-    isloggedIn() {
+    isloggedIn(): Observable<boolean> {
         console.log('sending check to jwt auth to see if we are logged in... awaiting answer true/false if we are logged in');
-        return this.jwtauth.loggedIn();
+        return Observable.of(this.jwtauth.loggedIn());
     }
 
     logoutUser() {

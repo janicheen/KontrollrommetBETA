@@ -5,4 +5,5 @@ export class State {
     user: User;
     meetingparticipations: MeetingParticipant[];
     isLoading = false;
+    isLoggedin = false;
 }
