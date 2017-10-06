@@ -11,10 +11,8 @@ import { NgJwtModule } from 'ng-jwt';
 // import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 // Routing Module ***
 import { AppRoutingModule } from './app-routing.module';
-
 // App Store
 import { AppStore } from './app-store';
-
 // Application Components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './authentication/login/login.component';
@@ -23,14 +21,13 @@ import { NavigationFrameComponent } from './navigationframe/navigationframe.comp
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MeetingsComponent } from './meetings/meetings/meetings.component';
 import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
-
 // Services
-import { AuthenticationService, Auth } from 'ng-jwt';
-import { AuthService } from './_services/auth.service';
-import { AuthGuard } from './_services/auth.guard';
+import { AuthenticationService as jwtAuthenticationService, Auth as jwtAuth } from 'ng-jwt';
+import { AuthGuard } from './_guards/auth.guard';
 import { HttpService } from './_services/http.service';
 import { DataService } from './_services/data.service';
 import { MeetingService } from './meetings/meeting.service';
+import { AuthService } from './authentication/authentication.service';
 
 // *** UNSTRUCTURED ***
 // import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -69,18 +66,18 @@ import { MeetingService } from './meetings/meeting.service';
     // MeetingsModule
   ],
   providers: [
-    // Apptore
+    // Appstore
     AppStore,
     // JWT services
-    AuthenticationService, Auth,
-    // Authentication service
-    AuthService,
+    jwtAuthenticationService, jwtAuth,
+    // Guards
     AuthGuard,
-    // Data service
+    // Main Service units
     DataService,
-    // Client views
     HttpService,
-    MeetingService
+    // Component Collective Services
+    AuthService,
+    MeetingService,
   ],
   bootstrap: [ AppComponent ]
 })

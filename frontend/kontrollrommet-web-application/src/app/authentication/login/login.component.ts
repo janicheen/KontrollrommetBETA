@@ -1,18 +1,8 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 // Services
-import { AuthService } from '../../_services/auth.service';
-import { DataService } from '../../_services/data.service';
-
-
-/* import { Router, ActivatedRoute } from '@angular/router';
-// Services
-import { AuthenticationService, UserService } from '../index';
-import { AlertService } from '../../main-ui/index';
-// Models
-import { User } from '../../_models/index';
- */
+import { AuthService } from '../../authentication/authentication.service';
 
 @Component({
     selector: 'app-login',
@@ -22,10 +12,11 @@ import { User } from '../../_models/index';
 
 export class LoginComponent implements OnInit {
     returnUrl: string;
+    username: string;
+    password: string;
 
     constructor(
         private authService: AuthService,
-        private dataService: DataService,
         private activatedroute: ActivatedRoute,
     ) { }
 
@@ -34,12 +25,9 @@ export class LoginComponent implements OnInit {
          this.returnUrl = this.activatedroute.snapshot.queryParams['returnUrl'] || '/';
     }
 
-    // Collect form data, pass it on to designated component collective service
+    // Pass component data to designated component collective service
     onLogin(form: NgForm) {
-        const username = form.value.username;
-        const password = form.value.password;
-
         console.log('passing login data on to auth service');
-        this.authService.loginUser(username, password, this.returnUrl);
+        this.authService.loginUser(this.username, this.password, this.returnUrl);
     }
 }

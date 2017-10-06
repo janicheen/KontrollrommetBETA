@@ -7,7 +7,7 @@ import { RegisterComponent } from './authentication/index';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MeetingsComponent } from './meetings/meetings/meetings.component';
 // Guard
-import { AuthGuard } from './_services/auth.guard';
+import { AuthGuard } from './_guards/auth.guard';
 
 
 // ***Application components***

@@ -1,20 +1,15 @@
 // Angular Dependencies
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-// import { tokenNotExpired } from 'angular2-jwt';
-// import { AuthHttp } from 'angular2-jwt';
-
+// Services
+import { DataService } from '../_services/data.service';
 // Models
 import { User } from '../_models/index';
-// Services
-import { DataService } from './data.service';
-
 
 @Injectable()
 export class AuthService {
-    token: string;
 
     constructor(
         // private router: Router,
@@ -23,11 +18,14 @@ export class AuthService {
     ) { }
 
     // Recives form data from component, passes it to data service
+    // Reroutes to new page
     registerUser(user: User) {
         this.dataService.registerUser(user);
+        this.router.navigate(['/login']);
     }
 
     // Receives form data from component, passes it on to data service
+    // Reacts on return data
     loginUser(username: string, password: string, returnUrl: string) {
         return this.dataService.loginUser(username, password)
         .toPromise()

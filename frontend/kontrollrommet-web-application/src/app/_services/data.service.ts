@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-// Models
-import { User, MeetingParticipant } from '../_models/index';
-
 // Services
 import { HttpService } from './http.service';
 import {  Auth as jwtAuth } from 'ng-jwt';
 import { AuthenticationService as jwtAuthService } from 'ng-jwt';
-
 // Store
 import { AppStore } from '../app-store';
+// Models
+import { User } from '../_models/index';
+import { MeetingParticipant } from '../_models/index';
 
+// Data Service processes data received from component collective services,
+// Passes data to/prom http and auth services,
+// Passes update commands with data to Store
 @Injectable()
 export class DataService {
 
