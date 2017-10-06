@@ -36,7 +36,7 @@ export class AuthService {
                 // If login returns sucessful, this operation is performed
                 if (data) {
                     console.log('login sucessful');
-                    this.actionService.updateCurrentUser();
+                    this.actionService.loadInitialData();
                     // this.dataService.loadInitialData();
                     this.router.navigate([returnUrl]);
                 // It login returns unsuccessful, this operation is performed

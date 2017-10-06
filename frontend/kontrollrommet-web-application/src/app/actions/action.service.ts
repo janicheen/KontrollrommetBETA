@@ -11,6 +11,11 @@ constructor(
     private dataService: DataService
 ) { }
 
+    loadInitialData() {
+        this.updateCurrentUser();
+        this.updateMeetingParticipantByUser();
+    }
+
     // Gets data from http and loads it into the Store
     updateCurrentUser() {
         this.dataService.getCurrentUser()
@@ -22,4 +27,16 @@ constructor(
             err => console.log('Error updating user')
         );
     }
+
+    updateMeetingParticipantByUser() {
+        this.dataService.getMeetingParticipantByUser()
+        .subscribe(
+        data => {
+            console.log('gotten meeting participation from http service...', data);
+            this.appStore.updateState('meetingparticipations', data);
+            },
+            err => console.log('Error loading current user')
+        );
+    }
+
 }

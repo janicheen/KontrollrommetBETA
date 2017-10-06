@@ -5,8 +5,6 @@ import 'rxjs/Rx';
 import { HttpService } from './http.service';
 import {  Auth as jwtAuth } from 'ng-jwt';
 import { AuthenticationService as jwtAuthService } from 'ng-jwt';
-// Store
-import { AppStore } from '../app-store';
 // Models
 import { User } from '../_models/index';
 import { MeetingParticipant } from '../_models/index';
@@ -21,56 +19,35 @@ export class DataService {
         private httpService: HttpService,
         private jwtauth: jwtAuth,
         private jwtauthservice: jwtAuthService,
-        private appStore: AppStore
     ) {}
 
-/* 
-    // Gets data from http and loads into the Store
-    loadCurrentUser() {
-        this.httpService.getCurrentUser()
-        .subscribe(
-        data => {
-            console.log('gotten current user from http service...', data);
-            this.appStore.updateState('user', data);
-            },
-            err => console.log('Error loading current user')
-        );
-    } */
-    // Gets data from http and loads into the Store
-    loadMeetingParticipantByUser() {
-        this.httpService.getMeetingParticipantByUser()
-        .subscribe(
-        data => {
-            console.log('gotten meeting participation from http service...', data);
-            this.appStore.updateState('meetingparticipations', data);
-        },
-            err => console.log('Error loading current user')
-        );
+    getMeetingParticipantByUser(): Observable<MeetingParticipant[]> {
+        console.log('getting meeting participants from http...');
+        return this.httpService.getMeetingParticipantByUser();
     }
 
-    // Gets data from http and loads into the Store
     getCurrentUser(): Observable<User> {
+        console.log('getting current user from http...');
         return this.httpService.getCurrentUser();
     }
 
-    // *** Authentication Processing ***
-
-    // Direct Http method
     registerUser(user) {
-        console.log('registering user...', user);
+        console.log('passing new user data to http for registering.');
         this.httpService.createUser(user);
     }
-    // Returns a true/false in login is successful
+
     loginUser(username: string, password: string): Observable<boolean> {
-        console.log('sending login data to jwt auth service');
+        console.log('sending login data to jwt auth service... awaiting answer true/false if login was successfull');
         return this.jwtauthservice.login(username, password);
     }
 
     isloggedIn() {
+        console.log('sending check to jwt auth to see if we are logged in... awaiting answer true/false if we are logged in');
         return this.jwtauth.loggedIn();
     }
 
     logoutUser() {
+        console.log('sending command to jwt auth to log us out');
         this.jwtauthservice.logout();
     }
 }
