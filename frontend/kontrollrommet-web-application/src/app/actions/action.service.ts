@@ -17,7 +17,11 @@ constructor(
         this.updateLoggedIn();
     }
 
-    // Gets data from http and loads it into the Store
+    subscribeTo(property: string) {
+        console.log(this.appStore.changes.pluck(property));
+        return this.appStore.changes.pluck(property);
+    }
+
     updateCurrentUser() {
         this.dataService.getCurrentUser()
         .subscribe(
@@ -45,7 +49,7 @@ constructor(
         .subscribe(
         data => {
             console.log('I got the status of logged in, so now im updating it in the store');
-            this.appStore.updateState('isLoggedin', data);
+            this.appStore.updateState('is_logged_in', data);
             },
         );
     }
@@ -54,7 +58,7 @@ constructor(
         console.log('I got the command to log out, so now im asking data service to to it');
         this.dataService.logoutUser();
         console.log('Changing status in store, for logged out');
-        this.appStore.updateState('isLoggedin', false);
+        this.appStore.updateState('is_logged_in', false);
     }
 
 

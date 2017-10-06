@@ -21,8 +21,8 @@ export class LoginComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        // get returnurl from route parameter 'returnUrl' or default to '/'
-         this.returnUrl = this.activatedroute.snapshot.queryParams['returnUrl'] || '/';
+        console.log('get returnurl from route parameter returnUrl or default to /');
+        this.returnUrl = this.activatedroute.snapshot.queryParams['returnUrl'] || '/';
     }
 
     // Pass component data to designated component collective service

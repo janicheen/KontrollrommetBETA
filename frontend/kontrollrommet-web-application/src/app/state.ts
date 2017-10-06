@@ -4,6 +4,6 @@ import { MeetingParticipant } from './_models/index';
 export class State {
     user: User;
     meetingparticipations: MeetingParticipant[];
-    isLoading = false;
-    isLoggedin = false;
+    is_loading = false;
+    is_logged_in = false;
 }

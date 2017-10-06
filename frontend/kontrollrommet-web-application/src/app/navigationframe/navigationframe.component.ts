@@ -8,7 +8,6 @@ import 'rxjs/Rx';
 // Models
 import { User } from '../_models/index';
 // External Services
-import { AppStore } from '../app-store';
 import { ActionService } from '../actions/action.service';
 
 @Component({
@@ -17,21 +16,17 @@ import { ActionService } from '../actions/action.service';
     styleUrls: [ './navigationframe.component.css' ]
 })
 export class NavigationFrameComponent implements OnInit {
-    currentuser: User;
-    loggedin: boolean;
+    // currentuser: User;
+    loggedin = this.actionService.subscribeTo('is_logged_in');
+    currentuser = this.actionService.subscribeTo('user');
 
   constructor(
-    private store: AppStore,
     public actionService: ActionService,
     private router: Router,
-    ) {
-      this.store.changes.pluck('user')
-      .subscribe((user: User) => this.currentuser = user);
-      this.store.changes.pluck('isLoggedin')
-      .subscribe((isloggedin: boolean) => this.loggedin = isloggedin);
-    }
+    ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   logout(): void {
     console.log('logging out');

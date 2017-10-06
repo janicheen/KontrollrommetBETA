@@ -19,16 +19,19 @@ export class AuthService {
         private router: Router
     ) { }
 
-    // Recives form data from component, passes it to data service
+    // , passes it to data service
     // Reroutes to new page
     registerUser(user: User) {
+        console.log('Receiving new user data from component, passing it on to data service.');
         this.dataService.registerUser(user);
+        console.log('Routing to login page');
         this.router.navigate(['/login']);
     }
 
     // Receives form data from component, passes it on to data service
     // Reacts on return data
     loginUser(username: string, password: string, returnUrl: string) {
+        console.log('Receiving login data from component, passing it on to data service...');
         return this.dataService.loginUser(username, password)
         .toPromise()
         .then(

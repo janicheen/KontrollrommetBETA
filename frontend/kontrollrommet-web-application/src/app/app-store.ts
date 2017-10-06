@@ -6,12 +6,6 @@ import { MeetingParticipant } from './_models/meetingparticipant';
 // State
 import { State } from './state';
 
-/* interface State {
-    user: Object;
-    isLoading: boolean;
-    meetingparticipations: any[];
-}
- */
 const state = new State();
 const store = new BehaviorSubject<State>(state);
 
@@ -20,19 +14,19 @@ export class AppStore {
 
     changes = store.asObservable()
     .distinctUntilChanged()
-    // log new state
-    .do(changes => console.log('new state', changes));
+    .do(changes => console.log('projecting new state', changes));
 
     getState() {
     return this.store.value;
     }
 
     setState(state: State) {
-        console.log('setState ', state); // log update
+        console.log('setState ', state);
         this.store.next(state);
     }
 
-    updateState(property: string, data) {
+    updateState(property: string, data: any) {
+        console.log('updating state', state);
         const currentState = this.getState();
         this.setState(Object.assign({}, currentState, { [property]: data }));
     }
