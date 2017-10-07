@@ -7,6 +7,8 @@ import 'rxjs/Rx';
 import { Person, Entity, Subject,  Meeting, MeetingSubject, MeetingParticipant } from '../../_models/index';
 import { PersonToEntityRelation } from '../../_models/persontoentityrelation';
 import { MeetingCategory } from '../../_categories/index';
+import { EntityToPlanRelation } from '../../_models/entitytoplanrelation';
+
 // Internal Services
 import { MeetingService } from '../meeting.service';
 
@@ -28,9 +30,9 @@ export class MeetingFormComponent implements OnInit {
     // Template properties
     entityrelations = this.actionService.subscribeTo('entityrelations');
     meeting_categories = this.actionService.subscribeTo('meeting_categories');
-    // Template properties
+    // Form properties
     meetingparticipants: PersonToEntityRelation[];
-    meetingsubjects: Subject[];
+    meetingsubjects: EntityToPlanRelation[];
 
     submitted = false;
 
@@ -53,6 +55,7 @@ export class MeetingFormComponent implements OnInit {
         }
  */
     ngOnInit(): void {}
+
     // What to do when entity field is chosen
     onChangeEntity(): void {
         console.log('entity chosen, now populating fields...');
@@ -62,6 +65,12 @@ export class MeetingFormComponent implements OnInit {
             console.log('gotten this:', data);
             this.meetingparticipants = data;
          });
+         this.dataService.getObject('meeting subjects', 'client_views/plansbyentity', this.meeting.executive_entity.id)
+         .subscribe(data => {
+             console.log('gotten this:', data);
+             this.meetingsubjects = data;
+          });
+
         // this.getMeetingSubjects(this.meeting.executive_entity.id);
     }
 

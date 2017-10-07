@@ -25,7 +25,7 @@
 
                     <div class='wrapper'>
                         <label>Inviterte</label>
-                        <ul class='container'  [(ngModel)]='meeting.meetingparticipants'>
+                        <ul class='container'>
                             <li *ngFor="let participant of meeting.meetingparticipants">
                                 {{participant.person.first_name}} {{participant.person.last_name}}
                                 <button class="delete">x</button>									
@@ -35,7 +35,7 @@
 
                     <div class='wrapper'>
                         <label>Agenda</label>
-                        <ul class='container' [(ngModel)]='meeting.meetingsubjects'>
+                        <ul class='container'>
                             <li *ngFor="let meetingsubject of meeting.meetingsubjects">
                                 {{meetingsubject.subject.headline}}
                                 <button class="delete">x</button>	
@@ -52,16 +52,15 @@
             <div class="panel panel-default">
                 <label class="panel-heading">Foreslåtte møtedeltakere</label>
                 <ul class="list-unstyled panel-body scroll-area">	
-                    <li *ngFor="let person of meetingparticipants">{{person.person.first_name}} {{person.person.last_name}}</li>
+                    <li *ngFor="let person of meetingparticipants">{{person?.person.first_name}} {{person?.person.last_name}}</li>
                 </ul>
             </div>
 
             <div class="panel panel-default">
                 <label class="panel-heading">Foreslåtte agendapunkter</label>
                 <ul class="list-unstyled panel-body">	
-                    <li *ngFor="let subject of possible_meetingsubjects">{{subject.headline}}</li>
+                    <li *ngFor="let subject of (meetingsubjects)">{{subject?.plan.headline}}</li>
                 </ul>
-                <button *ngIf="meeting.executive_entity" type="button" class="btn btn-default" data-toggle="modal" data-target="#NewMeetingSubjectModal">Nytt agendapunkt</button>
             </div>
          
         </div>
