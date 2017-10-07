@@ -12,6 +12,7 @@ import { User } from '../../_models/index';
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+    // Form properties
     user = new User;
 
     constructor(

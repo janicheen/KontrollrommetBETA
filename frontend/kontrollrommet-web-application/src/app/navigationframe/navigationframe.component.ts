@@ -8,7 +8,7 @@ import 'rxjs/Rx';
 // Models
 import { User } from '../_models/index';
 // External Services
-import { ActionService } from '../actions/action.service';
+import { ActionService } from '../_services/action.service';
 
 @Component({
     selector: 'app-navigationframe',
@@ -16,22 +16,21 @@ import { ActionService } from '../actions/action.service';
     styleUrls: [ './navigationframe.component.css' ]
 })
 export class NavigationFrameComponent implements OnInit {
-    // currentuser: User;
+    // Template properties subscribed to store
     loggedin = this.actionService.subscribeTo('is_logged_in');
-    currentuser = this.actionService.subscribeTo('user');
+    currentuser = this.actionService.subscribeTo('currentuser');
 
-  constructor(
-    public actionService: ActionService,
-    private router: Router,
+    constructor(
+        public actionService: ActionService,
+        private router: Router,
     ) {}
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {}
 
-  logout(): void {
-    console.log('logging out');
-    this.actionService.logoutUser();
-    this.router.navigate(['/login']);
-  }
+    logout(): void {
+        console.log('logging out');
+        this.actionService.logoutUser();
+        this.router.navigate(['/login']);
+    }
 
 }

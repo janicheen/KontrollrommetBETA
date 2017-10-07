@@ -7,6 +7,7 @@ import {  Auth as jwtAuth } from 'ng-jwt';
 import { AuthenticationService as jwtAuthService } from 'ng-jwt';
 // Models
 import { User } from '../_models/index';
+import { PersonToEntityRelation } from '../_models/index';
 import { MeetingParticipant } from '../_models/index';
 
 // Data Service processes data received from component collective services,
@@ -20,6 +21,16 @@ export class DataService {
         private jwtauth: jwtAuth,
         private jwtauthservice: jwtAuthService,
     ) {}
+
+    getObject(obj_name, obj_url, obj_urlparam) {
+        console.log('getting ', obj_name, ' from http...');
+        return this.httpService.getObject(obj_name, obj_url, obj_urlparam);
+    }
+
+    getPersonToEntityRelationByUser(): Observable<PersonToEntityRelation[]> {
+        console.log('getting entitiy relations from http...');
+        return this.httpService.getPersonToEntityRelationByUser();
+    }
 
     getMeetingParticipantByUser(): Observable<MeetingParticipant[]> {
         console.log('getting meeting participants from http...');
@@ -41,14 +52,15 @@ export class DataService {
         return this.jwtauthservice.login(username, password);
     }
 
+    logoutUser() {
+        console.log('sending command to jwt auth to log us out');
+        this.jwtauthservice.logout();
+    }
+
     isloggedIn(): Observable<boolean> {
         console.log('sending check to jwt auth to see if we are logged in... awaiting answer true/false if we are logged in');
         return Observable.of(this.jwtauth.loggedIn());
     }
 
-    logoutUser() {
-        console.log('sending command to jwt auth to log us out');
-        this.jwtauthservice.logout();
-    }
 }
 

@@ -8,7 +8,7 @@ import { HttpModule } from '@angular/http';
 // Angular JWT
 import { NgJwtModule } from 'ng-jwt';
 // Bootstrap Module
-// import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 // Routing Module ***
 import { AppRoutingModule } from './app-routing.module';
 // App Store
@@ -21,12 +21,13 @@ import { NavigationFrameComponent } from './navigationframe/navigationframe.comp
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MeetingsComponent } from './meetings/meetings/meetings.component';
 import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
+import { MeetingFormComponent } from './meetings/new-meeting/new-meeting.component';
 // Services
 import { AuthenticationService as jwtAuthenticationService, Auth as jwtAuth } from 'ng-jwt';
 import { AuthGuard } from './_guards/auth.guard';
 import { HttpService } from './_services/http.service';
 import { DataService } from './_services/data.service';
-import { ActionService } from './actions/action.service';
+import { ActionService } from './_services/action.service';
 import { MeetingService } from './meetings/meeting.service';
 import { AuthService } from './authentication/authentication.service';
 
@@ -48,7 +49,8 @@ import { AuthService } from './authentication/authentication.service';
     NavigationFrameComponent,
     DashboardComponent,
     MeetingsComponent,
-    MeetingListComponent
+    MeetingListComponent,
+    MeetingFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,7 @@ import { AuthService } from './authentication/authentication.service';
       loginTokenName: 'token'
     }),
     AppRoutingModule,
-   // NgbModule.forRoot(),
+    NgbModule.forRoot(),
     // AuthenticationModule,
     // MainUIModule,
     // MeetingsModule

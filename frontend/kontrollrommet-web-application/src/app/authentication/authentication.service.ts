@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 // Services
 import { DataService } from '../_services/data.service';
-import { ActionService } from '../actions/action.service';
+import { ActionService } from '../_services/action.service';
 // Models
 import { User } from '../_models/index';
 

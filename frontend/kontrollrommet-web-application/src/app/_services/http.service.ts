@@ -9,7 +9,10 @@ import 'rxjs/add/operator/catch';
 import { AuthHttp } from 'ng-jwt';
 // Models
 import { User } from '../_models/index';
-import { Entity, Meeting, MeetingParticipant } from '../_models/index';
+import { Entity } from '../_models/index';
+import { PersonToEntityRelation } from '../_models/index';
+import { Meeting } from '../_models/index';
+import { MeetingParticipant } from '../_models/index';
 
 @Injectable()
 export class HttpService {
@@ -21,6 +24,19 @@ export class HttpService {
         private http: Http
     ) { }
 
+    getObject(obj_name, obj_url, obj_urlparam) {
+        console.log('getting ', obj_name, 'from server...');
+        if (obj_urlparam) {
+            const options = new RequestOptions({params: {'id': obj_urlparam}});
+            return this.authHttp.get('http://127.0.0.1:8000/' + obj_url + '/', options)
+            .map(res => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
+        } else {
+            return this.authHttp.get('http://127.0.0.1:8000/' + obj_url + '/')
+            .map(res => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
+        }
+    }
     // *** Regular HTTP requests //
 
     createUser(user) {
@@ -43,6 +59,13 @@ export class HttpService {
     getMeetingParticipantByUser(): Observable<MeetingParticipant[]> {
         console.log('getting meetings related to user from server...');
         return this.authHttp.get('http://127.0.0.1:8000/client_views/meetingparticipantbyuser/')
+        .map(res => res.json())
+        .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
+    }
+
+    getPersonToEntityRelationByUser(): Observable<PersonToEntityRelation[]> {
+        console.log('getting entities related to user from server...');
+        return this.authHttp.get('http://127.0.0.1:8000/client_views/persontoentityrelationbyuser/')
         .map(res => res.json())
         .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
     }

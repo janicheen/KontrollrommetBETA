@@ -6,6 +6,7 @@ import { LoginComponent } from './authentication/index';
 import { RegisterComponent } from './authentication/index';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MeetingsComponent } from './meetings/meetings/meetings.component';
+import { MeetingFormComponent } from './meetings/new-meeting/new-meeting.component';
 // Guard
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -33,6 +34,7 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: 'meeting_management', component: MeetingsComponent, canActivate: [AuthGuard]},
+  { path: 'meetingform', component: MeetingFormComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: '/dashboard' }
 ];
 

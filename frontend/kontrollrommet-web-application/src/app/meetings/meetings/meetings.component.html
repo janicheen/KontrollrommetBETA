@@ -29,7 +29,7 @@
   </div>
 
   <div class='row'>  
-    <button type="button" class="btn btn-default">Start møte</button>
+    <button type="button" [disabled]="!meetinglist.selectedmeeting" class="btn btn-default">Start møte</button>
     <button (click)="onClickNewMeetingRequest()">Lag ny møteinnkalling</button>    
   </div>
 </div>
