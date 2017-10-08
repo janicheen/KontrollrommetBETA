@@ -25,20 +25,20 @@
 
                     <div class='wrapper'>
                         <label>Inviterte</label>
-                        <ul class='container'>
-                            <li *ngFor="let participant of meeting.meetingparticipants">
+                        <ul class='container' [dragula]='"bag-one"' [dragulaModel]='meeting.meetingparticipants'>
+                            <li *ngFor="let participant of chosen_persons">
                                 {{participant.person.first_name}} {{participant.person.last_name}}
-                                <button class="delete">x</button>									
+                                <button class="delete" (click)="onClickRemoveMeetingParticipant(participant); $event.stopPropagation()">x</button>									
                             </li>	
                         </ul>
                     </div>
 
                     <div class='wrapper'>
                         <label>Agenda</label>
-                        <ul class='container'>
-                            <li *ngFor="let meetingsubject of meeting.meetingsubjects">
-                                {{meetingsubject.subject.headline}}
-                                <button class="delete">x</button>	
+                        <ul class='container' [dragula]='"bag-two"' [dragulaModel]='meeting.meetingsubjects'>
+                            <li *ngFor="let meetingsubject of chosen_subjects">
+                                {{meetingsubject.plan.headline}}
+                                <button class="delete" (click)="onClickRemoveSubject(meetingsubject); $event.stopPropagation()">x</button>	
                             </li>
                         </ul>
                     </div>
@@ -52,17 +52,23 @@
             <div class="panel panel-default">
                 <label class="panel-heading">Foreslåtte møtedeltakere</label>
                 <ul class="list-unstyled panel-body scroll-area">	
-                    <li *ngFor="let person of meetingparticipants">{{person?.person.first_name}} {{person?.person.last_name}}</li>
+                    <li *ngFor="let person of suggested_persons" (click)="onSelectPerson(person)">{{person?.person.first_name}} {{person?.person.last_name}}</li>
                 </ul>
             </div>
 
             <div class="panel panel-default">
                 <label class="panel-heading">Foreslåtte agendapunkter</label>
                 <ul class="list-unstyled panel-body">	
-                    <li *ngFor="let subject of (meetingsubjects)">{{subject?.plan.headline}}</li>
+                    <li *ngFor="let subject of suggested_subjects" (click)="onSelectSubject(subject)">{{subject?.plan.headline}}</li>
                 </ul>
+                <button *ngIf="meeting.executive_entity" type="button" class="btn btn-default" data-toggle="modal" data-target="#NewMeetingSubjectModal">Nytt agendapunkt</button>                
             </div>
-         
+            <!-- Modal -->
+            <div class="modal fade" id="NewMeetingSubjectModal" tabindex="-1" role="dialog">
+              <!--  <app-new-meetingsubject></app-new-meetingsubject>   -->                 
+            </div>
+            <!-- Modal End -->
+            
         </div>
     </div>
 </div>

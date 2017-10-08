@@ -9,6 +9,8 @@ import { HttpModule } from '@angular/http';
 import { NgJwtModule } from 'ng-jwt';
 // Bootstrap Module
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+// Dragula Module
+import {DragulaModule , DragulaService} from 'ng2-dragula/ng2-dragula';
 // Routing Module ***
 import { AppRoutingModule } from './app-routing.module';
 // App Store
@@ -57,13 +59,14 @@ import { AuthService } from './authentication/authentication.service';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    AppRoutingModule,
     NgJwtModule.forRoot({
       loginEndPoint: 'http://127.0.0.1:8000/api-token-auth/',
       headerPrefix: 'JWT',
       loginTokenName: 'token'
     }),
-    AppRoutingModule,
     NgbModule.forRoot(),
+    DragulaModule,
     // AuthenticationModule,
     // MainUIModule,
     // MeetingsModule
@@ -73,6 +76,8 @@ import { AuthService } from './authentication/authentication.service';
     AppStore,
     // JWT services
     jwtAuthenticationService, jwtAuth,
+    // Dragula
+    DragulaService,
     // Guards
     AuthGuard,
     // Main Service units

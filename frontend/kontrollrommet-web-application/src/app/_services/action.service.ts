@@ -25,11 +25,16 @@ constructor(
         return this.appStore.changes.pluck(property);
     }
 
+    // Universal Update Object, getting it from http service and placing it in store, takes:
+    // obj_name: general name
+    // obj_url: the url to call
+    // obj_urlparam?: id nr to get specific object
+    // obj_stateproperty: property name in State to be updated
     updateObject(obj_name, obj_url, obj_urlparam, obj_stateproperty) {
         this.dataService.getObject(obj_name, obj_url, obj_urlparam)
         .subscribe(
         data => {
-            console.log('I got the ', obj_name, ' data, so now I am updating it in store.');
+            console.log('I got the ', obj_name, ' data from Data Service, so now I am updating it in store.');
             this.appStore.updateState(obj_stateproperty, data);
             },
         err => console.log('Error getting', obj_name, 'data')

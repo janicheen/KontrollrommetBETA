@@ -22,8 +22,12 @@ export class DataService {
         private jwtauthservice: jwtAuthService,
     ) {}
 
+    // Universal Get Object from http service, takes:
+    // obj_name: general name
+    // obj_url: the url to call
+    // obj_urlparam?: id nr to get specific object
     getObject(obj_name, obj_url, obj_urlparam) {
-        console.log('getting ', obj_name, ' from http...');
+        console.log('getting ', obj_name, ' from http service...');
         return this.httpService.getObject(obj_name, obj_url, obj_urlparam);
     }
 
