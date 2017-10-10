@@ -1,8 +1,5 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/Rx';
-// Models
-import { User } from './_models/user';
-import { MeetingParticipant } from './_models/meetingparticipant';
 // State
 import { State } from './state';
 
@@ -14,7 +11,10 @@ export class AppStore {
 
     changes = store.asObservable()
     .distinctUntilChanged()
-    .do(changes => console.log('projecting new state', changes));
+    .do(changes => {
+        console.log('projecting new state', changes);
+        localStorage.setItem('localstate', JSON.stringify(changes));
+    });
 
     getState() {
     return this.store.value;
@@ -30,4 +30,10 @@ export class AppStore {
         const currentState = this.getState();
         this.setState(Object.assign({}, currentState, { [property]: data }));
     }
+
+    subscribeTo(property: string) {
+        console.log('subscribing...');
+        return this.changes.pluck(property);
+    }
+
 }

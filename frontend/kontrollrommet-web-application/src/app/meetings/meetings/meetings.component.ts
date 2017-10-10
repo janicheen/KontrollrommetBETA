@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+// Component collective Services
+import { MeetingService } from '../meeting.service';
 
 @Component({
   selector: 'app-meetings',
@@ -10,14 +11,16 @@ import { Router } from '@angular/router';
 export class MeetingsComponent implements OnInit {
 
   constructor(
-    private router: Router,
+    private meetingService: MeetingService
     ) { }
 
   ngOnInit(): void {
   }
 
-  onClickNewMeetingRequest(): void {
-    this.router.navigate(['/meetingform']);
+  //  Input reactions worth passing to Component Collective Service
+  onNewMeetingRequest(): void {
+    console.log('passing new meeting request signal to component collective service');
+    this.meetingService.newMeetingRequest();
   }
 
 }

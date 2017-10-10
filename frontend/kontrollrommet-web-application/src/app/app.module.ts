@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { DatePipe } from '@angular/common';
+
 // Angular JWT
 import { NgJwtModule } from 'ng-jwt';
 // Bootstrap Module
@@ -19,8 +21,8 @@ import { AppStore } from './app-store';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
-import { NavigationFrameComponent } from './navigationframe/navigationframe.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { NavigationFrameComponent } from './navigation/navigationframe/navigationframe.component';
+import { DashboardComponent } from './navigation/dashboard/dashboard.component';
 import { MeetingsComponent } from './meetings/meetings/meetings.component';
 import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
 import { MeetingFormComponent } from './meetings/new-meeting/new-meeting.component';
@@ -31,6 +33,7 @@ import { HttpService } from './_services/http.service';
 import { DataService } from './_services/data.service';
 import { ActionService } from './_services/action.service';
 import { MeetingService } from './meetings/meeting.service';
+import { NavigationService } from './navigation/navigation.service';
 import { AuthService } from './authentication/authentication.service';
 
 // *** UNSTRUCTURED ***
@@ -78,6 +81,7 @@ import { AuthService } from './authentication/authentication.service';
     jwtAuthenticationService, jwtAuth,
     // Dragula
     DragulaService,
+    DatePipe,
     // Guards
     AuthGuard,
     // Main Service units
@@ -86,6 +90,7 @@ import { AuthService } from './authentication/authentication.service';
     ActionService,
     // Component Collective Services
     AuthService,
+    NavigationService,
     MeetingService,
   ],
   bootstrap: [ AppComponent ]

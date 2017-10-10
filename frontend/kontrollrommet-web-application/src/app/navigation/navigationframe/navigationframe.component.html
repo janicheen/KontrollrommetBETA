@@ -12,7 +12,7 @@
       <a class="btn btn-default" role="button" routerLink="/project_management" routerLinkActive="active">Prosjektstyring</a>
       <a class="btn btn-default" role="button" routerLink="/useraccount" routerLinkActive="active">Din Brukerkonto</a>    
       <a class="btn btn-default" role="button" routerLink="/login" routerLinkActive="active" *ngIf="!(loggedin | async)">Login</a>    
-      <a class="btn btn-default" role="button" (click)="logout()" *ngIf="(loggedin | async)">Logout</a>
+      <a class="btn btn-default" role="button" (click)="logoutUser()" *ngIf="(loggedin | async)">Logout</a>
     </nav>
   </div>
 </div>

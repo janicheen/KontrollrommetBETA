@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 // Components
 import { LoginComponent } from './authentication/index';
 import { RegisterComponent } from './authentication/index';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './navigation/dashboard/dashboard.component';
 import { MeetingsComponent } from './meetings/meetings/meetings.component';
 import { MeetingFormComponent } from './meetings/new-meeting/new-meeting.component';
 // Guard

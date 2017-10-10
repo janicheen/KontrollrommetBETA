@@ -1,46 +1,63 @@
+//
+// Component Collective Service
+//
+
 // Angular Dependencies
-import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-// Services
-import { DataService } from '../_services/data.service';
+// Main Services
 import { ActionService } from '../_services/action.service';
-// Models
+import { AppStore } from '../app-store';
+// Process Models
+import { Action } from '../_process/action';
+// Application Models
 import { User } from '../_models/index';
 
 @Injectable()
 export class AuthService {
 
     constructor(
-        // private router: Router,
-        private dataService: DataService,
         private actionService: ActionService,
+        private appStore: AppStore,
         private router: Router
     ) { }
 
-    // , passes it to data service
-    // Reroutes to new page
+    // Processes that take input from components, process them, calls for actions and deals with results
+
+    // Process with no result
     registerUser(user: User) {
-        console.log('Receiving new user data from component, passing it on to data service.');
-        this.dataService.registerUser(user);
+        console.log('Received new user data from component');
+        console.log('Placing data in actionobject and passing it to actionservice');
+        let action = new Action;
+        action.action = 'create-user';
+        action.payload = user;
+        this.actionService.doAction(action);
         console.log('Routing to login page');
         this.router.navigate(['/login']);
     }
 
-    // Receives form data from component, passes it on to data service
-    // Reacts on return data
+    // Process with result
     loginUser(username: string, password: string, returnUrl: string) {
-        console.log('Receiving login data from component, passing it on to data service...');
-        return this.dataService.loginUser(username, password)
+        console.log('Received login data from component');
+        console.log('asking action service to login-user');
+        let action = new Action;
+        action.action = 'login-user';
+        action.payload = [username, password];
+        this.actionService.doAction(action)
         .toPromise()
         .then(
             (data) => {
+                this.appStore.updateState('is_loading', false);
                 // If login returns sucessful, this operation is performed
                 if (data) {
                     console.log('got answer from data service and login was sucessful! TRUE');
-                    this.actionService.loadInitialData();
-                    // this.dataService.loadInitialData();
+                    console.log('asking action service to load-alldata');
+                    let action = new Action;
+                    action.action = 'load-alldata';
+                    this.actionService.doAction(action);
+                    // rerouting user
                     this.router.navigate([returnUrl]);
                 // It login returns unsuccessful, this operation is performed
                 } else {

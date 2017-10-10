@@ -1,7 +1,8 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿// Angular Dependencies
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-// Services
+// Component collective Services
 import { AuthService } from '../../authentication/authentication.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { AuthService } from '../../authentication/authentication.service';
 })
 
 export class LoginComponent implements OnInit {
+    // Component properties
     returnUrl: string;
     username: string;
     password: string;
@@ -21,11 +23,11 @@ export class LoginComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        console.log('get returnurl from route parameter returnUrl or default to /');
+        console.log('store returnurl in component');
         this.returnUrl = this.activatedroute.snapshot.queryParams['returnUrl'] || '/';
     }
 
-    // Pass component data to designated component collective service
+    //  Input reactions worth passing to Component Collective Service
     onLogin(form: NgForm) {
         console.log('passing login data on to auth service');
         this.authService.loginUser(this.username, this.password, this.returnUrl);

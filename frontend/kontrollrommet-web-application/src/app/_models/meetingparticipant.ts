@@ -12,5 +12,7 @@ export class MeetingParticipant {
     is_reporting: boolean;
     sent_meetingrequest: Date;
     accepted_invite: Date;
-
+    // POST related fields
+    person_id: number;
+    meeting_id: number;
 }

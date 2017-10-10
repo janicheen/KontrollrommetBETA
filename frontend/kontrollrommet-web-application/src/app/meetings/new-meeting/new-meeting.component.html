@@ -2,7 +2,7 @@
     <h2>Ny Møteinnkalling</h2>
     <div class="row">	
         <div class="col-md-6">
-            <form (ngSubmit)="onSubmit()" #meetingForm="ngForm">
+            <form (ngSubmit)="onSubmit(f)" #f="ngForm">
                 <div class="form-group">
                     <label for="entity">Velg Boligselskap</label>
                     <select class="form-control" name="entity" id="entity" required [(ngModel)]="meeting.executive_entity" (change)="onChangeEntity()">
@@ -43,7 +43,7 @@
                         </ul>
                     </div>
 
-                    <button type="submit" class="btn btn-success" [disabled]="!meetingForm.form.valid">Lag innkalling</button>
+                    <button type="submit" class="btn btn-success" [disabled]="!f.valid">Lag innkalling</button>
                 </div>
             </form>	
         </div>

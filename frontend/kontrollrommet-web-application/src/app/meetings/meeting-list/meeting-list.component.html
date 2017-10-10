@@ -8,7 +8,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class='clickable-row' *ngFor="let meeting of meetings | async" [class.active]="meeting === selectedmeeting" (click)="onSelect(meeting)">
+      <tr class='clickable-row' *ngFor="let meeting of meetingparticipations | async" [class.active]="meeting === selected_meetingparticipation" (click)="onSelect(meeting)">
         <td>{{ meeting.meeting?.requested_meetdate | date }}</td>
         <td>{{ meeting.meeting?.meeting_category.name }}</td>
         <td>{{ meeting.meeting?.executive_entity.name }}</td>

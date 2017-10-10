@@ -1,9 +1,11 @@
+// Angular Dependencies
 import { Component, OnInit } from '@angular/core';
-
-// Services
-import { ActionService } from '../../_services/action.service';
+// Component collective Services
+import { MeetingService } from '../meeting.service';
+// Main Services
+import { AppStore } from '../../app-store';
 // Models
-import { Meeting, Entity, MeetingParticipant} from '../../_models/index';
+import { MeetingParticipant} from '../../_models/index';
 
 @Component({
     selector: 'app-meetinglist',
@@ -12,21 +14,20 @@ import { Meeting, Entity, MeetingParticipant} from '../../_models/index';
  })
 
 export class MeetingListComponent implements OnInit {
-    // Properties of the component
-    meetings = this.actionService.subscribeTo('meetingparticipations');
-    selectedmeeting: MeetingParticipant;
+    // Subscribed properties
+    meetingparticipations = this.appStore.subscribeTo('meetingparticipations');
+    // Component properties
+    selected_meetingparticipation: MeetingParticipant;
 
     constructor(
-        private actionService: ActionService,
+        private appStore: AppStore
     ) {}
 
      ngOnInit() {}
 
-     // When a meeting is selected from the list
+     // Input that can be dealt with locally
     onSelect(meeting: MeetingParticipant): void {
-        this.selectedmeeting = meeting;
-        console.log('selected this meeting', this.selectedmeeting);
+        this.selected_meetingparticipation = meeting;
     }
-
 
 }
