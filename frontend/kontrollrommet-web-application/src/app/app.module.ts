@@ -26,6 +26,7 @@ import { DashboardComponent } from './navigation/dashboard/dashboard.component';
 import { MeetingsComponent } from './meetings/meetings/meetings.component';
 import { MeetingListComponent } from './meetings/meeting-list/meeting-list.component';
 import { MeetingFormComponent } from './meetings/new-meeting/new-meeting.component';
+import { NewMeetingsubjectComponent } from './meetings/new-meetingsubject/new-meetingsubject.component';
 // Services
 import { AuthenticationService as jwtAuthenticationService, Auth as jwtAuth } from 'ng-jwt';
 import { AuthGuard } from './_guards/auth.guard';
@@ -56,6 +57,7 @@ import { AuthService } from './authentication/authentication.service';
     MeetingsComponent,
     MeetingListComponent,
     MeetingFormComponent,
+    NewMeetingsubjectComponent,
   ],
   imports: [
     BrowserModule,

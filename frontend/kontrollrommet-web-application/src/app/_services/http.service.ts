@@ -24,13 +24,6 @@ export class HttpService {
         private http: Http
     ) { }
 
-    createUser(user) {
-        console.log('sending this data to server...', JSON.stringify({ user }));
-        return this.http.post('http://127.0.0.1:8000/client_views/createuser/', JSON.stringify(user), this.options)
-        .map(res => res.json()) // ...and calling .json() on the response to return data
-        .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
-    }
-
     getObject(obj_name, obj_url, obj_urlparam) {
         console.log('getting ', obj_name, 'from server...');
         if (obj_urlparam) {
@@ -44,17 +37,31 @@ export class HttpService {
             .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
         }
     }
+
     // *** Regular HTTP requests //
 
+    createUser(user) {
+        console.log('sending this data to server...', JSON.stringify({ user }));
+        return this.http.post('http://127.0.0.1:8000/client_views/createuser/', JSON.stringify(user), this.options)
+        .map(res => res.json()) // ...and calling .json() on the response to return data
+        .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
+    }
+
+    // *** AuthHTTP requests //
 
     createMeeting(meeting) {
         console.log('sending this data to server...', JSON.stringify( meeting ));
         return this.authHttp.post('http://127.0.0.1:8000/meeting_manager/meetingpost/', JSON.stringify(meeting), this.options)
         .map(res => res.json()) // ...and calling .json() on the response to return data
-        .catch((error: any) => Observable.throw(error.json().error || 'Server error')) // ...errors if
-        .subscribe();
+        .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
     }
-    // *** AuthHTTP requests //
+
+    createPlan(plan) {
+        console.log('sending this data to server...', JSON.stringify( plan ));
+        return this.authHttp.post('http://127.0.0.1:8000/client_views/createplan/', JSON.stringify(plan), this.options)
+        .map(res => res.json()) // ...and calling .json() on the response to return data
+        .catch((error: any) => Observable.throw(error.json().error || 'Server error')); // ...errors if
+    }
 
     getCurrentUser(): Observable<User> {
         console.log('getting current user from server...');

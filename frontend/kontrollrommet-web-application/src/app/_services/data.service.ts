@@ -24,8 +24,12 @@ export class DataService {
 
     createMeeting(meeting) {
         console.log('passing new meeting data to http for creating meeting.');
-        this.httpService.createMeeting(meeting);
+        return this.httpService.createMeeting(meeting);
+    }
 
+    createPlan(plan) {
+        console.log('passing new subject data to http for creating plan.');
+        return this.httpService.createPlan(plan);
     }
     // Universal Get Object from http service, takes:
     // obj_name: general name, obj_url: the url to call, obj_urlparam?: id nr to get specific object
